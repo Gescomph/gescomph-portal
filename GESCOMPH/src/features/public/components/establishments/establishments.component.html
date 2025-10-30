@@ -1,0 +1,31 @@
+<section class="locales">
+  <header class="locales__header">
+    <h2 class="locales__title text-green fw-bolder">Nuestros Locales</h2>
+    <a routerLink="/establishments" class="locales__link">
+      Ver más
+      <mat-icon class="locales__link-icon">arrow_forward</mat-icon>
+    </a>
+  </header>
+
+  <div class="locales__carousel">
+    <button mat-mini-fab color="primary" class="locales__arrow locales__arrow--left" (click)="scrollCarrusel(-1)"
+      [disabled]="!canScrollLeft" aria-label="Desplazar a la izquierda">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <div class="locales__track" #carrusel>
+      <div class="locales__list">
+        <article *ngFor="let establishment of establishments" class="locales__item">
+          <app-card [local]="establishment" [showAvailableTag]="true" (onView)="view.emit(establishment.id)"
+            (onCreateAppointment)="createAppointment.emit(establishment.id)">
+          </app-card>
+        </article>
+      </div>
+    </div>
+
+    <button mat-mini-fab color="primary" class="locales__arrow locales__arrow--right" (click)="scrollCarrusel(1)"
+      [disabled]="!canScrollRight" aria-label="Desplazar a la derecha">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</section>

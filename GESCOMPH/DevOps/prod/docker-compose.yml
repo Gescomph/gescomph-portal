@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  # 🌐 Frontend GESCOMPH - Producción
+  gescomph-front-prod:
+    container_name: ${CONTAINER_NAME}
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    image: ${IMAGE_NAME}:latest
+    ports:
+      - "4203:${PORT}"
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - network_prod
+    labels:
+      - com.gescomph.environment=prod
+
+networks:
+  network_prod:
+    driver: bridge

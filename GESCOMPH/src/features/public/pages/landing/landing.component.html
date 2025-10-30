@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <app-banner></app-banner>
+
+  <app-history></app-history>
+
+  <app-establishments
+    [establishments]="items()"
+    (view)="onView($event)"
+    (createAppointment)="onCreateAppointment($event)">
+  </app-establishments>
+
+  <app-footer></app-footer>
+</div>

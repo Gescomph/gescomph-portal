@@ -1,0 +1,66 @@
+<div class="banner row content-wrapper align-items-center py-5 header">
+  <!-- Columna izquierda: texto -->
+  <div class="col-12 col-md-6 text-section text-center text-md-start">
+    <h1 class="title">
+      Bienvenido a <strong class="text-gold">GESCOMPAH</strong>
+    </h1>
+
+    <p class="tagline text-uppercase fw-bold mt-2">
+      Gestión eficiente de establecimientos comerciales
+    </p>
+
+    <p class="subtitle fw-semibold mt-3">
+      Una plataforma moderna para administrar y consultar la información de los
+      locales comerciales de manera transparente y centralizada.
+    </p>
+
+    <p class="description">
+      <strong>GESCOMPAH</strong> permite visualizar los locales disponibles,
+      agendar citas y formalizar contratos.
+      <br /><br />
+      Nuestro objetivo es facilitar la comunicación entre los ciudadanos y la
+      administración pública, impulsando el desarrollo económico local mediante
+      procesos digitales, simples y accesibles.
+    </p>
+
+    <!-- Botones -->
+    <div
+      class="d-flex justify-content-center justify-content-md-start gap-3 mt-4 flex-wrap"
+    >
+      <a routerLink="/establishments" class="premises-button">
+        <mat-icon>storefront</mat-icon>
+        Ver locales disponibles
+      </a>
+
+      <a routerLink="/auth/login" class="login-button">
+        <mat-icon>person</mat-icon>
+        Iniciar sesión
+      </a>
+    </div>
+
+    <!-- Estadísticas -->
+    <div
+      class="stats d-flex justify-content-center justify-content-md-start gap-5 mt-5 flex-wrap"
+    >
+      <div class="stat">
+        <h3>+{{totalEstablishmentsCount()}}</h3>
+        <p>Locales administrados</p>
+      </div>
+      <div class="stat">
+        <h3>+{{totalAppointmensCount()}}</h3>
+        <p>Citas gestionadas</p>
+      </div>
+      <div class="stat">
+        <h3>+{{totalContractsCount()}}</h3>
+        <p>Contratos activos</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: carrusel con efecto glass -->
+  <div
+    class="col-12 col-md-6 banner-carousel d-flex justify-content-center mt-5 mt-md-0"
+  >
+    <app-carrusel></app-carrusel>
+  </div>
+</div>

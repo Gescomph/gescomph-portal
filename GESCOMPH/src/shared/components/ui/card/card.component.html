@@ -1,0 +1,52 @@
+<div class="local-card">
+  <!-- Imagen principal -->
+  <div class="image-container">
+    <img *ngIf="isCloudinary; else plainImg" [ngSrc]="cloudinaryPath" width="280" height="140" [alt]="local.name"
+      class="local-image" loading="lazy">
+    <ng-template #plainImg>
+      <img [src]="primaryImage" width="280" height="140" [alt]="local.name" class="local-image" loading="lazy">
+    </ng-template>
+
+    <!-- Tag de disponibilidad -->
+    <div *ngIf="showAvailableTag && local.active" class="availability-tag">Disponible</div>
+    <div *ngIf="showAvailableTag && !local.active" class="availability-tag unavailable">Ocupado</div>
+
+    <!-- “Ver más” (abre el diálogo con detalles) -->
+    <a class="card-link" (click)="handleView()">Ver más</a>
+  </div>
+
+  <!-- Contenido -->
+  <div class="card-content">
+    <h3 class="local-name">{{ local.name }}</h3>
+
+    <p class="description" *ngIf="shortDescription as desc">{{ desc }}</p>
+
+    <!-- Fila: dirección + metros cuadrados -->
+    <div class="info-grid">
+      <div class="info-item location">
+        <mat-icon class="mi" fontIcon="location_on"></mat-icon>
+        <span class="info-value ellipsis">{{ local.address }}</span>
+      </div>
+
+      <div class="info-item area">
+        <mat-icon class="mi" fontIcon="straighten"></mat-icon>
+        <span class="info-value">{{ local.areaM2 | number:'1.0-0' }} m²</span>
+      </div>
+    </div>
+
+    <!-- Precio -->
+    <div class="card-price bubble-style">
+      <span>{{ formattedRent }}</span>
+    </div>
+
+    <!-- Footer: siempre visible -->
+    <div class="card-actions">
+      <app-button
+        [showCreateAppointment]="false"
+        (onView)="handleView()"
+        (onEdit)="handleEdit()"
+        (onDelete)="handleDelete()">
+      </app-button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,236 @@
+/* ===========================
+   ESTRUCTURA PRINCIPAL
+=========================== */
+.banner {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.content-wrapper {
+  background: radial-gradient(
+    circle at top left,
+    var(--green-700),
+    var(--green-900)
+  );
+  position: relative;
+  color: #fff;
+  padding: 4rem 2rem;
+  z-index: 0;
+}
+
+/* Fondo dinámico corregido */
+.content-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 70%
+  );
+  animation: rotateBg 40s linear infinite;
+  pointer-events: none; /* ✅ permite clicks */
+  z-index: 0;
+}
+
+/* Asegura que el contenido esté sobre el fondo */
+.banner,
+.text-section,
+.banner-carousel {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes rotateBg {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===========================
+   ANIMACIÓN DE ENTRADA
+=========================== */
+.title,
+.subtitle,
+.description,
+.tagline,
+.stats {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+.subtitle {
+  animation-delay: 0.3s;
+}
+.description {
+  animation-delay: 0.6s;
+}
+.stats {
+  animation-delay: 0.9s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================
+   TEXTOS
+=========================== */
+.title {
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.text-gold {
+  background: linear-gradient(90deg, #d4af37, #fff9c4, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200%;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.tagline {
+  font-size: 0.95rem;
+  color: var(--yellow-300);
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: var(--yellow-200);
+}
+
+.description {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin-top: 0.5rem;
+}
+
+/* ===========================
+   BOTONES
+=========================== */
+.premises-button,
+.login-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 15px 35px;
+  cursor: pointer;
+}
+
+.premises-button {
+  background-color: var(--yellow-400);
+  color: #fff;
+}
+
+.premises-button:hover {
+  background-color: var(--yellow-500);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-button {
+  background-color: var(--green-600);
+  color: #fff;
+}
+
+.login-button:hover {
+  background-color: var(--green-500);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.premises-button mat-icon,
+.login-button mat-icon {
+  font-size: 1.4rem;
+}
+
+/* ===========================
+   ESTADÍSTICAS
+=========================== */
+.stats {
+  text-align: center;
+}
+
+.stat h3 {
+  font-size: 2rem;
+  color: var(--yellow-400);
+  margin: 0;
+}
+
+.stat p {
+  color: #fff;
+  opacity: 0.8;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* ===========================
+   CARRUSEL (Glass Effect)
+=========================== */
+.banner-carousel {
+  backdrop-filter: blur(12px) saturate(150%);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  padding: 0.5rem;
+  max-width: 95%;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.3rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .banner-carousel {
+    margin-top: 2rem;
+  }
+}
+

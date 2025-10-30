@@ -1,0 +1,56 @@
+<div class="container mt-4">
+  <!-- Botón para abrir el formulario en un modal -->
+  <ng-container *appHasRoleAndPermission="'Administrador'; perms: 'CREAR'">
+    <div class="d-flex justify-content-end mb-4">
+      <app-standard-button
+        text="Nuevo establecimiento"
+        variant="raised"
+        color="primary"
+        icon="add"
+        iconPosition="left"
+        (clicked)="openCreateDialog()"
+        [disabled]="loadingCards()">
+      </app-standard-button>
+    </div>
+  </ng-container>
+
+  <!-- Loading -->
+  <ng-container *ngIf="loadingCards(); else content">
+    <div class="d-flex justify-content-start mt-4">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-container>
+
+  <!-- Contenido -->
+  <ng-template #content>
+    <ng-container *ngIf="cards().length > 0; else noEstablishment">
+      <div class="d-flex flex-wrap gap-3 justify-content-center">
+        <app-card
+          *ngFor="let establishment of pagedCards()"
+          [local]="establishment"
+          [showAvailableTag]="true"
+          (onDelete)="handleDelete(establishment.id)"
+          (onUpdate)="onCardUpdated()"
+          (onView)="onView($event)"
+          (onEdit)="openEditDialogById(establishment.id)">
+        </app-card>
+      </div>
+
+      <!-- 📄 Paginación -->
+      <mat-paginator
+        [length]="cards().length"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        (page)="onPageChange($event)">
+      </mat-paginator>
+    </ng-container>
+  </ng-template>
+
+  <!-- Si no hay locales -->
+  <ng-template #noEstablishment>
+    <div class="text-center text-muted mt-4">
+      No hay locales registrados aún.
+    </div>
+  </ng-template>
+</div>
