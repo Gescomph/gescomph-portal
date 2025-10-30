@@ -1,23 +1,24 @@
-version: "3.8"
+version: "3.9"
 
 services:
   # 🌐 Frontend GESCOMPH - QA
   gescomph-front-qa:
     container_name: ${CONTAINER_NAME}
     build:
-      context: ../
+      context: ../..               # raíz del proyecto Angular
       dockerfile: Dockerfile
     image: ${IMAGE_NAME}:latest
-    ports:
-      - "4201:${PORT}"
     restart: always
+    ports:
+      - "4201:${PORT}"             # 4201 host → 80 contenedor
     env_file:
       - .env
     networks:
-      - network_qa
+      - gescomph_network           # 🔗 red compartida con backend
     labels:
       - com.gescomph.environment=qa
 
+# 🔗 Red externa compartida con backend
 networks:
-  network_qa:
-    driver: bridge
+  gescomph_network:
+    external: true
