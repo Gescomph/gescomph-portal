@@ -1,0 +1,13 @@
+/* styles.scss o scoped en el componente */
+
+/* Espaciado entre campos */
+mat-form-field {
+  width: 100%;
+}
+
+/* Ajustar headers */
+h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+}
