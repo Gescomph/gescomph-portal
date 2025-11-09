@@ -1,0 +1,28 @@
+<div appFileDrop (files)="filesAdded.emit($event)" class="dropzone" role="button" tabindex="0"
+  (keydown.enter)="fileInput.click()" (keydown.space)="fileInput.click()" (click)="fileInput.click()">
+  <mat-icon>cloud_upload</mat-icon>
+  <p>Arrastra o haz clic para seleccionar</p>
+  <input type="file" #fileInput (change)="onInputFiles($event)" accept="image/*" multiple hidden />
+</div>
+
+<div class="counter">
+  {{ (previews.length + existingImages.length) }}/{{ max }} imágenes
+</div>
+
+<div class="grid">
+  <!-- EXISTING -->
+  <div class="item" *ngFor="let img of existingImages; let i = index">
+    <img [src]="img.filePath" alt="existente">
+    <button mat-icon-button color="warn" (click)="removeExisting.emit(i)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+  <!-- NEW -->
+  <div class="item" *ngFor="let url of previews; let i = index">
+    <img [src]="url" alt="nuevo">
+    <button mat-icon-button color="warn" (click)="removeNew.emit(i)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="quick-actions card p-3 border-success-subtle shadow-sm">
+    <h5 class="fw-bold text-success mb-3">
+        <i class="bi bi-plus-circle me-2"></i>
+        Acciones Rápidas
+    </h5>
+
+    <div class="row d-flex flex-column gap-3 mx-1">
+        <button *ngFor="let action of actions" class="btn w-100" [ngClass]="action.style" [routerLink]="action.RouterLink">
+            {{ action.label }}
+        </button>
+    </div>
+</div>

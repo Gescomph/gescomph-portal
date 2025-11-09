@@ -1,0 +1,83 @@
+/* =========================
+   Dropzone (same look as Plaza)
+   ========================= */
+.dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  transition: background-color .15s, border-color .15s;
+  background: #f8fafc;
+  cursor: pointer;
+  margin-top: 12px;
+}
+.dropzone:hover,
+.dropzone.drag-over {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+.dropzone mat-icon {
+  color: #2563eb;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+/* =========================
+   Contador
+   ========================= */
+.counter {
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #334155;
+  text-align: right;
+}
+
+/* =========================
+   Grid miniaturas
+   ========================= */
+.grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 12px;
+}
+
+.item {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  transition: transform .12s ease;
+}
+.item:hover {
+  transform: translateY(-1px);
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* same delete pill style */
+.item button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(255,255,255,.65);
+  border-radius: 8px;
+  backdrop-filter: blur(2px);
+}
+
+/* =========================
+   Utilities
+   ========================= */
+.mt-2 { margin-top: 8px; }
+.mb-2 { margin-bottom: 8px; }
+.w-100 { width: 100%; }
