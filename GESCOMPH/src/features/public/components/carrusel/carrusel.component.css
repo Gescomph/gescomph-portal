@@ -1,0 +1,176 @@
+/* ===========================
+   CONTENEDOR PRINCIPAL
+=========================== */
+.carousel {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.carousel:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.55);
+}
+
+/* ===========================
+   IMÁGENES DEL CARRUSEL
+=========================== */
+.imagen-local img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  display: block;
+  transition: transform 1s ease, filter 1s ease;
+  border-radius: 0; /* se maneja con el contenedor */
+}
+
+/* Efecto de zoom y brillo al cambiar */
+.carousel-item.active img {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
+
+.carousel-item img {
+  filter: brightness(0.85);
+}
+
+/* Transición entre slides */
+.carousel-item {
+  transition: transform 1.2s ease-in-out, opacity 1s ease-in-out;
+}
+
+/* ===========================
+   OVERLAY OSCURO GLOBAL
+=========================== */
+.carousel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.65)
+  );
+  pointer-events: none;
+}
+
+/* ===========================
+   TEXTO SUPERPUESTO
+=========================== */
+.carousel-caption {
+  position: absolute;
+  z-index: 20 !important;       /* <-- ESTO es clave */
+  bottom: 2rem;
+  left: 2rem;
+
+  /* layout */
+  width: fit-content;           /* que solo ocupe lo necesario */
+  max-width: 55%;
+  text-align: left;
+
+  /* fondo */
+  background: rgba(0,0,0,0.85); /* más oscuro */
+  padding: 1.1rem 1.4rem;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.75);
+}
+
+
+
+.carousel-caption h5 {
+  color: #FFE066; /* amarillo más brillante */
+  font-weight: 800;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0px 0px 6px rgba(0,0,0,.9);
+}
+
+.carousel-caption p {
+  color: #ffffff; /* blanco puro */
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.45;
+  text-shadow: 0px 0px 6px rgba(0,0,0,.9);
+}
+
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================
+   INDICADORES PERSONALIZADOS
+=========================== */
+.carousel-indicators {
+  bottom: 15px;
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: var(--yellow-400);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-indicators .active {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* ===========================
+   FLECHAS DE NAVEGACIÓN
+=========================== */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(84%) sepia(48%) saturate(320%) hue-rotate(10deg)
+    brightness(95%) contrast(95%);
+  width: 3rem;
+  height: 3rem;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 1;
+}
+
+/* ===========================
+   RESPONSIVIDAD
+=========================== */
+@media (max-width: 768px) {
+  .imagen-local img {
+    height: 50vh;
+  }
+
+  .carousel {
+    border-radius: 12px;
+  }
+
+  .carousel-caption {
+    bottom: 1rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .carousel-caption h5 {
+    font-size: 1.2rem;
+  }
+}

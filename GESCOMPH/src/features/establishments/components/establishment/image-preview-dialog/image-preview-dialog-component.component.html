@@ -1,0 +1,48 @@
+<div class="preview-container">
+  <div class="preview-header">
+    <div class="title">
+      {{ title }}
+      <ng-container *ngIf="total > 0">
+        &nbsp;&nbsp;<small>{{ current }} / {{ total }}</small>
+      </ng-container>
+    </div>
+
+    <app-standard-button
+      variant="icon"
+      icon="close"
+      (clicked)="close()"
+      ariaLabel="Cerrar">
+    </app-standard-button>
+  </div>
+
+  <div class="preview-body" *ngIf="total > 0; else empty">
+    <button
+      mat-icon-button
+      class="nav left"
+      (click)="prev()"
+      [disabled]="total <= 1"
+      aria-label="Anterior">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <img
+      [src]="currentSrc"
+      alt="imagen"
+      class="image"
+      draggable="false"
+      (dragstart)="$event.preventDefault()" />
+
+    <button
+      mat-icon-button
+      class="nav right"
+      (click)="next()"
+      [disabled]="total <= 1"
+      aria-label="Siguiente">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <ng-template #empty>
+    <div class="empty">Sin imágenes para mostrar</div>
+  </ng-template>
+</div>
