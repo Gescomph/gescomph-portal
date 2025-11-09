@@ -1,0 +1,115 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon class="dialog-title__icon">business</mat-icon>
+  {{ data.name }}
+</h2>
+
+<mat-dialog-content class="establishment-dialog">
+  <div class="dialog-grid">
+
+    <!-- Carrusel -->
+    <div class="dialog-left">
+      <ng-container *ngIf="images?.length; else noImages">
+        <figure class="carousel" aria-live="polite">
+
+          <img
+            [src]="imgSrc(images[currentImageIndex])"
+            [alt]="'Imagen de ' + data.name"
+            class="carousel__image"
+            (click)="viewImage(imgSrc(images[currentImageIndex]))"
+            tabindex="0"
+            (keydown.enter)="viewImage(imgSrc(images[currentImageIndex]))"
+            role="button"
+          />
+
+          <button
+            type="button"
+            class="carousel__arrow carousel__arrow--left"
+            (click)="prevImage()"
+            aria-label="Imagen anterior"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+
+          <button
+            type="button"
+            class="carousel__arrow carousel__arrow--right"
+            (click)="nextImage()"
+            aria-label="Imagen siguiente"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+          <div class="carousel__dots">
+            <button
+              *ngFor="let image of images; let idx = index"
+              type="button"
+              class="carousel__dot"
+              [class.carousel__dot--active]="idx === currentImageIndex"
+              (click)="goToImage(idx)"
+              [attr.aria-label]="'Ir a imagen ' + (idx + 1)"
+            ></button>
+          </div>
+
+        </figure>
+      </ng-container>
+
+      <ng-template #noImages>
+        <div class="no-images">
+          <mat-icon>photo</mat-icon>
+          <p>Sin imágenes disponibles</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Información -->
+    <div class="dialog-right">
+      <section>
+        <h3>Información del establecimiento</h3>
+        <ul class="info-list">
+          <li>
+            <mat-icon>location_on</mat-icon>
+            <span>{{ data.address }}</span>
+          </li>
+          <li>
+            <mat-icon class="mi" fontIcon="straighten"></mat-icon>
+            <span>{{ data.areaM2 | number: '1.0-0' }} m²</span>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Información financiera</h3>
+        <ul class="info-list">
+          <li>
+            <mat-icon>attach_money</mat-icon>
+            <span>{{ data.rentValueBase | money:true:0 }}</span>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Descripción</h3>
+        <p class="description">
+          {{ data.description || 'Sin descripción disponible.' }}
+        </p>
+      </section>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <app-standard-button
+    text="Agendar cita"
+    icon="calendar_today"
+    variant="stroked"
+    color="primary"
+    (clicked)="handleCreateAppointment()"
+  ></app-standard-button>
+
+  <app-standard-button
+    text="Cerrar"
+    variant="flat"
+    color="warn"
+    (clicked)="onClose()"
+  ></app-standard-button>
+</mat-dialog-actions>

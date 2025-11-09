@@ -1,0 +1,140 @@
+ .alert-content {
+    flex: 1;
+  }
+
+  .alert-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+  }
+
+  .alert-description {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.4;
+  }
+
+  .btn-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+
+  .btn-subtitle {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+
+  .summary-container {
+    padding: 32px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .summary-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+
+  .summary-item {
+    text-align: center;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(22, 163, 74, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .summary-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(22, 163, 74, 0.1);
+  }
+
+  .summary-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #16a34a;
+    margin-bottom: 8px;
+  }
+
+  .summary-label {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .summary-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
+
+  .trend-up {
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.1);
+  }
+
+  .trend-down {
+    color: #dc2626;
+    background: rgba(220, 38, 38, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .summary-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .summary-item {
+      padding: 20px 16px;
+    }
+
+    .summary-number {
+      font-size: 2rem;
+    }
+  }
+
+/*================================================
+Estilos temporales
+==================================================*/
+
+.chart-card {
+  background-color: white;
+  border: 1px solid #a7f3d0; /* Verde claro pastel (#a7f3d0 ≈ Tailwind emerald-200) */
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra todo horizontalmente */
+}
+
+.chart-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.chart-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #166534; /* Verde oscuro (#166534 ≈ Tailwind green-800) */
+  margin-bottom: 16px;
+  align-self: flex-start; /* Opcional: alineado al inicio si quieres como los demás */
+}
+
+.chart-container {
+  position: relative;
+  height: 260px;
+  width: 260px; /* Asegura que el gráfico no se estire de más */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

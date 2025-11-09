@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+
+<mat-dialog-content class="mat-dialog-content">
+  <app-generic-form #dynamicForm [formType]="data.formType" [initialData]="data.entity"
+    [selectOptions]="data.selectOptions || {}" (formSubmit)="close($event)"></app-generic-form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="form-actions">
+  <app-standard-button
+    text="Cancelar"
+    variant="stroked"
+    (clicked)="close(null)">
+  </app-standard-button>
+  <app-standard-button
+    text="Guardar"
+    variant="raised"
+    color="primary"
+    icon="save"
+    [disabled]="!dynamicForm || !dynamicForm.form || dynamicForm.form.invalid"
+    (clicked)="dynamicForm.onSubmit()">
+  </app-standard-button>
+</mat-dialog-actions>
