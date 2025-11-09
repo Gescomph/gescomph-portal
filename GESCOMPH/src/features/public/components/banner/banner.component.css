@@ -1,0 +1,114 @@
+/* ===========================
+   FONDO ORIGINAL
+=========================== */
+.banner {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background: radial-gradient(circle at top left, var(--green-700), var(--green-900));
+  padding: 4rem 2rem;
+}
+
+.banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+  animation: rotateBg 40s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.text-section,
+.banner-carousel {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes rotateBg {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* ===========================
+   HERO — TIPOGRAFÍA BLANCA
+=========================== */
+.hero-title,
+.hero-subtitle,
+.hero-button,
+.stat h3,
+.stat p {
+  color: #fff !important;
+  font-family: inherit;
+}
+
+/* título final */
+.hero-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 18px rgba(0,0,0,.45);
+}
+
+.hero-subtitle {
+  font-size: clamp(.95rem, 1.1vw, 1.15rem);
+  font-weight: 400;
+  opacity: .92;
+  line-height: 1.4;
+}
+
+
+/* botones */
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: transform .2s ease, background-color .2s ease;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,0,0,.25);
+}
+
+.hero-button mat-icon { font-size: 1.25rem; }
+
+.hero-button.primary { background-color: var(--yellow-400); }
+.hero-button.primary:hover { background-color: var(--yellow-500); transform: translateY(-3px); }
+
+.hero-button.secondary { background-color: var(--green-600); }
+.hero-button.secondary:hover { background-color: var(--green-500); transform: translateY(-3px); }
+
+/* stats */
+.stat h3 { font-size: 2rem; font-weight: 700; margin: 0; }
+.stat p { font-size: .95rem; opacity: .95; margin-top: .25rem; }
+
+
+/* ===========================
+   BALANCE C
+=========================== */
+@media (min-width: 992px) {
+  .text-section { max-width: 620px; }
+  .banner-carousel { max-width: 640px; margin-left: auto; margin-right: auto; }
+}
+
+@media (min-width: 1200px) {
+  .banner-carousel { max-width: 700px; }
+}
+
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+  .banner { text-align: center; padding: 2rem 1rem; }
+  .stats { margin-top: 2rem; }
+  .banner-carousel { margin-top: 2rem; width: 100%; }
+}
