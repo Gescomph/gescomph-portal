@@ -1,0 +1,43 @@
+  <div class="row d-flex justify-content-center">
+    <app-generic-table
+      [data]="(modules$ | async) || []"
+      [columns]="columns"
+      [titulo]="'Gestión de Módulos'"
+      [subTitulo]="'Administra los módulos del sistema'"
+      [createButtonLabel]="'Nuevo Módulo'"
+      [showViewButton]="false"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
+      (create)="onCreateNew()">
+    </app-generic-table>
+
+    <ng-template #iconTemplate let-row>
+  <mat-icon aria-hidden="false" aria-label="{{ row.icon }}">
+    {{ row.icon }}
+  </mat-icon>
+</ng-template>
+
+  <ng-template #iconTemplate let-row>
+    <mat-icon aria-hidden="false" aria-label="{{ row.icon }}">
+      {{ row.icon }}
+    </mat-icon>
+  </ng-template>
+
+    <ng-template #estadoTemplate let-row >
+      <div class="d-inline-flex align-items-center gap-3 flex-nowrap">
+        <span class="badge align-middle" [ngClass]="row.active ? 'badge-success-solid' : 'badge-warning'">
+          {{ row.active ? 'Activo' : 'Inactivo' }}
+        </span>
+
+        <app-toggle-button-component class="align-middle"
+          [checked]="row.active"
+          (changed)="onToggleActive(row, $event)"
+          [size]="20"
+          [onColor]="'#388E3C'"
+          [offColor]="'#9CA3AF'"
+          [thumb]="'#ffffff'">
+        </app-toggle-button-component>
+      </div>
+    </ng-template>
+
+  </div>
