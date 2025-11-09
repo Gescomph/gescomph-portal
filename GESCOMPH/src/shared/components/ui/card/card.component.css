@@ -1,0 +1,192 @@
+/* --- Tarjeta base --- */
+.local-card {
+  width: 280px;
+  max-height:350px ;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.local-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Imagen --- */
+.image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+}
+
+.local-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.local-card:hover .local-image {
+  transform: scale(1.05);
+}
+
+/* overlay loader + placeholder */
+.loader-overlay,
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  z-index: 2;
+}
+
+.placeholder mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #9e9e9e;
+}
+
+.availability-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--color-primary, #2e7d32);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 16px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.unavailable {
+  background-color: #c62828;
+}
+
+/* --- Contenido --- */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding: 0.75rem;
+}
+
+.local-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.description {
+  font-size: 0.8rem;
+  color: #555;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.info-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  gap: 0.5rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #444;
+}
+
+.info-item.location {
+  flex: 1 1 70%;
+  min-width: 0;
+}
+
+.info-item.area {
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.mi {
+  font-size: 18px !important;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  color: var(--accent-color, #2e7d32);
+  flex-shrink: 0;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-price.bubble-style {
+  align-self: flex-start;
+  bg: rgba(46, 125, 50, 0.1);
+  background: rgba(46, 125, 50, 0.1);
+  color: var(--accent-color, #2e7d32);
+  font-weight: 700;
+  border-radius: 50px;
+  padding: 6px 12px;
+  font-size: 0.95rem;
+  margin: 0.5rem 0 0.25rem;
+}
+
+/* --- Acciones y toggle --- */
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.card-toggle {
+  font-size: 0.85rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  min-height: 40px;
+
+  margin-left: auto; /* <<--- FIX */
+}
+
+app-button {
+  display: inline-flex;
+}
+
+@media (max-width: 768px) {
+  .local-card { width: 100%; }
+  .card-content { padding: 1rem; }
+  .local-name { font-size: 1rem; }
+  .card-price.bubble-style { font-size: 1rem; }
+}

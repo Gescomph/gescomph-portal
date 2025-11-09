@@ -1,0 +1,10 @@
+.loading-spinner-container {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
+
+.mat-dialog-content{
+  border: solid var(--primary-color) 1px;
+}
+

@@ -1,0 +1,18 @@
+<div class="row d-flex justify-content-center">
+    <app-generic-table
+      [data]="rolUsers"
+      [columns]="columns"
+      [titulo]="'Roles y Usuarios '"
+      [subTitulo]="'Gesiones sus Roles y Usuarios del sistema'"
+      [createButtonLabel]="'Nuevo Roles y Usuarios '"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
+      (view)="onView($event)"
+      (create)="onCreateNew()">
+    </app-generic-table>
+
+
+    <ng-template #estadoTemplate let-row>
+        <span class="badge badge-success">Activo</span>
+    </ng-template>
+</div>
