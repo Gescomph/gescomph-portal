@@ -1,0 +1,19 @@
+<div #carouselElement id="carouselExample" class="carousel slide">
+  <div class="carousel-inner imagen-local">
+    <div *ngFor="let img of images; let i = index" class="carousel-item" [class.active]="i === 0">
+      <img [src]="img.src" [alt]="img.alt" class="d-block w-100" />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ img.title }}</h5>
+        <p>{{ img.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="carousel-control-prev custom-arrow" (click)="prev()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  <button type="button" class="carousel-control-next custom-arrow" (click)="next()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>

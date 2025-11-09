@@ -1,0 +1,57 @@
+.bell-button {
+  color: #fff;
+  margin-right: 1rem;
+}
+
+.bell-button .mat-badge-content {
+  background-color: #ff5252;
+  color: #fff;
+}
+
+.notification-menu {
+  min-width: 320px;
+  max-width: 360px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-weight: 600;
+}
+
+.notification-header button {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.notification-empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.notification-item {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.notification-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.notification-message {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.72);
+}
+
+.notification-meta {
+  font-size: 0.72rem;
+  color: rgba(0, 0, 0, 0.54);
+}

@@ -1,0 +1,205 @@
+<!-- Overlay descarga PDF (se conserva) -->
+<div
+  class="pdf-loading-overlay"
+  *ngIf="isDownloadingPdf"
+  aria-live="assertive"
+  aria-busy="true">
+  <div
+    class="pdf-loading-card"
+    role="alert"
+    aria-label="Generando y descargando contrato">
+    <svg class="download-anim" viewBox="0 0 64 64" aria-hidden="true">
+      <path
+        class="arrow"
+        d="M32 12 v26 M22 30 l10 10 10-10"
+        fill="none"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+      <rect
+        class="box"
+        x="12"
+        y="44"
+        width="40"
+        height="8"
+        rx="2"
+        ry="2"></rect>
+    </svg>
+    <mat-progress-spinner
+      mode="indeterminate"
+      diameter="48"
+      strokeWidth="4"></mat-progress-spinner>
+    <div class="label">Generando PDF…</div>
+    <div class="sub-label">Esto puede tardar unos segundos</div>
+  </div>
+</div>
+
+<!-- Loading -->
+<ng-container *ngIf="loading(); else contentTpl">
+  <div class="loading-wrap">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-container>
+
+<!-- Contenido principal -->
+<ng-template #contentTpl>
+  <!-- Encabezado de página -->
+  <header class="page-header">
+    <div class="page-title">
+      <h2>Gestión de Contratos</h2>
+      <p class="muted">Contratos (según tu rol)</p>
+    </div>
+
+    <div class="header-actions">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          [value]="filterKey()"
+          (input)="onFilterChange($any($event.target).value || '')"
+          placeholder="Carlos García, 12345678, 3012345678..." />
+      </mat-form-field>
+
+      <ng-container *appHasRoleAndPermission="'Administrador'; perms: 'CREAR'">
+        <app-standard-button
+          text="Nuevo Contrato"
+          variant="raised"
+          color="primary"
+          icon="add"
+          iconPosition="left"
+          (clicked)="onCreate()">
+        </app-standard-button>
+      </ng-container>
+    </div>
+  </header>
+
+  <!-- Métricas rápidas -->
+  <section class="stats">
+    <div class="stat-card">
+      <mat-icon aria-hidden="true">assignment</mat-icon>
+      <div class="stat-text">
+        <span>Total</span>
+        <strong>{{ totalCount() }}</strong>
+      </div>
+    </div>
+    <div class="stat-card">
+      <mat-icon aria-hidden="true">check_circle</mat-icon>
+      <div class="stat-text">
+        <span>Activos</span>
+        <strong>{{ activeCount() }}</strong>
+      </div>
+    </div>
+    <div class="stat-card">
+      <mat-icon aria-hidden="true">error_outline</mat-icon>
+      <div class="stat-text">
+        <span>Inactivos</span>
+        <strong>{{ inactiveCount() }}</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid de tarjetas -->
+  <section class="cards-grid" role="list" aria-label="Listado de contratos">
+    <article
+      class="contract-card"
+      *ngFor="let row of pagedFiltered(); trackBy: trackById"
+      role="listitem"
+      [attr.aria-label]="'Contrato de ' + row.fullName">
+
+      <header class="card-header">
+        <div class="title">
+          <h3 class="truncate" [matTooltip]="row.fullName">
+            {{ row.fullName }}
+          </h3>
+          <span
+            class="chip"
+            [ngClass]="row.active ? 'chip--success' : 'chip--warning'">
+            {{ row.active ? 'Activo' : 'Inactivo' }}
+          </span>
+        </div>
+
+        <div class="card-actions">
+          <button
+            mat-icon-button
+            matTooltip="Descargar PDF"
+            (click)="onDownload(row)"
+            [disabled]="isDownloadingPdf"
+            aria-label="Descargar contrato">
+            <mat-icon>download</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            matTooltip="Ver detalle"
+            (click)="onView(row)"
+            aria-label="Ver detalle">
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+          <div *appHasRoleAndPermission="'Administrador'; perms: 'EDITAR'">
+            <app-toggle-button-component
+              [checked]="!!row?.active"
+              [disabled]="loading()"
+              (changed)="onToggleActive(row, $event)">
+            </app-toggle-button-component>
+          </div>
+        </div>
+      </header>
+
+      <div class="card-body">
+        <div class="meta-grid">
+          <div class="field">
+            <span class="label">Documento</span>
+            <span class="value">{{ row.document }}</span>
+          </div>
+          <div class="field">
+            <span class="label">Teléfono</span>
+            <span class="value">{{ row.phone }}</span>
+          </div>
+          <div class="field">
+            <span class="label">Email</span>
+            <span class="value">{{ row.email || '—' }}</span>
+          </div>
+          <div class="field">
+            <span class="label">Periodo</span>
+            <span class="value">
+              {{ row.startDate | date: 'yyyy-MM-dd' }} →
+              {{ row.endDate | date: 'yyyy-MM-dd' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="amounts">
+          <div class="amount">
+            <span class="label">Total Base</span>
+            <span class="value amount-mono">{{
+              row.totalBaseRentAgreed | money: true : 0
+            }}</span>
+          </div>
+          <div class="amount">
+            <span class="label">Total UVT</span>
+            <span class="value amount-mono strong">{{
+              row.totalUvtQtyAgreed | money: true : 0
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Sin resultados -->
+  <div class="no-results" *ngIf="!filtered()?.length">
+    <mat-icon aria-hidden="true">search_off</mat-icon>
+    <p>No hay contratos que coincidan con la búsqueda.</p>
+  </div>
+
+  <!-- 📄 Paginador -->
+  <mat-paginator
+    [length]="totalCount()"
+    [pageSize]="pageSize()"
+    [pageIndex]="pageIndex()"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    (page)="onPageChange($event)">
+  </mat-paginator>
+</ng-template>
