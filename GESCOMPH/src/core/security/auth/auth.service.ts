@@ -2,12 +2,20 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, switchMap, tap } from 'rxjs';
+import { Observable, of, switchMap, tap, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../../../shared/models/user.model';
 import { UserStore } from '../permission/user.store';
 import { ChangePasswordDto } from '../../models/auth/change-password.models';
 import { REQ_AUTH_HEADER, SKIP_REFRESH_HEADER } from '../../../shared/var/http.constants';
+import {
+  AuthLoginCredentials,
+  AuthLoginResponse,
+  TwoFactorConfirmResponse,
+  TwoFactorResendRequest,
+  TwoFactorResendResponse,
+  TwoFactorVerifyRequest,
+} from './auth.models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -23,9 +31,43 @@ export class AuthService {
     return this.http.post<any>(`${this.urlBase}/register`, obj, { withCredentials: true });
   }
 
-  Login(obj: any) {
-    return this.http.post<any>(`${this.urlBase}/login`, obj, { withCredentials: true })
-      .pipe(switchMap(() => this.GetMe())); // /me riega el store
+  Login(credentials: AuthLoginCredentials) {
+    return this.http
+      .post<AuthLoginResponse>(`${this.urlBase}/login`, credentials, { withCredentials: true })
+      .pipe(
+        switchMap(response =>
+          response.requiresTwoFactor
+            ? of(response)
+            : this.GetMe().pipe(map(() => response))
+        )
+      );
+  }
+
+  ConfirmTwoFactor(dto: TwoFactorVerifyRequest) {
+    return this.http
+      .post<TwoFactorConfirmResponse>(`${this.urlBase}/confirmar-2fa`, dto, { withCredentials: true })
+      .pipe(
+        switchMap(response => this.GetMe().pipe(map(() => response)))
+      );
+  }
+
+  ResendTwoFactorCode(dto: TwoFactorResendRequest) {
+    return this.http.post<TwoFactorResendResponse>(
+      `${this.urlBase}/reenviar-2fa`,
+      dto,
+      { withCredentials: true }
+    );
+  }
+
+  ToggleTwoFactor(enabled: boolean) {
+    return this.http.post(
+      `${this.urlBase}/two-factor`,
+      { enabled },
+      {
+        withCredentials: true,
+        headers: this.authedHeaders()
+      }
+    );
   }
 
   GetMe() {
@@ -58,18 +100,18 @@ export class AuthService {
   }
   ChangePassword(dto: ChangePasswordDto): Observable<any> {
     return this.http.post(
-      environment.apiURL + '/auth/change-password',
+      environment.apiURL + '/change-password',
       dto,
       { withCredentials: true }
     );
   }
 
   RequestPasswordReset(email: string): Observable<any> {
-    return this.http.post(this.urlBase + 'recuperar/enviar-codigo', { email });
+    return this.http.post(this.urlBase + '/recuperar/enviar-codigo', { email });
   }
 
   ConfirmPasswordReset(params: { email: string; code: string; newPassword: string }): Observable<any> {
-    return this.http.post(this.urlBase + 'recuperar/confirmar', params);
+    return this.http.post(this.urlBase + '/recuperar/confirmar', params);
   }
 }
 

@@ -1,10 +1,3 @@
-export interface LoginModel {
-    email: string;
-    password: string;
-}
+import type { AuthLoginCredentials } from '../../../core/security/auth/auth.models';
 
-export interface LoginResponseModel {
-    id: string;
-    email: string;
-    roles: string[];
-}
+export type LoginModel = AuthLoginCredentials;

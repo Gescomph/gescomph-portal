@@ -7,4 +7,5 @@ export interface User {
   roles: string[];
   menu: BackendMenuItem[];
   personId?: number; // Optional for safety
+  twoFactorEnabled?: boolean;
 }

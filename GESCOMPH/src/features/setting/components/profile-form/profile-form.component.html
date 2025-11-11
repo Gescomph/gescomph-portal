@@ -63,6 +63,25 @@
       </mat-form-field>
 
       <div class="section-header">
+        <h4>Seguridad</h4>
+        <p class="two-factor-hint">
+          Activa este control para exigir un código enviado al correo en cada inicio de sesión.
+        </p>
+      </div>
+
+      <div class="two-factor-row" *ngIf="!isLoading">
+        <mat-slide-toggle
+          [checked]="twoFactorEnabled"
+          (change)="onTwoFactorToggle($event)"
+          [disabled]="isTwoFactorToggling">
+          Verificación en dos pasos
+        </mat-slide-toggle>
+        <p class="two-factor-status">
+          {{ twoFactorEnabled ? "Código activo, se solicita en cada ingreso." : "Código inactivo, puedes activarlo para proteger tu cuenta." }}
+        </p>
+      </div>
+
+      <div class="section-header">
         <h4>Información Geográfica</h4>
       </div>
       
