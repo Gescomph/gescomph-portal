@@ -23,3 +23,23 @@ mat-card-actions {
   justify-content: flex-end;
   padding: 16px;
 }
+
+.two-factor-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.two-factor-hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--gray-600);
+}
+
+.two-factor-status {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--gray-600);
+}

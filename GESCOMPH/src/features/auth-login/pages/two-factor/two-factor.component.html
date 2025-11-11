@@ -1,0 +1,71 @@
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-4">
+  <div class="container-xl">
+    <div class="row justify-content-center align-items-center min-vh-90">
+
+      <!-- Logo -->
+      <div class="col-12 col-lg-6 d-flex justify-content-center mb-4 mb-lg-0">
+        <div class="text-center">
+          <div class="mb-3">
+            <img src="assets/Escudo-palermo.png" alt="Logo" class="imagen-logo" decoding="async">
+          </div>
+          <div>
+            <h2 class="text-green fw-bolder mb-2">GESCOMPH</h2>
+            <p class="text-marmol fs-5 fw-semibold mb-1">Sistema de Gestion Comercial</p>
+            <p class="text-marmol fs-6 mb-0">Alcaldia de Palermo, Huila</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="form p-4 border-green shadow-sm">
+          <div class="text-start mb-4">
+            <h4 class="text-green fw-medium mb-2">Verificacion en dos pasos</h4>
+            <p class="text-marmol mb-1" *ngIf="challenge">
+              Se ha enviado un codigo a <strong>{{ challenge.email }}</strong> por {{ challenge.deliveryChannel }}.
+            </p>
+            <p class="text-marmol fs-6 mb-0" *ngIf="expiresAtLabel">
+              Valido hasta {{ expiresAtLabel }} ({{ challenge?.expiresInSeconds }} seg).
+            </p>
+            <p class="text-marmol fs-6 mb-0" *ngIf="!challenge">
+              No se detecto un desafio activo. Inicia sesion nuevamente.
+            </p>
+          </div>
+
+          <form [formGroup]="form" (ngSubmit)="confirmCode()" novalidate>
+
+            <div class="mb-3">
+              <label for="code" class="form-label texto fw-medium text-green">Codigo de verificacion</label>
+              <input type="text" id="code" class="form-control border-green" formControlName="code"
+                placeholder="123456" maxlength="6" autocomplete="one-time-code" inputmode="numeric"
+                [class.is-invalid]="codeCtrl.invalid && (codeCtrl.dirty || codeCtrl.touched)"
+                [attr.aria-invalid]="codeCtrl.invalid ? 'true' : null" />
+
+              <div class="invalid-feedback d-block" *ngIf="codeCtrl.touched && codeCtrl.invalid">
+                <ng-container *ngIf="codeCtrl.errors?.['required']">El codigo es obligatorio.</ng-container>
+                <ng-container *ngIf="codeCtrl.errors?.['pattern']">Debe ser un codigo de 6 digitos.</ng-container>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <button type="button" class="btn btn-link p-0 small" (click)="resendCode()" [disabled]="isResending || !challenge">
+                {{ isResending ? 'Reenviando...' : 'Reenviar codigo' }}
+              </button>
+              <a class="small link-secondary" [routerLink]="['/auth/login']" (click)="returnToLogin()">
+                Volver al inicio
+              </a>
+            </div>
+
+            <button type="submit" class="btn btn-green w-100"
+              [disabled]="form.invalid || isSubmitting || !challenge">
+              {{ isSubmitting ? 'Validando...' : 'Verificar codigo' }}
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

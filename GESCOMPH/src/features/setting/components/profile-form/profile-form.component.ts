@@ -6,6 +6,7 @@ import { PersonService } from '../../../security/services/person/person.service'
 import { CityService } from '../../services/city/city.service';
 import { DepartmentService } from '../../services/department/department.service';
 import { ProfileService } from '../../services/profile/profile.service';
+import { AuthService } from '../../../../core/security/auth/auth.service';
 
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
@@ -16,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { UserStore } from '../../../../core/security/permission/user.store';
 import { FormErrorComponent } from '../../../../shared/components/forms/form-error/form-error.component';
 import { StandardButtonComponent } from '../../../../shared/components/ui/standard-button/standard-button.component';
@@ -36,6 +38,7 @@ import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatSlideToggleModule,
     StandardButtonComponent,
     FormErrorComponent
   ],
@@ -49,6 +52,7 @@ export class ProfileFormComponent implements OnInit {
   private departmentService = inject(DepartmentService);
   private personService = inject(PersonService);
   private sweetAlertService = inject(SweetAlertService);
+  private authService = inject(AuthService);
   private userStore = inject(UserStore);
 
   form!: FormGroup;
@@ -57,6 +61,8 @@ export class ProfileFormComponent implements OnInit {
   profile: PersonSelectModel | null = null;
   isLoading = false;
   isSaving = false;
+  twoFactorEnabled = false;
+  isTwoFactorToggling = false;
 
   // Mapas de mensajes para validadores personalizados usados en la vista
   firstNameMessages = { alphaHuman: () => 'Los nombres solo pueden contener letras y espacios' } as const;
@@ -74,6 +80,7 @@ export class ProfileFormComponent implements OnInit {
     this.loadDepartments();
     this.setupCityCascading();
     this.loadProfile();
+    this.refreshTwoFactorFromStore();
   }
 
   private initForm(): void {
@@ -133,13 +140,14 @@ export class ProfileFormComponent implements OnInit {
             this.form.get('cityId')?.setValue(city.id);
           }
         }
+        this.refreshTwoFactorFromStore();
         this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error loading profile', err);
-        this.sweetAlertService.showApiError(err, 'No se pudo cargar el perfil. Asegúrate de que tu usuario tenga una persona asociada.');
-        this.isLoading = false;
-      }
+        },
+        error: (err) => {
+          console.error('Error loading profile', err);
+          this.sweetAlertService.showApiError(err, 'No se pudo cargar el perfil. Asegúrate de que tu usuario tenga una persona asociada.');
+          this.isLoading = false;
+        }
     });
   }
 
@@ -176,5 +184,41 @@ export class ProfileFormComponent implements OnInit {
         this.isSaving = false;
       }
     });
+  }
+
+  onTwoFactorToggle(event: MatSlideToggleChange): void {
+    this.toggleTwoFactorState(event.checked);
+  }
+
+  private toggleTwoFactorState(enabled: boolean): void {
+    const previous = this.twoFactorEnabled;
+    this.twoFactorEnabled = enabled;
+    this.isTwoFactorToggling = true;
+
+    this.authService.ToggleTwoFactor(enabled).subscribe({
+      next: () => {
+        this.updateUserStoreTwoFactor(enabled);
+        const action = enabled ? 'activado' : 'desactivado';
+        this.sweetAlertService.showNotification('Verificación en dos pasos', `Se ha ${action} la verificación en dos pasos.`, 'success');
+      },
+      error: (err) => {
+        this.twoFactorEnabled = previous;
+        this.sweetAlertService.showApiError(err, 'No se pudo actualizar la verificación en dos pasos.');
+      },
+      complete: () => {
+        this.isTwoFactorToggling = false;
+      }
+    });
+  }
+
+  private refreshTwoFactorFromStore(): void {
+    this.twoFactorEnabled = this.userStore.snapshot?.twoFactorEnabled ?? false;
+  }
+
+  private updateUserStoreTwoFactor(enabled: boolean): void {
+    const current = this.userStore.snapshot;
+    if (current) {
+      this.userStore.set({ ...current, twoFactorEnabled: enabled });
+    }
   }
 }
