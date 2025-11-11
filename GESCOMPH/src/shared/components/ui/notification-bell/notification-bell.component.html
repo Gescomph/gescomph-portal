@@ -13,36 +13,56 @@
 
 <mat-menu #menu="matMenu" class="notification-menu">
   <div class="notification-header">
-    <span>Notificaciones</span>
-    <button mat-button type="button" (click)="markAllAsRead()">Marcar todas</button>
+    <div class="user-info">
+      <span class="header-label">Notificaciones</span>
+    </div>
+    <button mat-button type="button" class="mark-all-btn" (click)="markAllAsRead()">
+      MARCAR TODAS
+    </button>
   </div>
 
-  <div *ngIf="loading(); else listTpl" class="notification-empty">Cargando...</div>
-
-  <ng-template #listTpl>
-    <div *ngIf="items().length === 0; else itemsTpl" class="notification-empty">
-      Sin notificaciones
+  <div class="notification-content">
+    <div *ngIf="loading(); else listTpl" class="notification-loading">
+      <mat-spinner diameter="24"></mat-spinner>
+      <span>Cargando notificaciones...</span>
     </div>
-  </ng-template>
 
-  <ng-template #itemsTpl>
-    <mat-nav-list>
-      <a
-        mat-list-item
-        *ngFor="let notification of items(); trackBy: trackById"
-        (click)="onNotificationClick(notification)"
-        class="notification-item"
-      >
-        <div matListItemTitle class="notification-title">
-          {{ notification.title }}
+    <ng-template #listTpl>
+      <div *ngIf="items().length === 0; else itemsTpl" class="notification-empty">
+        <mat-icon>notifications_off</mat-icon>
+        <span>Sin notificaciones</span>
+      </div>
+    </ng-template>
+
+    <ng-template #itemsTpl>
+      <div class="notification-list">
+        <div
+          *ngFor="let notification of items(); trackBy: trackById"
+          class="notification-item"
+          [ngClass]="{ unread: isUnread(notification) }"
+          (click)="onNotificationClick(notification)"
+        >
+          <div class="notification-main">
+            <div class="notification-type-section">
+              <span class="notification-type-badge" [ngClass]="priorityClass(notification.priority)">
+                {{ priorityLabel(notification.priority) }}
+              </span>
+            </div>
+
+            <div class="notification-details">
+              <div class="notification-message">
+                {{ notification.message }}
+              </div>
+              <div class="notification-title">
+                {{ notification.title }}
+              </div>
+              <div class="notification-meta">
+                <span class="notification-date">{{ asDate(notification.createdAt) | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div matListItemLine class="notification-message">
-          {{ notification.message }}
-        </div>
-        <div matListItemLine class="notification-meta">
-          {{ asDate(notification.createdAt)?.toLocaleString() }}
-        </div>
-      </a>
-    </mat-nav-list>
-  </ng-template>
+      </div>
+    </ng-template>
+  </div>
 </mat-menu>
