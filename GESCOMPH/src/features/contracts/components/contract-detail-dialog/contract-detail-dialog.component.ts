@@ -12,6 +12,7 @@ import { MoneyPipe } from '../../../../shared/pipes/money.pipe';
 import { ContractSelectModel, MonthlyObligation } from '../../models/contract.models';
 import { ContractService } from '../../services/contract/contract.service';
 import { ContractStore } from '../../store/contract.store';
+import { ButtonPayComponent } from '../../../../shared/components/ui/button-pay/button-pay.component';
 
 @Component({
   selector: 'app-contract-detail-dialog',
@@ -23,6 +24,7 @@ import { ContractStore } from '../../store/contract.store';
     MatProgressSpinnerModule,
     StandardButtonComponent,
     MoneyPipe,
+    ButtonPayComponent
   ],
   templateUrl: './contract-detail-dialog.component.html',
   styleUrls: ['./contract-detail-dialog.component.css'],

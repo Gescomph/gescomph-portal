@@ -464,3 +464,53 @@ button:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
+
+
+/* Contenedor general de las acciones */
+.multa-actions {
+  display: flex;
+  justify-content: space-between;
+  /* separa los elementos */
+  align-items: center;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e0e0e0;
+  background-color: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilo para el texto de descarga */
+.click-hint {
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #007ad9;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s ease;
+}
+
+.click-hint:hover {
+  color: #005b9f;
+  text-decoration: underline;
+}
+
+/* Si el botón de pago es un componente tipo p-button, puedes reforzar su estilo aquí */
+app-button-pay ::ng-deep button {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+app-button-pay ::ng-deep button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #16a34a, #15803d);
+}
