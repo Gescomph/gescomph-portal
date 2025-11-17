@@ -1,0 +1,117 @@
+<article class="local-card">
+  <div class="image-container">
+
+    @if (primaryImage(); as src) {
+      @if (isCloudinary()) {
+        <img
+          [ngSrc]="cloudinaryPath()"
+          width="280" height="140"
+          [alt]="resource.name"
+          class="local-image"
+          priority
+          (load)="onLoad()"
+          (error)="onError()"
+        />
+      } @else {
+        <img
+          [ngSrc]="src"
+          width="280" height="140"
+          [alt]="resource.name"
+          class="local-image"
+          priority
+          (load)="onLoad()"
+          (error)="onError()"
+        />
+      }
+    }
+
+    <div class="loader-overlay" *ngIf="loading()">
+      <mat-progress-spinner mode="indeterminate" diameter="36" strokeWidth="4"></mat-progress-spinner>
+    </div>
+
+    <div class="placeholder" *ngIf="!loading() && errored()">
+      <mat-icon>broken_image</mat-icon>
+    </div>
+
+    @if (showAvailableTag && resource.active !== undefined) {
+      @if (resource.active) {
+        <div class="availability-tag">Disponible</div>
+      } @else {
+        <div class="availability-tag unavailable">Ocupado</div>
+      }
+    }
+
+    <button
+      *ngIf="showViewMore"
+      type="button"
+        class="card-link"
+      (click)="$event.stopPropagation(); handleView()"
+      aria-label="Ver detalles de {{ resource.name }}">
+      Ver más
+    </button>
+  </div>
+
+  <section class="card-content">
+    <h3 class="local-name">{{ resource.name }}</h3>
+
+    @if (shortDescription()) {
+      <p class="description">{{ shortDescription() }}</p>
+    }
+
+    <div class="info-grid">
+      @if (resource.address) {
+        <div class="info-item location">
+          <mat-icon class="mi" fontIcon="location_on"></mat-icon>
+          <span class="info-value ellipsis">{{ resource.address }}</span>
+        </div>
+      }
+      @if (resource.location) {
+        <div class="info-item location">
+          <mat-icon class="mi" fontIcon="location_on"></mat-icon>
+          <span class="info-value ellipsis">{{ resource.location }}</span>
+        </div>
+      }
+      @if (resource.areaM2) {
+        <div class="info-item area">
+          <mat-icon class="mi" fontIcon="straighten"></mat-icon>
+          <span class="info-value">{{ resource.areaM2 | number:'1.0-0' }} m²</span>
+        </div>
+      }
+    </div>
+
+    @if (resource.rentValueBase) {
+      <div class="card-price bubble-style">
+        <span>{{ formattedRent() }}</span>
+      </div>
+    }
+
+    <footer class="card-footer">
+      @if (toggleConfig) {
+        <mat-slide-toggle
+          class="card-toggle"
+          [checked]="toggleConfig!.checked"
+          [disabled]="toggleConfig!.disabled ?? false"
+          [labelPosition]="toggleConfig!.labelPosition ?? 'after'"
+          [color]="toggleConfig!.color ?? 'primary'"
+          [aria-label]="toggleConfig!.ariaLabel ?? toggleConfig!.label ?? 'Cambiar estado'"
+          (click)="$event.stopPropagation()"
+          (change)="onToggleChange($event)"
+        >
+          {{ toggleConfig!.label }}
+        </mat-slide-toggle>
+      }
+
+      <div class="card-actions" (click)="$event.stopPropagation()">
+        <app-button
+          [showView]="showViewButton"
+          [showEdit]="true"
+          [showDelete]="true"
+          [showCreateAppointment]="false"
+          (view)="handleView()"
+          (edit)="handleEdit()"
+          (delete)="handleDelete()"
+        />
+      </div>
+    </footer>
+  </section>
+</article>
