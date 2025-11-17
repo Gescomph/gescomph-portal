@@ -1,0 +1,43 @@
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: var(--accent-color) !important;
+  color: var(--white) !important;
+}
+
+::ng-deep .mat-step-header .mat-step-icon {
+  background-color: var(--color-primary) !important;
+  color: var(--white) !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: var(--text-color-white) !important;
+}
+
+/* Force primary raised buttons to use project green */
+::ng-deep .mat-raised-button.mat-primary,
+::ng-deep .mat-mdc-raised-button.mat-primary {
+  background-color: var(--color-primary) !important;
+  color: var(--white) !important;
+}
+
+/* Disabled override to ensure grey, even with ::ng-deep and !important above */
+::ng-deep .mat-raised-button.mat-primary[disabled],
+::ng-deep .mat-mdc-raised-button.mat-primary[disabled] {
+  background-color: var(--gray-300) !important;
+  color: var(--gray-600) !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-raised-button.mat-primary[disabled]:hover,
+::ng-deep .mat-mdc-raised-button.mat-primary[disabled]:hover {
+  background-color: var(--gray-300) !important;
+  color: var(--gray-600) !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-step-label {
+  color: var(--text-color-black ) !important;
+}
+
+::ng-deep .mat-step-header[aria-selected="true"] .mat-step-label {
+  color: var(--accent-color) !important;
+}

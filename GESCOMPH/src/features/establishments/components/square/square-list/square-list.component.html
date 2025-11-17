@@ -1,0 +1,98 @@
+<div class="container mt-4">
+
+  <!-- 🔍 BUSCADOR + BOTÓN NUEVO -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        placeholder="Buscar…"
+        [formControl]="filterControl"
+        type="text" />
+    </mat-form-field>
+
+    <!-- 👤 Botón Nueva plaza (solo visible si el usuario tiene permiso CREAR) -->
+    <ng-container *appHasRoleAndPermission="'Administrador'; perms: 'CREAR'">
+      <app-standard-button
+        text="Nueva plaza"
+        variant="raised"
+        color="primary"
+        icon="add"
+        iconPosition="left"
+        (clicked)="onCreate()"
+        [disabled]="loading()">
+      </app-standard-button>
+    </ng-container>
+  </div>
+
+  <!-- 🌀 Loading -->
+  <ng-container *ngIf="loading(); else content">
+    <div class="d-flex justify-content-center mt-4">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-container>
+
+  <!-- 📦 Contenido cuando NO está cargando -->
+  <ng-template #content>
+    <ng-container *ngIf="filteredSquares().length > 0; else noSquares">
+      <div class="d-flex flex-wrap gap-3 justify-content-center">
+        <app-card
+          *ngFor="let plaza of pagedSquares(); trackBy: trackById"
+          [resource]="plaza"
+          [showViewMore]="false"
+          [showViewButton]="false"
+          [showAvailableTag]="false"
+          [toggleConfig]="{
+            checked: plaza.active,
+            label: plaza.active ? 'Activo' : 'Inactivo',
+            disabled: isBusy(plaza.id)
+          }"
+          (click)="onPlazaCardClick(plaza.id)"
+          (toggleChanged)="onToggleActive(plaza.id, $event)"
+          (delete)="onDelete(plaza)"
+          (edit)="onEdit(plaza)">
+        </app-card>
+      </div>
+
+      <!-- 📄 Paginación -->
+      <mat-paginator
+        [length]="filteredSquares().length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[6, 12, 18]"
+        [pageIndex]="pageIndex"
+        showFirstLastButtons
+        (page)="onPage($event)">
+      </mat-paginator>
+    </ng-container>
+  </ng-template>
+
+  <!--  Si no hay resultados -->
+  <ng-template #noSquares>
+    <div class="text-center text-muted mt-4">
+      No hay plazas que coincidan con la búsqueda.
+    </div>
+  </ng-template>
+
+  <!-- Template personalizado para la columna 'Estado' -->
+  <ng-template #estadoTemplate let-row>
+    <div class="d-inline-flex align-items-center gap-3 flex-nowrap">
+      <span class="badge align-middle" [ngClass]="row.active ? 'badge-success-solid' : 'badge-warning'">
+        {{ row.active ? 'Activo' : 'Inactivo' }}
+      </span>
+
+      <div *appHasRoleAndPermission="'Administrador'; perms: 'EDITAR'">
+        <app-toggle-button-component
+          class="align-middle"
+          [checked]="!!row?.active"
+          [disabled]="loading() || isBusy(row?.id)"
+          (changed)="onToggleActive(row?.id, $event)"
+          [size]="20"
+          [onColor]="'#388E3C'"
+          [offColor]="'#9CA3AF'"
+          [thumb]="'#ffffff'">
+        </app-toggle-button-component>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
