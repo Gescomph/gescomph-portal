@@ -1,0 +1,26 @@
+<section class="locales">
+  <div class="container">
+    <header class="locales__header">
+      <h2 class="locales__title text-green fw-bolder">Nuestros Locales</h2>
+      <a routerLink="/establishments" class="locales__link">
+        Ver más
+        <mat-icon class="locales__link-icon">arrow_forward</mat-icon>
+      </a>
+    </header>
+
+    <div class="locales__carousel">
+      <div class="locales__track">
+        <div class="locales__list">
+          <article *ngFor="let establishment of establishments" class="locales__item">
+            <app-card
+              [resource]="establishment"
+              [showAvailableTag]="true"
+              (view)="view.emit(establishment.id)"
+              (onCreateAppointment)="createAppointment.emit(establishment.id)">
+            </app-card>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

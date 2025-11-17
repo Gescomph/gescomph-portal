@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  background-color: #fff;
+  padding: 2rem 1rem;
+}
+
+.historia h2,
+.historia h3 {
+  color: var(--green-600);
+  font-weight: 700;
+}
+
+.historia p {
+  color: var(--green-950, #333);
+  font-size: 1.1rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.historia-carrusel {
+  width: 100%;
+  max-width: 500px;
+}
+
+@media (max-width: 768px) {
+  .historia {
+    text-align: center;
+  }
+
+  .historia-carrusel {
+    max-width: 100%;
+  }
+}

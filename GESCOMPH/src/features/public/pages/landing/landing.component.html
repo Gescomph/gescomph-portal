@@ -1,0 +1,14 @@
+<main class="landing container-fluid">
+  <app-banner></app-banner>
+  <app-history></app-history>
+
+  <section id="establishments" aria-labelledby="establishments-title">
+    <app-establishments
+      [establishments]="items()"
+      (view)="onView($event)"
+      (createAppointment)="onCreateAppointment($event)">
+    </app-establishments>
+  </section>
+</main>
+
+<app-footer></app-footer>
