@@ -1,0 +1,96 @@
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f5f5f5;
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0 10px;
+}
+
+.action-btn svg {
+  stroke-width: 2;
+  transition: stroke-width 0.2s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Botón "Ver más" --- */
+.view-btn {
+  background: rgba(25, 118, 210, 0.06);
+  color: #f59e0b;
+}
+
+.view-btn:hover {
+  background: rgba(25, 118, 210, 0.15);
+}
+
+/* --- Botones con texto --- */
+.text-btn {
+  justify-content: flex-start;
+  gap: 6px; /* espacio entre ícono y texto */
+  padding: 0 14px;
+  min-width: 100px;
+}
+
+.text-btn .icon {
+  flex-shrink: 0;
+}
+
+/* --- Otros botones (edit, delete) --- */
+.edit-btn:hover {
+  background: #FFF3E0;
+  color: #F57C00;
+}
+
+.delete-btn:hover {
+  background: #FFEBEE;
+  color: #D32F2F;
+}
+
+/* --- Accesibilidad --- */
+.action-btn:focus {
+  outline: 2px solid #2196F3;
+  outline-offset: 2px;
+}
+
+.action-btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .action-btn {
+    height: 40px;
+  }
+
+  .action-buttons {
+    gap: 12px;
+  }
+
+  .text-btn {
+    min-width: auto;
+    padding: 0 10px;
+  }
+}

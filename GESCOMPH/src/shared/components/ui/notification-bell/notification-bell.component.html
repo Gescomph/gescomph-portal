@@ -1,0 +1,68 @@
+<button
+  mat-icon-button
+  class="bell-button"
+  [matMenuTriggerFor]="menu"
+  matBadge="{{ unreadCount() || '' }}"
+  matBadgeHidden="{{ !(unreadCount() > 0) }}"
+  matBadgeColor="warn"
+  (click)="refresh()"
+  aria-label="Notificaciones"
+>
+  <mat-icon>notifications</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu" class="notification-menu">
+  <div class="notification-header">
+    <div class="user-info">
+      <span class="header-label">Notificaciones</span>
+    </div>
+    <button mat-button type="button" class="mark-all-btn" (click)="markAllAsRead()">
+      MARCAR TODAS
+    </button>
+  </div>
+
+  <div class="notification-content">
+    <div *ngIf="loading(); else listTpl" class="notification-loading">
+      <mat-spinner diameter="24"></mat-spinner>
+      <span>Cargando notificaciones...</span>
+    </div>
+
+    <ng-template #listTpl>
+      <div *ngIf="items().length === 0; else itemsTpl" class="notification-empty">
+        <mat-icon>notifications_off</mat-icon>
+        <span>Sin notificaciones</span>
+      </div>
+    </ng-template>
+
+    <ng-template #itemsTpl>
+      <div class="notification-list">
+        <div
+          *ngFor="let notification of items(); trackBy: trackById"
+          class="notification-item"
+          [ngClass]="{ unread: isUnread(notification) }"
+          (click)="onNotificationClick(notification)"
+        >
+          <div class="notification-main">
+            <div class="notification-type-section">
+              <span class="notification-type-badge" [ngClass]="priorityClass(notification.priority)">
+                {{ priorityLabel(notification.priority) }}
+              </span>
+            </div>
+
+            <div class="notification-details">
+              <div class="notification-message">
+                {{ notification.message }}
+              </div>
+              <div class="notification-title">
+                {{ notification.title }}
+              </div>
+              <div class="notification-meta">
+                <span class="notification-date">{{ asDate(notification.createdAt) | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</mat-menu>

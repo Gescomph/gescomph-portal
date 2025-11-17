@@ -1,0 +1,77 @@
+<div class="form-grid two-cols">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Nombres</mat-label>
+    <input matInput formControlName="firstName" maxlength="100" placeholder="Brayan Santiago" />
+    <mat-hint>Ingrese nombres completos</mat-hint>
+    <mat-error *ngIf="form.get('firstName')?.hasError('required')">Ingresa los nombres</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Apellidos</mat-label>
+    <input matInput formControlName="lastName" maxlength="100" placeholder="Guerrero Mendez" />
+    <mat-hint>Ingrese los apellidos completos</mat-hint>
+    <mat-error *ngIf="form.get('lastName')?.hasError('required')">Ingresa los apellidos</mat-error>
+  </mat-form-field>
+</div>
+
+<div class="form-grid two-cols">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Documento</mat-label>
+    <input matInput formControlName="document" maxlength="20" />
+    <mat-hint>Solo números</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Teléfono</mat-label>
+    <input matInput formControlName="phone" maxlength="20" />
+    <mat-hint>Número para contacto</mat-hint>
+    <mat-error *ngIf="form.get('phone')?.hasError('required')">Ingresa un teléfono</mat-error>
+  </mat-form-field>
+</div>
+
+<div class="form-grid">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Dirección</mat-label>
+    <input matInput formControlName="address" maxlength="150" />
+    <mat-hint>Dirección de residencia</mat-hint>
+  </mat-form-field>
+</div>
+
+<div class="form-grid two-cols">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Departamento</mat-label>
+    <mat-select formControlName="departmentId" required>
+      <mat-option [value]="null" disabled>Selecciona un departamento…</mat-option>
+      <mat-option *ngFor="let dept of departments" [value]="dept.value">
+        {{ dept.label }}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Departamento de residencia</mat-hint>
+    <mat-error *ngIf="form.get('departmentId')?.hasError('required')">
+      Selecciona un departamento
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Ciudad</mat-label>
+    <mat-select formControlName="cityId" required>
+      <mat-option [value]="null" disabled>Selecciona una ciudad…</mat-option>
+      <mat-option
+        *ngIf="form.get('departmentId')?.value && !loadingCities && (cityOptions.length === 0)"
+        [disabled]="true">
+        No hay ciudades disponibles para este departamento
+      </mat-option>
+      <mat-option *ngFor="let city of cityOptions" [value]="city.value">
+        {{ city.label }}
+      </mat-option>
+    </mat-select>
+    <mat-icon *ngIf="loadingCities" matSuffix class="spin">autorenew</mat-icon>
+    <mat-hint *ngIf="!form.get('departmentId')?.value">Selecciona primero un departamento</mat-hint>
+    <mat-hint *ngIf="form.get('departmentId')?.value && !loadingCities">
+      Elige la ciudad de residencia
+    </mat-hint>
+    <mat-error *ngIf="form.get('cityId')?.hasError('required')">
+      Selecciona una ciudad
+    </mat-error>
+  </mat-form-field>
+</div>
