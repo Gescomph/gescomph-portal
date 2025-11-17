@@ -1,0 +1,85 @@
+/* ====== FOOTER GLOBAL ====== */
+.footer {
+  background-color: #146530;
+  /* verde institucional */
+  color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ====== TÍTULOS Y TEXTO ====== */
+.footer h5 {
+  color: #fff;
+  margin-bottom: -2px;
+  font-weight: 700;
+}
+
+.footer p,
+.footer a,
+.footer span,
+.footer i {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #c1e9d2;
+  opacity: 1;
+}
+
+/* ====== ENLACES ====== */
+.footer a {
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer a:hover,
+.footer ul li:hover i {
+  color: var(--yellow-300);
+}
+
+/* ====== ÍCONOS Y COLORES ====== */
+.text-gold {
+  color: var(--yellow-300);
+}
+
+/* ====== LOGO ====== */
+.logo {
+  min-width: 45px;
+  max-width: 60px;
+  min-height: 45px;
+  max-height: 60px;
+}
+
+/* ====== LISTAS ====== */
+.footer ul {
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+/* ====== SEPARADOR ====== */
+.footer hr {
+  opacity: 0.2;
+  border-color: #fff;
+}
+
+/* ====== COPYRIGHT ====== */
+.footer p.text-center {
+  font-size: 0.875rem;
+  color: #d5e8dc;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .footer {
+    text-align: center;
+  }
+
+  .footer .col-sm-12 {
+    margin-bottom: 1.5rem;
+  }
+
+  .footer img {
+    margin: 0 auto 1rem;
+  }
+
+  .footer .d-flex {
+    justify-content: center;
+  }
+}
