@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Editar Plaza' : 'Nueva Plaza' }}</h2>
+
+<mat-dialog-content class="form-dialog-content">
+  <form [formGroup]="generalGroup" class="form-step" autocomplete="off" spellcheck="false">
+    <div class="section-header">
+      <h3>Información Básica de la Plaza</h3>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="field-with-error col-span-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" placeholder="Plaza Principal..." required />
+          <mat-hint>{{ generalGroup.get('name')?.value?.length || 0 }}/100</mat-hint>
+        </mat-form-field>
+        <app-form-error [control]="generalGroup.get('name')" label="Nombre"></app-form-error>
+      </div>
+
+      <div class="field-with-error col-span-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput rows="3" formControlName="description" placeholder="..." required></textarea>
+          <mat-hint>{{ generalGroup.get('description')?.value?.length || 0 }}/500</mat-hint>
+        </mat-form-field>
+        <app-form-error [control]="generalGroup.get('description')" label="Descripción"></app-form-error>
+      </div>
+
+      <div class="field-with-error col-span-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Ubicación</mat-label>
+          <input matInput formControlName="location" placeholder="Calle 123 # 11-22" required />
+        </mat-form-field>
+        <app-form-error [control]="generalGroup.get('location')" label="Ubicación"></app-form-error>
+      </div>
+
+    </div>
+
+    <div class="section-header">
+      <h3>Imágenes de la Plaza</h3>
+    </div>
+
+    <p class="upload-helper">
+      Puedes subir hasta {{ MAX_IMAGES }} imágenes en formato JPG, PNG o WEBP (máximo {{ MAX_FILE_SIZE_MB }} MB cada una).
+    </p>
+
+    <app-image-manager
+      [existingImages]="existingImages"
+      [previews]="previews"
+      [max]="MAX_IMAGES"
+      (filesAdded)="onFilesAdded($event)"
+      (removeExisting)="removeExisting($event)"
+      (removeNew)="removeNew($event)">
+    </app-image-manager>
+
+    <div class="form-actions space-between">
+      <app-standard-button text="Cancelar" variant="stroked" (clicked)="cancel()" [disabled]="isBusy"></app-standard-button>
+      <app-standard-button
+        [text]="isEdit ? 'Guardar cambios' : 'Guardar'"
+        variant="raised"
+        color="primary"
+        icon="save"
+        (clicked)="save()"
+        [disabled]="generalGroup.invalid || isBusy"
+        [loading]="isBusy">
+      </app-standard-button>
+    </div>
+  </form>
+</mat-dialog-content>

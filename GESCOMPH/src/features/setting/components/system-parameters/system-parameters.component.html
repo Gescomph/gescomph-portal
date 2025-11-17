@@ -1,0 +1,35 @@
+<div class="container mt-4">
+
+  <!-- Tabla de parámetros del sistema -->
+  <app-generic-table
+    [columns]="columns" [data]="systemParameters$ | async"
+    [createButtonLabel]="'Nuevo parámetro del sistema'"
+    [titulo]="'Gestión de parámetros del sistema'"
+    [subTitulo]="'Gestione las variables del sistema'"
+    [showViewButton]="false"
+    (edit)="openEditDialog($event)"
+    (delete)="handleDelete($event)"
+    (create)="openCreateDialog()">
+  </app-generic-table>
+
+
+  <ng-template #estadoTemplate let-row>
+    <div class="d-inline-flex align-items-center gap-3 flex-nowrap">
+      <span class="badge align-middle" [ngClass]="row.active ? 'badge-success-solid' : 'badge-warning'">
+        {{ row.active ? 'Activo' : 'Inactivo' }}
+      </span>
+
+        <app-toggle-button-component
+          class="align-middle"
+          [checked]="!!row?.active"
+          (changed)="onToggleActive(row, $event)"
+          [size]="20"
+          [onColor]="'#388E3C'"
+          [offColor]="'#9CA3AF'"
+          [thumb]="'#ffffff'"/>
+
+    </div>
+  </ng-template>
+
+
+</div>

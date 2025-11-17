@@ -1,0 +1,20 @@
+
+.tab-spacing {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+mat-tab-group {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+mat-tab-body {
+    flex: 1;
+    overflow: hidden;
+}
+
+mat-tab-body .mat-tab-body-content {
+    height: 100%;
+}
