@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  # Frontend GESCOMPH - QA
+  gescomph-front-qa:
+    container_name: ${CONTAINER_NAME}
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    image: ${IMAGE_NAME}:latest
+    ports:
+      - "4202:${PORT}"
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - network_qa
+    labels:
+      - com.gescomph.environment=qa
+
+networks:
+  network_qa:
+    driver: bridge
