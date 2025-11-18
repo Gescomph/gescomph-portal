@@ -3,7 +3,8 @@ import { DynamicFormField } from "../../../models/form/form.models";
 
 export type FormType =
   | 'Form' | 'Module' | 'FormModule' | 'Appointment' | 'City' | 'Department'
-  | 'Person' | 'Permission' | 'Rol' | 'RolFormPermission' | 'RolUser' | 'User' | 'Plaza' | 'SystemParameter';
+  | 'Person' | 'Permission' | 'Rol' | 'RolFormPermission' | 'RolUser' | 'User' | 'Plaza' | 'SystemParameter'
+  | 'Clause';
 
 export const formSchemas: Record<FormType, DynamicFormField[]> = {
   'Form': [
@@ -232,6 +233,18 @@ export const formSchemas: Record<FormType, DynamicFormField[]> = {
     },
     { name: 'effectiveFrom', type: 'date', required: true, label: 'Vigente desde' },
     { name: 'effectiveTo', type: 'date', required: true, label: 'Vigente hasta' },
+  ],
+
+  'Clause': [
+    { name: 'id', type: 'hidden', required: false, label: 'Id' },
+    {
+      name: 'name', type: 'text', required: true, label: 'Nombre',
+      validations: { maxLength: 250, onlySpaces: true }
+    },
+    {
+      name: 'description', type: 'textarea', required: true, label: 'Descripción',
+      validations: { maxLength: 2000, onlySpaces: true }
+    },
   ],
 
 

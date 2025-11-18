@@ -51,6 +51,16 @@
     </div>
 
     <div class="header-actions">
+      <button
+        *appHasRoleAndPermission="'Administrador'"
+        mat-stroked-button
+        color="primary"
+        routerLink="/contracts/clauses"
+        aria-label="Ir al catálogo de cláusulas">
+        <mat-icon>gavel</mat-icon>
+        Cláusulas
+      </button>
+
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>Buscar</mat-label>
         <input
