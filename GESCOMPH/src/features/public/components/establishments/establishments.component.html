@@ -9,8 +9,17 @@
     </header>
 
     <div class="locales__carousel">
-      <div class="locales__track">
-        <div class="locales__list">
+      <button
+        mat-icon-button
+        class="locales__arrow locales__arrow--left"
+        [disabled]="!canScrollLeft"
+        aria-label="Locales anteriores"
+        (click)="scrollCarrusel(-1)">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <div class="locales__track" #carrusel>
+        <div class="locales__list carrusel-locales">
           <article *ngFor="let establishment of establishments" class="locales__item">
             <app-card
               [resource]="establishment"
@@ -21,6 +30,15 @@
           </article>
         </div>
       </div>
+
+      <button
+        mat-icon-button
+        class="locales__arrow locales__arrow--right"
+        [disabled]="!canScrollRight"
+        aria-label="Locales siguientes"
+        (click)="scrollCarrusel(1)">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
     </div>
   </div>
 </section>

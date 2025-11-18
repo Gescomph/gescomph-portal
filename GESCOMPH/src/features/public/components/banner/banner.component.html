@@ -1,55 +1,69 @@
 <header class="banner row align-items-center py-5 header">
-
-  <div class="col-12 col-md-6 text-section text-center text-md-start">
+  <div class="col-12 col-lg-6 text-section text-center text-lg-start">
+    <p class="eyebrow">Gestion integral para locales y citas</p>
 
     <h1 class="hero-title">
-      GESCOMPH — Gestión moderna para locales comerciales
+      Gestiona locales, contratos y visitas en un solo lugar.
     </h1>
 
     <p class="hero-subtitle mt-3">
-      Centraliza información, citas y contratos en un solo lugar.
+      Centraliza la informacion critica, agenda citas al instante y mantente
+      al tanto de los compromisos sin hojas de calculo ni llamadas interminables.
     </p>
 
-    <nav
-      class="d-flex justify-content-center justify-content-md-start gap-3 mt-4 flex-wrap"
-      aria-label="Acciones principales"
-    >
-      <a routerLink="/establishments" class="hero-button primary" role="button">
-        <mat-icon>storefront</mat-icon>
-        Ver locales disponibles
-      </a>
+    <div class="hero-actions-stack">
+      <nav
+        class="hero-actions d-flex justify-content-center justify-content-lg-start gap-2 gap-lg-3 mt-4 flex-wrap"
+        aria-label="Acciones principales"
+      >
+        <a routerLink="/establishments" class="hero-button primary" role="button">
+          <mat-icon>storefront</mat-icon>
+          Ver locales
+        </a>
 
-      <a routerLink="/auth/login" class="hero-button secondary" role="button">
-        <mat-icon>person</mat-icon>
-        Iniciar sesión
-      </a>
-    </nav>
+        <a href="#establishments" class="hero-button ghost" role="button">
+          <mat-icon>event_available</mat-icon>
+          Agendar visita
+        </a>
 
-    <ul
-      class="stats d-flex justify-content-center justify-content-md-start gap-5 mt-5 flex-wrap"
-      aria-label="Indicadores del sistema"
-    >
-      <li class="stat">
-        <h3>+{{ totalEstablishmentsCount() | countUp:1000 | async}}</h3>
-        <p>Locales administrados</p>
-      </li>
-      <li class="stat">
-        <h3>+{{ totalAppointmensCount() | countUp:1000 | async}}</h3>
-        <p>Citas gestionadas</p>
-      </li>
-      <li class="stat">
-        <h3>+{{ totalContractsCount() | countUp:1000 | async}}</h3>
-        <p>Contratos gestionados</p>
-      </li>
-    </ul>
+        <a routerLink="/auth/login" class="hero-button link" role="button">
+          <mat-icon>login</mat-icon>
+          Iniciar sesion
+        </a>
+      </nav>
+
+      <ul class="stats d-flex justify-content-center justify-content-lg-start gap-4 gap-lg-5 mt-3 flex-wrap" aria-label="Indicadores del sistema">
+        <li class="stat">
+          <p class="stat-label">Locales activos</p>
+          <h3>+{{ totalEstablishmentsCount() | countUp:1000 | async}}</h3>
+        </li>
+        <li class="stat">
+          <p class="stat-label">Citas coordinadas</p>
+          <h3>+{{ totalAppointmensCount() | countUp:1000 | async}}</h3>
+        </li>
+        <li class="stat">
+          <p class="stat-label">Contratos gestionados</p>
+          <h3>+{{ totalContractsCount() | countUp:1000 | async}}</h3>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div
-    class="col-12 col-md-6 banner-carousel d-flex justify-content-center mt-5 mt-md-0"
+    class="col-12 col-lg-6 banner-carousel d-flex justify-content-center mt-4 mt-lg-0"
     role="region"
-    aria-label="Galería de imágenes destacadas"
+    aria-label="Galeria de imagenes destacadas"
   >
-    <app-carrusel></app-carrusel>
+    <div class="media-shell">
+      <div class="media-header">
+        <div class="dot dot--green"></div>
+        <div class="dot dot--yellow"></div>
+        <div class="dot"></div>
+        <span class="media-title">Vista previa de locales</span>
+      </div>
+      <div class="media-body">
+        <app-carrusel></app-carrusel>
+      </div>
+    </div>
   </div>
-
 </header>
