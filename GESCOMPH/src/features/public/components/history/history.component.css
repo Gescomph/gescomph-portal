@@ -1,33 +1,85 @@
 :host {
   display: block;
-  background-color: #fff;
-  padding: 2rem 1rem;
+  background-color: transparent;
 }
 
-.historia h2,
-.historia h3 {
-  color: var(--green-600);
+.historia__card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-1);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
   font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
 }
 
-.historia p {
-  color: var(--green-950, #333);
-  font-size: 1.1rem;
-  line-height: 1.75;
-  margin-bottom: 1.25rem;
+.historia__eyebrow {
+  background: var(--color-accent-soft);
+  color: var(--state-warning);
+}
+
+.historia__title {
+  color: var(--color-text);
+  font-weight: 800;
+  margin: 0.75rem 0 0.5rem;
+  line-height: 1.2;
+}
+
+.historia__text {
+  color: var(--color-text-muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.historia__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.historia__list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.6rem;
+  align-items: flex-start;
+  color: var(--color-text);
+}
+
+.historia__list mat-icon {
+  color: var(--color-primary);
 }
 
 .historia-carrusel {
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
 }
 
 @media (max-width: 768px) {
-  .historia {
+  .historia__card {
+    padding: 1.5rem;
     text-align: center;
   }
 
-  .historia-carrusel {
-    max-width: 100%;
+  .historia__list {
+    justify-items: center;
+  }
+
+  .historia__list li {
+    grid-template-columns: auto;
+    justify-items: center;
+    text-align: center;
   }
 }
