@@ -19,7 +19,7 @@
 =========================== */
 .imagen-local img {
   width: 100%;
-  height: 80vh;
+  height: clamp(280px, 60vh, 640px);
   object-fit: cover;
   display: block;
   transition: transform 1s ease, filter 1s ease;
@@ -62,38 +62,43 @@
 .carousel-caption {
   position: absolute;
   z-index: 20 !important;       /* <-- ESTO es clave */
-  bottom: 2rem;
-  left: 2rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
 
   /* layout */
   width: fit-content;           /* que solo ocupe lo necesario */
-  max-width: 55%;
+  max-width: 520px;
   text-align: left;
 
   /* fondo */
-  background: rgba(0,0,0,0.85); /* más oscuro */
-  padding: 1.1rem 1.4rem;
+  background: rgba(12, 20, 32, 0.7);
+  padding: 1rem 1.3rem;
   border-radius: 12px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 20px rgba(0,0,0,.75);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.55);
 }
 
 
 
 .carousel-caption h5 {
-  color: #FFE066; /* amarillo más brillante */
+  color: var(--gray-50);
   font-weight: 800;
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-  text-shadow: 0px 0px 6px rgba(0,0,0,.9);
+  font-size: 1.48rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+  letter-spacing: 0.2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,.55);
+  border-bottom: 1px solid rgba(22, 163, 74, 0.35);
+  padding-bottom: 0.25rem;
 }
 
 .carousel-caption p {
-  color: #ffffff; /* blanco puro */
-  font-size: 1.1rem;
+  color: var(--gray-200);
+  font-size: 0.96rem;
   margin: 0;
-  line-height: 1.45;
-  text-shadow: 0px 0px 6px rgba(0,0,0,.9);
+  line-height: 1.5;
+  text-shadow: 0 1px 6px rgba(0,0,0,.6);
 }
 
 
@@ -165,12 +170,29 @@
   }
 
   .carousel-caption {
-    bottom: 1rem;
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
+    bottom: 0.65rem;
+    left: 0.65rem;
+    right: 0.65rem;
+    max-width: 100%;
+    width: auto;
+    text-align: center;
+    padding: 0.95rem 1.15rem;
   }
 
   .carousel-caption h5 {
-    font-size: 1.2rem;
+    font-size: 1.22rem;
+    line-height: 1.25;
+  }
+
+  .carousel-caption p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-caption {
+    bottom: 0.4rem;
+    left: 0.4rem;
+    right: 0.4rem;
   }
 }
