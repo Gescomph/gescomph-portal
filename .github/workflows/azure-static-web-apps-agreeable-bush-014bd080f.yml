@@ -19,6 +19,30 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+      # ---------------------------------------------------------
+      # ✔ AGREGADO: Forzamos Node 22 para Angular 20
+      # ---------------------------------------------------------
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+
+      # ---------------------------------------------------------
+      # ✔ AGREGADO: Instalación desde la carpeta del proyecto Angular
+      # ---------------------------------------------------------
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./GESCOMPH
+
+      # ---------------------------------------------------------
+      # ✔ AGREGADO: Build Angular con Node 22
+      # ---------------------------------------------------------
+      - name: Build Angular
+        run: npm run build
+        working-directory: ./GESCOMPH
+      # ---------------------------------------------------------
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
