@@ -19,6 +19,13 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+      # 🚀 AGREGADO: Forzar Node 20 para Angular 20.x
+      - name: Set Node Version
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
