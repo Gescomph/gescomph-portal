@@ -1,1 +1,12 @@
-<div id="mp-button-container" class="mp-button-wrapper"></div>
+<div class="mp-button-wrapper">
+  <button type="button" class="mp-button" [disabled]="loading || !canPay" (click)="pay()">
+    <ng-container *ngIf="!loading; else loadingTpl">
+      {{ canPay ? 'Pagar con Mercado Pago' : 'Selecciona una obligacion para pagar' }}
+    </ng-container>
+  </button>
+  <ng-template #loadingTpl>
+    <span class="mp-button__loading">Procesando pedido...</span>
+  </ng-template>
+
+  <p class="mp-button__error" *ngIf="error">{{ error }}</p>
+</div>
