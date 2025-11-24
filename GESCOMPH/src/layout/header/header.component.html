@@ -19,6 +19,10 @@
     <!-- SLOT PARA WIDGETS (campana, avatar, selector idioma, etc) -->
     <ng-content select="[header-actions]"></ng-content>
 
+    <button class="btn btn-outline-primary ms-2" (click)="startHelpTour()" title="Ayuda paso a paso">
+      <span class="bi bi-question-circle"></span>
+    </button>
+
     <span class="user-label">{{ username() }}</span>
   </div>
 </div>

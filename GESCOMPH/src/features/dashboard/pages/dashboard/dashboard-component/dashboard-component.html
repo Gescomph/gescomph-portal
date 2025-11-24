@@ -2,7 +2,7 @@
    PANEL DEL ADMINISTRADOR
 =========================== -->
 <ng-container *appHasRoleAndPermission="['Administrador']">
-  <section class="dashboard-hero mb-4">
+  <section id="dashboard-hero" class="dashboard-hero mb-4">
     <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
       <div>
         <h2 class="fw-bold mb-1">Panel Principal</h2>
@@ -12,8 +12,8 @@
   </section>
 
   <!-- Tarjetas estadísticas -->
-  <div class="row g-3 mb-4">
-    <div class="col-12 col-md-6 col-xl-3">
+    <div class="row g-3 mb-4">
+    <div id="card-locales-registrados" class="col-12 col-md-6 col-xl-3">
       <app-card-info
         title="Locales registrados"
         [value]="activeEstablishment() + inactiveEstablishment()"
@@ -21,7 +21,7 @@
       </app-card-info>
     </div>
 
-    <div class="col-12 col-md-6 col-xl-3">
+    <div id="card-locales-ocupados" class="col-12 col-md-6 col-xl-3">
       <app-card-info
         title="Locales ocupados"
         [value]="activeEstablishment()"
@@ -29,7 +29,7 @@
       </app-card-info>
     </div>
 
-    <div class="col-12 col-md-6 col-xl-3">
+    <div id="card-locales-disponibles" class="col-12 col-md-6 col-xl-3">
       <app-card-info
         title="Locales disponibles"
         [value]="inactiveEstablishment()"
@@ -37,7 +37,7 @@
       </app-card-info>
     </div>
 
-    <div class="col-12 col-md-6 col-xl-3">
+    <div id="card-contratos-activos" class="col-12 col-md-6 col-xl-3">
       <app-card-info
         title="Contratos activos"
         [value]="activeContract()"
@@ -49,13 +49,13 @@
   <!-- Quick Action -->
   <div class="row g-3 mb-4">
     <div class="col-12 col-lg-8">
-      <div class="card h-100 p-3">
+      <div id="quick-action" class="card h-100 p-3">
         <app-quick-action></app-quick-action>
       </div>
     </div>
 
     <!-- Próximas citas -->
-    <div class="col-12 col-lg-4">
+    <div id="upcoming-appointments" class="col-12 col-lg-4">
       <div class="card h-100">
         <div class="card-header">
           <h3 class="h6 mb-0">Próximas citas</h3>
@@ -63,7 +63,7 @@
         </div>
 
         <ng-container *ngIf="upcomingAppointments().length > 0; else noAppointments">
-          <div class="card-body d-flex flex-column gap-3">
+          <div class="card-body d-flex flex-column gap-3" id="upcoming-appointments-list">
 
             <div *ngFor="let appointment of upcomingAppointments()"
               class="d-flex justify-content-between align-items-start border-bottom pb-2">
@@ -90,10 +90,10 @@
   </div>
 
   <!-- Contratos próximos a vencer + gráfica -->
-  <div class="row g-3 mb-4">
+  <div id="contracts-and-chart" class="row g-3 mb-4">
 
     <!-- Contratos próximos a vencer -->
-    <div class="col-12 col-lg-4">
+    <div id="expiring-contracts" class="col-12 col-lg-4">
       <div class="card h-100">
         <div class="card-header">
           <h3 class="h6 mb-0">Contratos próximos a vencer</h3>
@@ -101,7 +101,7 @@
         </div>
 
         <ng-container *ngIf="expiringContracts().length > 0; else noContracts">
-          <div class="card-body d-flex flex-column gap-3">
+          <div id="expiring-contracts-list" class="card-body d-flex flex-column gap-3">
 
             <div *ngFor="let contract of expiringContracts()"
               class="d-flex justify-content-between align-items-start border-bottom pb-2">
@@ -127,7 +127,7 @@
     </div>
 
     <!-- Gráfica -->
-    <div class="col-12 col-lg-8">
+    <div id="income-chart-card" class="col-12 col-lg-8">
       <div class="card h-100">
         <div class="card-header d-flex justify-content-between align-items-center">
           <div>
@@ -139,6 +139,7 @@
 
         <div class="card-body">
           <app-line-chart
+            id="income-line-chart"
             [title]="'Ingresos mensuales'"
             [labels]="obligationsLabels()"
             [data]="obligationsData()">
@@ -146,12 +147,12 @@
 
           <div class="d-flex justify-content-between mt-3">
             <small class="text-muted">Último mes</small>
-            <strong>{{ latestIncomeMonth() | number:'1.0-0' }}</strong>
+            <strong id="latest-income">{{ latestIncomeMonth() | number:'1.0-0' }}</strong>
           </div>
 
           <div class="d-flex justify-content-between">
             <small class="text-muted">Total últimos 6 meses</small>
-            <strong>{{ sixMonthIncome() | number:'1.0-0' }}</strong>
+            <strong id="six-month-income">{{ sixMonthIncome() | number:'1.0-0' }}</strong>
           </div>
         </div>
       </div>

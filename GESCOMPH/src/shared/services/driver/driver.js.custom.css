@@ -1,0 +1,93 @@
+:root {
+  /* Importa las variables del sistema */
+  --driver-primary: var(--color-primary);
+  --driver-primary-contrast: var(--color-primary-contrast);
+  --driver-surface: var(--color-surface);
+  --driver-border: var(--color-border);
+  --driver-text: var(--color-text);
+  --driver-text-muted: var(--color-text-muted);
+  --driver-accent: var(--color-accent);
+  --driver-accent-contrast: var(--color-accent-contrast);
+}
+
+.driverjs-overlay {
+  background: rgba(22, 163, 74, 0.12); /* sombra verde suave */
+}
+
+.driverjs-popover {
+  background: var(--driver-surface);
+  color: var(--driver-text);
+  border: 2px solid var(--driver-border);
+  box-shadow: var(--shadow-2, 0 4px 16px rgba(22, 163, 74, 0.12));
+  border-radius: 12px;
+}
+
+.driverjs-popover-title {
+  color: var(--driver-primary);
+  font-weight: bold;
+  font-size: 1.15rem;
+}
+
+.driverjs-popover-description {
+  color: var(--driver-text-muted);
+  font-size: 1rem;
+}
+
+.driverjs-button {
+  background: var(--driver-primary);
+  color: var(--driver-primary-contrast);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5em 1.2em;
+  font-weight: 500;
+  box-shadow: var(--shadow-1, 0 1px 3px rgba(22, 163, 74, 0.08));
+  transition: background 0.2s;
+}
+.driverjs-button:hover, .driverjs-button:focus {
+  background: var(--driver-accent);
+  color: var(--driver-accent-contrast);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset, 2px);
+}
+
+.driverjs-close-btn {
+  color: var(--driver-accent);
+  background: transparent;
+  border: none;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+.driverjs-progress {
+  background: var(--driver-primary);
+  height: 4px;
+  border-radius: 2px;
+}
+
+.driverjs-highlighted {
+  box-shadow: 0 0 0 4px var(--driver-accent-soft, #fde68a);
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+}
+
+.driverjs-arrow {
+  color: var(--driver-primary);
+}
+
+.driverjs-popover-footer {
+  background: var(--driver-surface-muted, #f8fafc);
+  border-top: 1px solid var(--driver-border);
+  padding: 0.5em 1em;
+}
+
+.driverjs-popover[data-position*="bottom"] {
+  box-shadow: var(--shadow-accent, 0 4px 16px rgba(245, 158, 11, 0.2));
+}
+
+/* Ajustes responsivos */
+@media (max-width: 600px) {
+  .driverjs-popover {
+    max-width: 95vw;
+    font-size: 0.95em;
+  }
+}
