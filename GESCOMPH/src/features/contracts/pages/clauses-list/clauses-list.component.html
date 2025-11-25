@@ -1,0 +1,45 @@
+<section class="clauses-page" id="clauses-page">
+
+  <app-generic-table
+    id="clauses-table"
+    [data]="clauses"
+    [columns]="columns"
+    [titulo]="'Cláusulas'"
+    [subTitulo]="'Catálogo disponible para asociar a contratos'"
+    [createButtonLabel]="'Nueva cláusula'"
+    [showViewButton]="false"
+    (create)="startCreate()"
+    (edit)="startEdit($event)"
+    (delete)="delete($event)">
+  </app-generic-table>
+
+  <ng-template #estadoTemplate let-row>
+    <div
+      class="d-inline-flex align-items-center gap-3 flex-nowrap"
+      id="clauses-status-container-{{row.id}}">
+
+      <mat-chip-set id="clauses-chipset-{{row.id}}">
+        <mat-chip
+          id="clauses-chip-{{row.id}}"
+          [color]="row.active ? 'primary' : 'warn'"
+          [disableRipple]="true">
+          {{ row.active ? 'Activa' : 'Inactiva' }}
+        </mat-chip>
+      </mat-chip-set>
+
+      <app-toggle-button-component
+        id="clauses-toggle-{{row.id}}"
+        class="align-middle"
+        [checked]="row.active"
+        [disabled]="false"
+        (changed)="onToggleActive(row.id, toBool($event))"
+        [size]="20"
+        [onColor]="'#388E3C'"
+        [offColor]="'#9CA3AF'"
+        [thumb]="'#ffffff'">
+      </app-toggle-button-component>
+
+    </div>
+  </ng-template>
+
+</section>
