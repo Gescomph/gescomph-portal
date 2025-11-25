@@ -34,30 +34,10 @@ export class DriverJsService {
     const drv: any = driver({
       animate: true,
       allowClose: true,
-      showProgress: true
+      showProgress: true,
+      steps: filtered
     });
 
-    let index = 0;
-
-    const runStep = () => {
-      if (index >= filtered.length) {
-        if (drv.reset) drv.reset();
-        return;
-      }
-
-      drv.highlight({
-        element: filtered[index].element,
-        popover: filtered[index].popover,
-        onNext: () => {
-          index++;
-          runStep();
-        },
-        onClose: () => {
-          if (drv.reset) drv.reset();
-        }
-      });
-    };
-
-    runStep();
+    drv.drive();
   }
 }

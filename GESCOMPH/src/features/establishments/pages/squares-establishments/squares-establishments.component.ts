@@ -7,6 +7,8 @@ import { PageHeaderService } from '../../../../shared/services/page-header/page-
 import { PermissionService } from '../../../../core/security/permission/permission.service';
 import { CommonModule } from '@angular/common';
 import { EstablishmentEventsService } from '../../services/shared/establishment-events.service';
+import { ESTABLISHMENTS_TOUR } from './establishments-tour';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
 
 @Component({
   selector: 'app-squares-establishments',
@@ -22,6 +24,7 @@ export class SquaresEstablishmentsComponent implements OnInit {
   private readonly pageHeaderService = inject(PageHeaderService);
   private readonly permissionService = inject(PermissionService);
   private readonly sharedEvents = inject(EstablishmentEventsService);
+  private readonly driverJs = inject(DriverJsService);
 
 
   selectedIndex = signal(0);
@@ -56,6 +59,8 @@ export class SquaresEstablishmentsComponent implements OnInit {
       const tab = this.visibleTabs[0];
       this.pageHeaderService.setPageHeader(tab.label, tab.description);
     }
+
+    this.driverJs.registerSteps('/establishments/main', ESTABLISHMENTS_TOUR);
   }
 
   onTabChange(index: number): void {

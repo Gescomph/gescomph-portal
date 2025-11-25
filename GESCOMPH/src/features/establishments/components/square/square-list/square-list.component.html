@@ -2,7 +2,7 @@
 
   <!-- 🔍 BUSCADOR + BOTÓN NUEVO -->
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <mat-form-field class="search-field" appearance="outline">
+    <mat-form-field id="squares-search" class="search-field" appearance="outline">
       <mat-icon matPrefix>search</mat-icon>
       <input
         matInput
@@ -14,6 +14,7 @@
     <!-- 👤 Botón Nueva plaza (solo visible si el usuario tiene permiso CREAR) -->
     <ng-container *appHasRoleAndPermission="'Administrador'; perms: 'CREAR'">
       <app-standard-button
+        id="squares-new-btn"
         text="Nueva plaza"
         variant="raised"
         color="primary"
@@ -35,7 +36,7 @@
   <!-- 📦 Contenido cuando NO está cargando -->
   <ng-template #content>
     <ng-container *ngIf="filteredSquares().length > 0; else noSquares">
-      <div class="d-flex flex-wrap gap-3 justify-content-center">
+      <div id="squares-cards" class="d-flex flex-wrap gap-3 justify-content-center">
         <app-card
           *ngFor="let plaza of pagedSquares(); trackBy: trackById"
           [resource]="plaza"
@@ -47,6 +48,7 @@
             label: plaza.active ? 'Activo' : 'Inactivo',
             disabled: isBusy(plaza.id)
           }"
+          class="plaza-card"
           (click)="onPlazaCardClick(plaza.id)"
           (toggleChanged)="onToggleActive(plaza.id, $event)"
           (delete)="onDelete(plaza)"
@@ -56,6 +58,7 @@
 
       <!-- 📄 Paginación -->
       <mat-paginator
+        id="squares-paginator"
         [length]="filteredSquares().length"
         [pageSize]="pageSize"
         [pageSizeOptions]="[6, 12, 18]"

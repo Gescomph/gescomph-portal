@@ -8,6 +8,8 @@ import { ChangePasswordComponent } from "../../components/change-password/change
 import { SystemParametersComponent } from "../../components/system-parameters/system-parameters.component";
 import { ProfileFormComponent } from '../../components/profile-form/profile-form.component';
 import { LocationSettingsComponent } from '../location-settings/location-settings.component';
+import { SETTINGS_MAIN_TOUR } from './settings-main-tour';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
 
 @Component({
   selector: 'app-main-settings',
@@ -24,6 +26,7 @@ import { LocationSettingsComponent } from '../location-settings/location-setting
 export class MainSettingsComponent implements OnInit {
   private readonly pageHeaderService = inject(PageHeaderService);
   private readonly permissionService = inject(PermissionService);
+  private readonly driverJs = inject(DriverJsService);
 
   visibleTabs: { label: string; description: string; component: any; role?: string; perm?: string }[] = [];
 
@@ -70,6 +73,8 @@ export class MainSettingsComponent implements OnInit {
     if (this.visibleTabs.length > 0) {
       this.pageHeaderService.setPageHeader(this.visibleTabs[0].label, this.visibleTabs[0].description);
     }
+
+    this.driverJs.registerSteps('/settings/main', SETTINGS_MAIN_TOUR);
   }
 
   onTabChange(index: number): void {

@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
     this.loadContract();
     this.loadObligationsTotalMonthsChart();
     this.loadAppointments();
-    this.driverJs.registerSteps('dashboard', DASHBOARD_TOUR);
+    this.driverJs.registerSteps('/dashboard', DASHBOARD_TOUR);
   }
 
   private loadEstablishments(): void {

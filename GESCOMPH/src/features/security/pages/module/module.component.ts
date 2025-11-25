@@ -13,6 +13,8 @@ import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-
 import { ModuleSelectModel, ModuleUpdateModel } from '../../models/module.models';
 import { ModuleStore } from '../../store/module/module.store';
 import { MatIconModule } from '@angular/material/icon';
+import { SECURITY_MODULES_TOUR } from './security-modules-tour';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
 
 @Component({
   selector: 'app-module',
@@ -25,6 +27,7 @@ export class ModuleComponent implements OnInit {
   private readonly moduleStore = inject(ModuleStore);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly pageHeaderService = inject(PageHeaderService);
+  private readonly driverJs = inject(DriverJsService);
   constructor(private dialog: MatDialog) { }
 
   // Estado
@@ -39,6 +42,7 @@ export class ModuleComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageHeaderService.setPageHeader('Módulos', 'Gestión de Módulos');
+    this.driverJs.registerSteps('security/modules', SECURITY_MODULES_TOUR);
 
     this.columns = [
       { key: 'name', header: 'Nombre' },
