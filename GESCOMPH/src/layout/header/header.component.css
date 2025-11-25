@@ -70,7 +70,9 @@
   transition: transform 0.2s ease;
 }
 
-
+.help-button{
+  color: #fff;
+}
 
 .header-text {
   display: flex;
