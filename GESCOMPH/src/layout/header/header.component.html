@@ -19,8 +19,13 @@
     <!-- SLOT PARA WIDGETS (campana, avatar, selector idioma, etc) -->
     <ng-content select="[header-actions]"></ng-content>
 
-    <button class="btn btn-outline-primary ms-2" (click)="startHelpTour()" title="Ayuda paso a paso">
-      <span class="bi bi-question-circle"></span>
+    <button
+      mat-icon-button
+      class="help-button"
+      (click)="startHelpTour()"
+      matTooltip="Botón de ayuda"
+      aria-label="Ayuda">
+      <mat-icon>help_outline</mat-icon>
     </button>
 
     <span class="user-label">{{ username() }}</span>

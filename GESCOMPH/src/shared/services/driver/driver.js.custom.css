@@ -50,6 +50,26 @@
   outline-offset: var(--focus-ring-offset, 2px);
 }
 
+/* Botón Next (Siguiente) - Verde */
+.driverjs-next-btn {
+  background: var(--green-600) !important;
+  color: var(--white) !important;
+}
+.driverjs-next-btn:hover, .driverjs-next-btn:focus {
+  background: var(--green-700) !important;
+  color: var(--white) !important;
+}
+
+/* Botón Previous (Anterior) - Amarillo */
+.driverjs-prev-btn {
+  background: var(--yellow-500) !important;
+  color: var(--gray-900) !important;
+}
+.driverjs-prev-btn:hover, .driverjs-prev-btn:focus {
+  background: var(--yellow-600) !important;
+  color: var(--gray-900) !important;
+}
+
 .driverjs-close-btn {
   color: var(--driver-accent);
   background: transparent;
