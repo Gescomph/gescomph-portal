@@ -2,7 +2,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
 
-      <mat-form-field appearance="outline">
+      <mat-form-field id="establishments-plaza-select" appearance="outline">
         <mat-label>Plaza</mat-label>
         <mat-select (selectionChange)="onPlazaSelected($event.value)">
           <mat-option [value]="null">Todas</mat-option>
@@ -13,14 +13,14 @@
       </mat-form-field>
 
       <!-- 🔍 Buscador -->
-      <mat-form-field class="search-field" appearance="outline">
+      <mat-form-field id="establishments-search" class="search-field" appearance="outline">
         <mat-icon matPrefix>search</mat-icon>
         <input matInput placeholder="Buscar…" [formControl]="filterControl" type="text" />
       </mat-form-field>
 
       <!-- 👤 Botón Nuevo (solo para administradores con permiso CREAR) -->
       <ng-container *appHasRoleAndPermission="'Administrador'; perms: 'CREAR'">
-        <app-standard-button text="Nuevo establecimiento" variant="raised" color="primary" icon="add" iconPosition="left"
+        <app-standard-button id="establishments-new-btn" text="Nuevo establecimiento" variant="raised" color="primary" icon="add" iconPosition="left"
           (clicked)="openCreateDialog()" [disabled]="loadingCards()">
         </app-standard-button>
       </ng-container>
@@ -36,15 +36,16 @@
     <!-- 📦 Contenido -->
     <ng-template #content>
       <ng-container *ngIf="filteredEstablishments().length > 0; else noEstablishment">
-        <div class="d-flex flex-wrap gap-3 justify-content-center">
+        <div id="establishments-cards" class="d-flex flex-wrap gap-3 justify-content-center">
           <app-card *ngFor="let establishment of pagedCards()" [resource]="establishment" [showAvailableTag]="true"
+            class="establishment-card"
             (delete)="handleDelete(establishment.id)" (view)="onView(establishment.id)"
             (edit)="openEditDialogById(establishment.id)">
           </app-card>
         </div>
 
         <!-- 📄 Paginación -->
-        <mat-paginator [length]="filteredEstablishments().length" [pageSize]="pageSize()" [pageSizeOptions]="[6, 12, 18]"
+        <mat-paginator id="establishments-paginator" [length]="filteredEstablishments().length" [pageSize]="pageSize()" [pageSizeOptions]="[6, 12, 18]"
           showFirstLastButtons (page)="onPageChange($event)">
         </mat-paginator>
       </ng-container>

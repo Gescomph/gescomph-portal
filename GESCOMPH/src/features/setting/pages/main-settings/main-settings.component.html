@@ -1,4 +1,4 @@
-<mat-tab-group (selectedIndexChange)="onTabChange($event)">
+<mat-tab-group id="settings-main-tabs" (selectedIndexChange)="onTabChange($event)">
   <mat-tab *ngFor="let tab of visibleTabs" [label]="tab.label">
     <div class="tab-spacing">
       <ng-container *ngComponentOutlet="tab.component"></ng-container>
