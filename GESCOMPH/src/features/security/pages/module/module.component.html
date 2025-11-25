@@ -1,5 +1,6 @@
   <div class="row d-flex justify-content-center">
     <app-generic-table
+      id="security-modules-table"
       [data]="(modules$ | async) || []"
       [columns]="columns"
       [titulo]="'Gestión de Módulos'"

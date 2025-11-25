@@ -2,6 +2,7 @@
 
   <!-- Tabla de parámetros del sistema -->
   <app-generic-table
+    id="system-params-table"
     [columns]="columns" [data]="systemParameters$ | async"
     [createButtonLabel]="'Nuevo parámetro del sistema'"
     [titulo]="'Gestión de parámetros del sistema'"

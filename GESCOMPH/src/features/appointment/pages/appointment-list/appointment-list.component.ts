@@ -11,6 +11,8 @@ import { PageHeaderService } from '../../../../shared/services/page-header/page-
 import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-alert.service';
 import { AppointmentSelect, AppointmentUpdateModel } from '../../models/appointment.models';
 import { AppointmentStore } from '../../store/appointment.store';
+import { APPOINTMENT_TOUR } from './appointment-tour';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
 
 
 
@@ -26,6 +28,7 @@ export class AppointmentListComponent implements OnInit {
   private readonly appointmentStore = inject(AppointmentStore);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly pageHeaderService = inject(PageHeaderService);
+  private readonly driverJs = inject(DriverJsService);
 
 
   // Observable de formularios
@@ -46,6 +49,7 @@ export class AppointmentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageHeaderService.setPageHeader('Citas', 'Gestión de Citas');
+    this.driverJs.registerSteps('appointment', APPOINTMENT_TOUR);
     this.columns = [
       { key: 'personName', header: 'User', template: this.userTemplate },
       { key: 'establishmentName', header: 'Local' },

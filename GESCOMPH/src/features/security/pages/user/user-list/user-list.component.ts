@@ -17,6 +17,8 @@ import { UserSelectModel } from '../../../models/user.models';
 
 import { SecurityUserStore } from '../../../store/user/user.store';
 import { firstValueFrom } from 'rxjs';
+import { SECURITY_USERS_TOUR } from './security-users-tour';
+import { DriverJsService } from '../../../../../shared/services/driver/driver-js.services';
 
 @Component({
   selector: 'app-user-list',
@@ -36,6 +38,7 @@ export class UserListComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly alerts = inject(SweetAlertService);
   private readonly pageHeader = inject(PageHeaderService);
+  private readonly driverJs = inject(DriverJsService);
 
   private readonly userStore = inject(SecurityUserStore);
 
@@ -48,6 +51,7 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageHeader.setPageHeader('Usuarios', 'Gestión de Usuarios');
+    this.driverJs.registerSteps('security/users', SECURITY_USERS_TOUR);
 
     this.columns = [
       { key: 'email', header: 'Usuario', template: this.userTemplate },

@@ -12,6 +12,8 @@ import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-
 import { GenericTableComponent } from '../../../../shared/components/feedback/generic-table/generic-table.component';
 import { TableColumn } from '../../../../shared/models/table-column.models';
 import { ToggleButtonComponent } from '../../../../shared/components/ui/toggle-button/toggle-button-component.component';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
+import { CLAUSES_TOUR } from './clauses-tours';
 
 @Component({
   selector: 'app-clauses-list',
@@ -30,6 +32,7 @@ export class ClausesListComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly pageHeader = inject(PageHeaderService);
   private readonly sweetAlertService = inject(SweetAlertService);
+  private readonly driverJs = inject(DriverJsService);
 
   columns: TableColumn<ClauseSelect>[] = [];
   clauses: ClauseSelect[] = [];
@@ -45,6 +48,7 @@ export class ClausesListComponent implements OnInit {
       { key: 'active', header: 'Estado', type: 'custom', template: this.estadoTemplate },
     ];
     this.loadClauses();
+    this.driverJs.registerSteps('/contracts/clauses', CLAUSES_TOUR);
   }
 
   reload(): void {
