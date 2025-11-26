@@ -13,6 +13,8 @@ import { PageHeaderService } from '../../../../shared/services/page-header/page-
 import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-alert.service';
 import { RoleSelectModel, RoleUpdateModel } from '../../models/role.models';
 import { RoleStore } from '../../store/role/role.store';
+import { SECURITY_ROLES_TOUR } from './security-roles-tour';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
 
 @Component({
   selector: 'app-role',
@@ -27,6 +29,7 @@ export class RoleComponent implements OnInit {
   private readonly roleStore = inject(RoleStore);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly pageHeaderService = inject(PageHeaderService);
+  private readonly driverJs = inject(DriverJsService);
 
   // Estado de datos
   readonly roles$ = this.roleStore.roles$;
@@ -40,6 +43,7 @@ export class RoleComponent implements OnInit {
   // Ciclo de vida
   ngOnInit(): void {
     this.pageHeaderService.setPageHeader('Roles', 'Gestión de Roles');
+    this.driverJs.registerSteps('security/roles', SECURITY_ROLES_TOUR);
 
     // Se define aquí porque requiere el template ya resuelto
     this.columns = [

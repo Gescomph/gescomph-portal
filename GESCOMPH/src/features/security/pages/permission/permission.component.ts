@@ -12,6 +12,8 @@ import { PageHeaderService } from '../../../../shared/services/page-header/page-
 import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-alert.service';
 import { PermissionSelectModel, PermissionUpdateModel } from '../../models/permission.models';
 import { PermissionStore } from '../../store/permission/permission.store';
+import { SECURITY_PERMISSIONS_TOUR } from './security-permissions-tour';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
 
 @Component({
   selector: 'app-permission',
@@ -24,6 +26,7 @@ export class PermissionComponent implements OnInit {
   private readonly permissionStore = inject(PermissionStore);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly pageHeaderService = inject(PageHeaderService);
+  private readonly driverJs = inject(DriverJsService);
   constructor(private dialog: MatDialog) { }
 
   // Estado
@@ -36,6 +39,7 @@ export class PermissionComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageHeaderService.setPageHeader('Permisos', 'Gestión de Permisos');
+    this.driverJs.registerSteps('security/permissions', SECURITY_PERMISSIONS_TOUR);
     this.columns = [
       { key: 'name', header: 'Nombre' },
       { key: 'description', header: 'Descripción' },

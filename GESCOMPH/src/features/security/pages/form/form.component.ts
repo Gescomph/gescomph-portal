@@ -10,6 +10,8 @@ import { PageHeaderService } from '../../../../shared/services/page-header/page-
 import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-alert.service';
 import { FormSelectModel, FormUpdateModel } from '../../models/form.models';
 import { FormStore } from '../../store/form/form.store';
+import { SECURITY_FORMS_TOUR } from './security-forms-tour';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
 
 @Component({
   selector: 'app-form',
@@ -23,6 +25,7 @@ export class FormComponent implements OnInit {
   private readonly formStore = inject(FormStore);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly pageHeaderService = inject(PageHeaderService);
+  private readonly driverJs = inject(DriverJsService);
   constructor(private dialog: MatDialog) { }
 
   // Estado / datos
@@ -38,6 +41,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageHeaderService.setPageHeader('Formularios', 'Gestión de Formularios');
+    this.driverJs.registerSteps('security/forms', SECURITY_FORMS_TOUR);
 
     this.columns = [
       { key: 'name', header: 'Nombre' },

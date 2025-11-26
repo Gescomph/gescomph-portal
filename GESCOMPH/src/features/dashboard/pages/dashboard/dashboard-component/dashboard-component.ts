@@ -17,6 +17,8 @@ import { ContractService } from '../../../../contracts/services/contract/contrac
 import { DashboardService } from '../../../services/dashboard.service';
 import { AppointmentSelect } from '../../../../appointment/models/appointment.models';
 import { AppointmentService } from '../../../../appointment/services/appointment/appointment.service';
+import { DASHBOARD_TOUR } from './dashboard-tour';
+import { DriverJsService } from '../../../../../shared/services/driver/driver-js.services';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -43,6 +45,7 @@ export class DashboardComponent implements OnInit {
   private readonly contractService = inject(ContractService);
   private readonly obligationService = inject(DashboardService);
   private readonly appointmentService = inject(AppointmentService);
+  private readonly driverJs = inject(DriverJsService);
 
   readonly establishments = signal<readonly EstablishmentSelect[]>([]);
   readonly contract = signal<readonly ContractSelectModel[]>([]);
@@ -120,7 +123,7 @@ export class DashboardComponent implements OnInit {
     this.loadContract();
     this.loadObligationsTotalMonthsChart();
     this.loadAppointments();
-
+    this.driverJs.registerSteps('/dashboard', DASHBOARD_TOUR);
   }
 
   private loadEstablishments(): void {
