@@ -1,0 +1,84 @@
+<div class="main-content">
+  <div class="container">
+
+    <div class="content-wrapper">
+
+      <div class="header">
+        <h1>¡Gracias por tu pago!</h1>
+        <p class="subtitle">Tu transacción fue exitosa. Accede a cualquiera de nuestros sistemas.</p>
+      </div>
+
+      <!-- Carrusel -->
+      <div class="carousel-wrapper">
+        <div class="carousel-container">
+
+          <div
+            class="carousel-slide"
+            *ngFor="let slide of slides; let i = index"
+            [class.active]="i === currentSlide">
+            <img [src]="slide" />
+          </div>
+
+          <button class="carousel-nav prev" (click)="prevSlide()">‹</button>
+          <button class="carousel-nav next" (click)="nextSlide()">›</button>
+
+          <div class="carousel-dots">
+            <button
+              *ngFor="let _ of slides; let i = index"
+              class="dot"
+              [class.active]="i === currentSlide"
+              (click)="goToSlide(i)">
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Flip Cards -->
+      <div class="systems-container">
+
+        <!-- Sistema A -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+
+            <div class="flip-card-front">
+              <div class="system-icon">📊</div>
+              <div class="system-name">Sistema A</div>
+            </div>
+
+            <div class="flip-card-back">
+              <p class="system-desc">
+                Gestiona reportes y análisis en tiempo real con nuestro panel de control avanzado.
+              </p>
+              <a href="#sistemaA" class="btn">Ir al Sistema A</a>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Sistema B -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+
+            <div class="flip-card-front">
+              <div class="system-icon">⚙️</div>
+              <div class="system-name">Sistema B</div>
+            </div>
+
+            <div class="flip-card-back">
+              <p class="system-desc">
+                Administra configuraciones y automatizaciones para optimizar tu flujo de trabajo.
+              </p>
+              <a href="#sistemaB" class="btn">Ir al Sistema B</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

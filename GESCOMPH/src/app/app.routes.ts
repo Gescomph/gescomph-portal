@@ -5,10 +5,20 @@ import { LandingComponent } from '../features/public/pages/landing/landing.compo
 import { LayoutComponent } from '../layout/layout.component';
 import { NotFoundComponent } from '../shared/components/feedback/not-found/not-found.component';
 import { EstablishmentListComponent } from '../features/public/pages/establishment-list/establishment-list.component';
+import { PaymentSuccessComponent } from '../shared/components/ui/payment-success/payment-success.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', component: LandingComponent, canActivate: [publicGuard], title: 'Inicio' },
   { path: 'establishments', pathMatch: 'full', component: EstablishmentListComponent, canActivate: [publicGuard], title: 'Establecimientos Disponibles' },
+
+  {
+    path: 'payment-success',
+    pathMatch: 'full',
+    component: PaymentSuccessComponent,
+    title: 'Pago Exitoso'
+  },
+
+
 
   {
     path: 'auth',
