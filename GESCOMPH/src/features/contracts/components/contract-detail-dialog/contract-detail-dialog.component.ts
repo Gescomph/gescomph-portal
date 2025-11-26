@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 
 import { StandardButtonComponent } from '../../../../shared/components/ui/standard-button/standard-button.component';
 import { MoneyPipe } from '../../../../shared/pipes/money.pipe';
 import { ContractSelectModel } from '../../models/contract.models';
-import { MonthlyObligation } from '../../models/obligation-month.models';
+import { MonthlyObligation, ObligationStatus } from '../../models/obligation-month.models';
 import { ContractService } from '../../services/contract/contract.service';
 import { ContractStore } from '../../store/contract.store';
 import { ButtonPayComponent } from '../../../../shared/components/ui/button-pay/button-pay.component';
+import { ObligationRealtimeService } from '../../services/obligation-realtime.service';
 
 @Component({
   selector: 'app-contract-detail-dialog',
@@ -28,37 +29,25 @@ import { ButtonPayComponent } from '../../../../shared/components/ui/button-pay/
     ButtonPayComponent
   ],
   templateUrl: './contract-detail-dialog.component.html',
-  styleUrls: ['./contract-detail-dialog.component.css'],
+  styleUrls: [
+    './contract-detail-dialog.component.css',
+    './contract-detail-dialog.component-additions.css'
+  ],
 })
-export class ContractDetailDialogComponent implements OnInit {
+export class ContractDetailDialogComponent implements OnInit, OnDestroy {
   private readonly svc = inject(ContractService);
   private readonly store = inject(ContractStore);
+  private readonly realtimeSvc = inject(ObligationRealtimeService);
+  private sub?: Subscription;
 
   contract: ContractSelectModel | null = null;
   obligations: MonthlyObligation[] = [];
+  selectedObligation?: MonthlyObligation;
   loading = false;
   error: string | null = null;
 
   // Mejor performance en *ngFor
   trackByObligationId = (_: number, item: MonthlyObligation) => item.id;
-
-  // --- Mapa tipado y type-guard para evitar TS7053 ---
-  private static readonly STATUS_LABEL = {
-    PAID: 'Pagado',
-    PENDING: 'Pendiente',
-    OVERDUE: 'Vencido',
-  } as const;
-
-  private static isStatusKey(s: string): s is keyof typeof ContractDetailDialogComponent.STATUS_LABEL {
-    return Object.prototype.hasOwnProperty.call(ContractDetailDialogComponent.STATUS_LABEL, s);
-  }
-
-  getStatusText(status: string): string {
-    return ContractDetailDialogComponent.isStatusKey(status)
-      ? ContractDetailDialogComponent.STATUS_LABEL[status]
-      : status; // fallback si backend envía algo no mapeado
-  }
-  // ---------------------------------------------------
 
   constructor(
     private readonly dialogRef: MatDialogRef<ContractDetailDialogComponent>,
@@ -67,10 +56,24 @@ export class ContractDetailDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+    this.setupRealtime();
   }
 
-  private loadData(): void {
-    this.loading = true;
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+    this.realtimeSvc.stopConnection();
+  }
+
+  private setupRealtime(): void {
+    this.realtimeSvc.startConnection();
+    this.sub = this.realtimeSvc.obligationsUpdated$.subscribe(() => {
+      console.log('Refrescando obligaciones por evento real-time...');
+      this.loadData(true);
+    });
+  }
+
+  private loadData(isRefresh = false): void {
+    if (!isRefresh) this.loading = true;
     this.error = null;
 
     const id = this.data?.id;
@@ -95,6 +98,7 @@ export class ContractDetailDialogComponent implements OnInit {
             if (a.year !== b.year) return b.year - a.year;
             return b.month - a.month;
           });
+          this.selectedObligation = this.pickPreferredObligation(this.obligations);
         },
         error: (err) => {
           console.error('Error loading contract detail:', err);
@@ -106,4 +110,30 @@ export class ContractDetailDialogComponent implements OnInit {
   close(): void {
     this.dialogRef.close();
   }
+
+  /**
+   * Determina si una obligación puede ser pagada.
+   * Una obligación puede pagarse si:
+   * - No ha sido pagada (status !== 'Aprobada' y status !== 'Pagada')
+   * - No está bloqueada (locked !== true)
+   */
+  canPayObligation(obligation: MonthlyObligation): boolean {
+    return obligation.status !== ObligationStatus.Aprobada &&
+      obligation.status !== ObligationStatus.Pagada &&
+      !obligation.locked;
+  }
+
+  private pickPreferredObligation(list: MonthlyObligation[]): MonthlyObligation | undefined {
+    if (!list?.length) return undefined;
+
+    const prioritized = list.find((item) =>
+      item.status === ObligationStatus.Pendiente ||
+      item.status === ObligationStatus.Vencida
+    );
+    return prioritized ?? list[0];
+  }
+
+  getTotal(o: MonthlyObligation): number {
+    return o.totalAmount + (o.lateAmount || 0);
+  }
 }
