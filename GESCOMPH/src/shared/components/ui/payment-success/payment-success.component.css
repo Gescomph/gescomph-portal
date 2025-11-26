@@ -1,0 +1,210 @@
+/* ===== Main Layout ===== */
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+
+  /* Mantener el contenido dentro del 90vh */
+  max-height: 90vh;
+}
+
+/* ===== Content Wrapper ===== */
+.content-wrapper {
+  flex: 1;
+  /* Ocupa todo el espacio disponible */
+  overflow-y: auto;
+  /* Scroll solo del contenido interno */
+  padding: 10px 10px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  /* Espaciado elegante entre secciones */
+}
+
+/* ===== Header ===== */
+.header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h1 {
+  color: #28a745;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== Carousel ===== */
+.carousel-wrapper {
+  width: 100%;
+  height: 300px;
+  /* Más compacto para caber en 90vh */
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+  background: #fff;
+}
+
+.carousel-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(40, 167, 69, 0.7);
+  border: none;
+  color: #fff;
+  padding: 12px 15px;
+  font-size: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.carousel-nav.prev {
+  left: 10px;
+}
+
+.carousel-nav.next {
+  right: 10px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+/* ===== Flip Cards ===== */
+.systems-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.flip-card {
+  height: 240px;
+  /* Menos alto para caber en 90vh */
+  position: relative;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+
+.flip-card-front {
+  background: #f8f9fa;
+}
+
+.flip-card-back {
+  background: #f0f9f0;
+  transform: rotateY(180deg);
+  border-color: #28a745;
+}
+
+.system-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.system-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #28a745;
+}
+
+.system-desc {
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 10px 0;
+}
+
+.btn {
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 8px;
+  width: 85%;
+  background: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== Footer ===== */
+footer {
+  padding-top: 15px;
+  font-size: 13px;
+  color: #999;
+  text-align: center;
+  border-top: 1px solid #e0e0e0;
+}
+
+footer a {
+  color: #28a745;
+  text-decoration: none;
+}
