@@ -1,9 +1,5 @@
-<mat-tab-group
-  id="establishments-tabs"
-  [selectedIndex]="selectedIndex()"
-  (selectedIndexChange)="onTabChange($event)"
-  *appHasRoleAndPermission="'Administrador'; perms: 'VER'"
->
+<mat-tab-group id="establishments-tabs" [selectedIndex]="selectedIndex()" (selectedIndexChange)="onTabChange($event)"
+  *appHasRoleAndPermission="'Administrador'; perms: 'VER'">
   <mat-tab *ngFor="let tab of visibleTabs" [label]="tab.label">
     <div class="tab-spacing">
       <ng-container *ngComponentOutlet="tab.component"></ng-container>
@@ -11,6 +7,31 @@
   </mat-tab>
 </mat-tab-group>
 
+<!-- Vista jerárquica para Arrendador -->
 <div *appHasRoleAndPermission="'Arrendador'; perms: 'VER'">
-  <app-establishments-list></app-establishments-list>
+
+  <!-- Breadcrumbs Estilizados -->
+  <div *ngIf="viewMode() === 'establishments'" class="breadcrumb-container">
+    <button class="back-btn" (click)="onBackToPlazas()">
+      <mat-icon class="icon-sm">arrow_back</mat-icon>
+      <span>Volver</span>
+    </button>
+
+    <span class="breadcrumb-separator">|</span>
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+      <span class="breadcrumb-link" (click)="onBackToPlazas()">Plazas</span>
+      <mat-icon class="icon-xs mx-2 text-muted">chevron_right</mat-icon>
+      <span class="breadcrumb-current">{{ selectedPlazaName() }}</span>
+    </nav>
+  </div>
+
+  <!-- Vista de Plazas -->
+  <app-square-list *ngIf="viewMode() === 'plazas'" (plazaSelected)="onPlazaCardClick($event)">
+  </app-square-list>
+
+  <!-- Vista de Establecimientos filtrados por plaza -->
+  <app-establishments-list *ngIf="viewMode() === 'establishments'" [filterByPlazaId]="selectedPlazaId()">
+  </app-establishments-list>
+
 </div>

@@ -1,3 +1,58 @@
 .tab-spacing {
     padding-top: 36px;
 }
+
+.breadcrumb-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6c757d;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0.95rem;
+}
+
+.back-btn:hover {
+    color: #0d6efd;
+}
+
+.breadcrumb-separator {
+    color: #dee2e6;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.breadcrumb-link {
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.breadcrumb-link:hover {
+    color: #0d6efd;
+}
+
+.breadcrumb-current {
+    color: #212529;
+    font-weight: 600;
+}

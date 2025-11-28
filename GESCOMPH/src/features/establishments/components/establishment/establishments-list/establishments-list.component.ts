@@ -7,6 +7,7 @@ import {
   computed,
   inject,
   signal,
+  Input,
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -64,6 +65,12 @@ export class EstablishmentsListComponent implements OnInit {
   private readonly sharedEvents = inject(EstablishmentEventsService);
   private readonly destroyRef = inject(DestroyRef);
 
+  // Input para filtrar por plaza (navegación jerárquica tenant)
+  @Input() filterByPlazaId?: number | null = null;
+
+  // Signal para controlar visibilidad del dropdown
+  readonly showPlazaDropdown = signal<boolean>(true);
+
   readonly plazas = signal<SquareSelectModel[]>([]);
 
 
@@ -74,9 +81,9 @@ export class EstablishmentsListComponent implements OnInit {
     this.selectedPlazaId.set(id);
 
     if (id === null) {
-      await this.store.loadCardsAll();      // vuelve a ALL cards
+      await this.store.loadCardsAll(false);      // vuelve a ALL cards (false = mostrar todos, incluidos inactivos)
     } else {
-      await this.store.loadCardsByPlaza(id); // <-- ESTE
+      await this.store.loadCardsByPlaza(id, false); // (false = mostrar todos, incluidos inactivos)
     }
 
     this.pageIndex.set(0);
@@ -118,14 +125,27 @@ export class EstablishmentsListComponent implements OnInit {
     // 1) cargar plazas para llenar el <mat-select>
     await this.loadPlazas();
 
-    // 2) carga inicial de establecimientos (todas las plazas)
-    await this.store.loadCardsAll();
+    // 2) Si viene filterByPlazaId (navegación jerárquica), cargar solo esa plaza
+    if (this.filterByPlazaId != null) {
+      this.showPlazaDropdown.set(false); // Ocultar dropdown
+      this.selectedPlazaId.set(this.filterByPlazaId);
+      await this.store.loadCardsByPlaza(this.filterByPlazaId, true); // true = solo activos (Tenant)
+    } else {
+      // Carga inicial de establecimientos (todas las plazas)
+      this.showPlazaDropdown.set(true); // Mostrar dropdown
+      await this.store.loadCardsAll(false); // false = mostrar todos (Admin)
+    }
 
     // 3) si cambian estados activos / inactivos de plazas → refrescar cards
     this.sharedEvents.plazaStateChanged$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        void this.store.loadCardsAll();
+        // Refrescar según el modo actual
+        if (this.filterByPlazaId != null) {
+          void this.store.loadCardsByPlaza(this.filterByPlazaId, true);
+        } else {
+          void this.store.loadCardsAll(false);
+        }
         this.pageIndex.set(0);
       });
 
@@ -134,7 +154,8 @@ export class EstablishmentsListComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(async plazaId => {
         this.selectedPlazaId.set(plazaId);
-        await this.store.loadCardsByPlaza(plazaId);
+        // Si viene de evento compartido (Admin tab), cargar todos (false)
+        await this.store.loadCardsByPlaza(plazaId, false);
         this.pageIndex.set(0);
       });
   }

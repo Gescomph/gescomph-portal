@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import './driver.js.custom.css';
 
 @Injectable({ providedIn: 'root' })
 export class DriverJsService {

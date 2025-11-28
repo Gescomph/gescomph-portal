@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, TemplateRef, ViewChild, computed, effect, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, computed, effect, inject, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { GenericTableComponent } from '../../../../../shared/components/feedback/generic-table/generic-table.component';
@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { StandardButtonComponent } from '../../../../../shared/components/ui/standard-button/standard-button.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { PermissionService } from '../../../../../core/security/permission/permission.service';
 
 @Component({
   selector: 'app-square-list',
@@ -52,6 +53,9 @@ export class SquareListComponent implements OnInit {
   private readonly squareService = inject(SquareService);
   private readonly imageService = inject(ImageService);
 
+  // Output event para navegación jerárquica (tenant)
+  @Output() plazaSelected = new EventEmitter<{ id: number; name: string }>();
+
 
 
 
@@ -66,6 +70,13 @@ export class SquareListComponent implements OnInit {
 
 
   onPlazaCardClick(id: number) {
+    // Buscar el nombre de la plaza
+    const plaza = this.squares().find(p => p.id === id);
+    if (plaza) {
+      // Emitir evento para navegación jerárquica (tenant)
+      this.plazaSelected.emit({ id: plaza.id, name: plaza.name });
+    }
+    // Mantener compatibilidad con tabs (admin)
     this.sharedEvents.notifyPlazaFilterSelected(id);
     this.sharedEvents.notifyGoToEstablishmentsTab();
   }
@@ -84,13 +95,23 @@ export class SquareListComponent implements OnInit {
   pageIndex = 0;
   pageSize = 6;
 
+  private readonly permissionService = inject(PermissionService);
+
   // === Computed reactivos ===
   readonly filteredSquares = computed(() => {
     const txt = (this.filterValue() ?? '').toLowerCase();
-    return this.squares().filter(p =>
-      p.name?.toLowerCase().includes(txt) ||
-      p.description?.toLowerCase().includes(txt)
-    );
+    const isAdmin = this.permissionService.hasRole('Administrador');
+
+    return this.squares().filter(p => {
+      // 1. Filtro de texto
+      const matchesText = p.name?.toLowerCase().includes(txt) ||
+        p.description?.toLowerCase().includes(txt);
+
+      // 2. Filtro de actividad (si no es admin, solo activos)
+      const matchesActive = isAdmin ? true : p.active === true;
+
+      return matchesText && matchesActive;
+    });
   });
 
   readonly pagedSquares = computed(() => {

@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
 import { HasRoleAndPermissionDirective } from '../../../../core/security/directives/has-role-and-permission.directive';
 import { EstablishmentsListComponent } from "../../components/establishment/establishments-list/establishments-list.component";
 import { SquareListComponent } from "../../components/square/square-list/square-list.component";
@@ -15,8 +16,10 @@ import { DriverJsService } from '../../../../shared/services/driver/driver-js.se
   imports: [
     MatTabsModule,
     EstablishmentsListComponent,
+    SquareListComponent,
     HasRoleAndPermissionDirective,
-    CommonModule],
+    CommonModule,
+    MatIconModule],
   templateUrl: './squares-establishments.component.html',
   styleUrl: './squares-establishments.component.css'
 })
@@ -29,6 +32,10 @@ export class SquaresEstablishmentsComponent implements OnInit {
 
   selectedIndex = signal(0);
 
+  // Navegación jerárquica para arrendatario
+  viewMode = signal<'plazas' | 'establishments'>('plazas');
+  selectedPlazaId = signal<number | null>(null);
+  selectedPlazaName = signal<string>('');
 
   // tabs dinámicos
   visibleTabs: { label: string; description: string; component: any; roles: string[] }[] = [];
@@ -69,5 +76,20 @@ export class SquaresEstablishmentsComponent implements OnInit {
     if (tab) {
       this.pageHeaderService.setPageHeader(tab.label, tab.description);
     }
+  }
+
+  // Métodos para navegación jerárquica (tenant)
+  onPlazaCardClick(event: { id: number; name: string }): void {
+    this.selectedPlazaId.set(event.id);
+    this.selectedPlazaName.set(event.name);
+    this.viewMode.set('establishments');
+    this.pageHeaderService.setPageHeader(event.name, `Establecimientos en ${event.name}`);
+  }
+
+  onBackToPlazas(): void {
+    this.viewMode.set('plazas');
+    this.selectedPlazaId.set(null);
+    this.selectedPlazaName.set('');
+    this.pageHeaderService.setPageHeader('Plazas', 'Selecciona una plaza para ver sus establecimientos');
   }
 }

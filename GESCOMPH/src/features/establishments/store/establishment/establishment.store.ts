@@ -240,7 +240,9 @@ export class EstablishmentStore {
       const data = await firstValueFrom(
         this.establishmentService.getCardsByPlaza(plazaId, { activeOnly })
       );
-      this.setCards(data ?? []);
+      // Filtrado manual de seguridad por si el backend no filtra correctamente
+      const filtered = activeOnly ? (data ?? []).filter(x => x.active) : (data ?? []);
+      this.setCards(filtered);
     } catch (e: any) {
       const status = e?.status ?? e?.statusCode;
       const type = e?.type;
