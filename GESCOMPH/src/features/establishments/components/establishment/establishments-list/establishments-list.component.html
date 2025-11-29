@@ -1,9 +1,10 @@
 <div class="container mt-4">
 
-  <div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="controls-container">
 
     <!-- Dropdown de plazas (solo visible cuando no viene filtrado) -->
-    <mat-form-field *ngIf="showPlazaDropdown()" id="establishments-plaza-select" appearance="outline">
+    <mat-form-field *ngIf="showPlazaDropdown()" id="establishments-plaza-select" appearance="outline"
+      class="filter-field">
       <mat-label>Plaza</mat-label>
       <mat-select (selectionChange)="onPlazaSelected($event.value)">
         <mat-option [value]="null">Todas</mat-option>

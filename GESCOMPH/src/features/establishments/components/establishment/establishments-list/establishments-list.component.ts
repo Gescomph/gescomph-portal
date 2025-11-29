@@ -245,7 +245,7 @@ export class EstablishmentsListComponent implements OnInit {
               width: '80vw',
               maxWidth: '900px',
               height: 'auto',
-              maxHeight: 'none',
+              maxHeight: '90vh',
               panelClass: 'no-scroll-dialog'
             });
 

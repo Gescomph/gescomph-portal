@@ -113,14 +113,30 @@ export class ContractDetailDialogComponent implements OnInit, OnDestroy {
 
   /**
    * Determina si una obligación puede ser pagada.
-   * Una obligación puede pagarse si:
-   * - No ha sido pagada (status !== 'Aprobada' y status !== 'Pagada')
+   * Una obligación puede pagarse solo si:
+   * - Status es: Pendiente (1), Vencida (6), PreJuridico (8) o Juridico (9)
    * - No está bloqueada (locked !== true)
    */
   canPayObligation(obligation: MonthlyObligation): boolean {
-    return obligation.status !== ObligationStatus.Aprobada &&
-      obligation.status !== ObligationStatus.Pagada &&
-      !obligation.locked;
+    const payableStatuses: string[] = [
+      ObligationStatus.Pendiente,
+      ObligationStatus.Vencida,
+      ObligationStatus.PreJuridico,
+      ObligationStatus.Juridico
+    ];
+
+    const canPay = payableStatuses.includes(obligation.status) && !obligation.locked;
+
+    // Debug: descomentar para ver qué pasa
+    console.log('canPayObligation:', {
+      obligationId: obligation.id,
+      status: obligation.status,
+      locked: obligation.locked,
+      canPay,
+      payableStatuses
+    });
+
+    return canPay;
   }
 
   private pickPreferredObligation(list: MonthlyObligation[]): MonthlyObligation | undefined {
@@ -134,6 +150,6 @@ export class ContractDetailDialogComponent implements OnInit, OnDestroy {
   }
 
   getTotal(o: MonthlyObligation): number {
-    return o.totalAmount + (o.lateAmount || 0);
-  }
+    return o.totalAmount + (o.lateAmount || 0);
+  }
 }

@@ -219,7 +219,7 @@
 }
 
 /* ========== RESPONSIVE DESIGN - OPTIMIZADO PARA MODALES ========== */
-@media (max-width: 900px) {
+@media (max-width: 991px) {
   .form-step,
   .form-container {
     padding: 12px;
@@ -238,7 +238,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 575px) {
   .form-actions {
     flex-direction: column;
     gap: 6px;
@@ -355,3 +355,8 @@
     opacity: 1;
   }
 }
+
+
+
+
+

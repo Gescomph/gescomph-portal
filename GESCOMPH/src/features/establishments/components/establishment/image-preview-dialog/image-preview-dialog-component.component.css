@@ -103,7 +103,12 @@
 }
 
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 575px) {
   .image { max-width: 88vw; max-height: 60vh; }
   .nav { width: 38px; height: 38px; }
 }
+
+
+
+
+

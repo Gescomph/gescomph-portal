@@ -1,5 +1,5 @@
-﻿/* ========================================
- * OPCIÃ“N 1: HEADER GRADIENTE PRINCIPAL (RECOMENDADA)
+/* ========================================
+ * OPCIÓN 1: HEADER GRADIENTE PRINCIPAL (RECOMENDADA)
  * ======================================== */
 .header-container {
   display: flex;
@@ -7,8 +7,10 @@
   align-items: center;
   background: var(--gradient-primary);
   color: var(--white);
-  height: 80px; /* altura unificada */
-  padding: 0 24px; /* sin padding vertical para igualar altura */
+  height: 80px;
+  /* altura unificada */
+  padding: 0 24px;
+  /* sin padding vertical para igualar altura */
   box-shadow:
     0 4px 16px rgba(22, 163, 74, 0.15),
     0 2px 8px rgba(22, 163, 74, 0.1);
@@ -26,13 +28,18 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   animation: headerShimmer 4s infinite;
 }
 
 @keyframes headerShimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
 }
 
 .left-content {
@@ -70,7 +77,7 @@
   transition: transform 0.2s ease;
 }
 
-.help-button{
+.help-button {
   color: #fff;
 }
 
@@ -123,7 +130,7 @@
 }
 
 /* ========================================
- * OPCIÓN 2: HEADER CON ACENTO AMARILLO
+ * OPCI�N 2: HEADER CON ACENTO AMARILLO
  * ======================================== */
 .header-container-accent {
   display: flex;
@@ -152,7 +159,7 @@
 }
 
 /* ========================================
- * OPCIÃ“N 3: HEADER GLASSMORPHISM
+ * OPCIÓN 3: HEADER GLASSMORPHISM
  * ======================================== */
 .header-container-glass {
   display: flex;
@@ -171,7 +178,7 @@
 }
 
 /* ========================================
- * OPCIÃ“N 4: HEADER MINIMALISTA ELEGANTE
+ * OPCIÓN 4: HEADER MINIMALISTA ELEGANTE
  * ======================================== */
 .header-container-minimal {
   display: flex;
@@ -217,7 +224,7 @@
 }
 
 /* ========================================
- * OPCIÓN 5: HEADER DINÁMICO CON PATRONES
+ * OPCI�N 5: HEADER DIN�MICO CON PATRONES
  * ======================================== */
 .header-container-pattern {
   display: flex;
@@ -237,12 +244,13 @@
  * MEJORAS GENERALES PARA TODOS LOS ESTILOS
  * ======================================== */
 
-/* AnimaciÃ³n de entrada del header */
+/* Animación de entrada del header */
 @keyframes slideInDown {
   from {
     transform: translateY(-100%);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -257,7 +265,7 @@
   animation: slideInDown 0.5s ease-out;
 }
 
-/* Efecto hover en el tÃ­tulo */
+/* Efecto hover en el título */
 .title {
   cursor: pointer;
   transition: all 0.3s ease;
@@ -268,7 +276,7 @@
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* Badge de notificaciÃ³n para el usuario */
+/* Badge de notificación para el usuario */
 .user-section {
   position: relative;
   display: flex;
@@ -313,7 +321,8 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+
   .header-container,
   .header-container-accent,
   .header-container-glass,
@@ -346,9 +355,10 @@
   }
 }
 
-@media (max-width: 480px) {
-  .right-content {
-    display: none; /* Ocultar en pantallas muy pequeÃ±as */
+@media (max-width: 575px) {
+  .user-label {
+    display: none;
+    /* Ocultar etiqueta de usuario en pantallas muy peque�as */
   }
 
   .header-text {
@@ -379,4 +389,8 @@
     color: var(--green-400);
   }
 }
+
+
+
+
 

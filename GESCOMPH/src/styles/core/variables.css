@@ -51,7 +51,17 @@
   --shadow-3: 0 8px 32px rgba(22, 163, 74, 0.16);
   --shadow-accent: 0 4px 16px rgba(245, 158, 11, 0.2);
 
+  /* Responsive Breakpoints */
+  --bp-mobile: 767px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
+
   /* Angular Material v20 color tokens mapping to project theme */
   --mat-sys-primary: var(--color-primary);
   --mat-sys-on-primary: var(--color-primary-contrast);
 }
+
+
+
+
+

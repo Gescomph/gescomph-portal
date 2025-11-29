@@ -160,7 +160,7 @@
 /* ===========================
    RESPONSIVIDAD
 =========================== */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .imagen-local img {
     height: 50vh;
   }
@@ -196,3 +196,8 @@
     right: 0.4rem;
   }
 }
+
+
+
+
+

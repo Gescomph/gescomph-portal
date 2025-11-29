@@ -190,7 +190,7 @@ app-button {
   display: inline-flex;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .local-card {
     width: 100%;
   }
@@ -207,3 +207,7 @@ app-button {
     font-size: 1rem;
   }
 }
+
+
+
+

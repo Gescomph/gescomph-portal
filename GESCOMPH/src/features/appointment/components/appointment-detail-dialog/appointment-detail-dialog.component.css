@@ -430,7 +430,7 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .dialog-header {
     padding: 1rem;
   }
@@ -464,3 +464,8 @@ button:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
+
+
+
+
+

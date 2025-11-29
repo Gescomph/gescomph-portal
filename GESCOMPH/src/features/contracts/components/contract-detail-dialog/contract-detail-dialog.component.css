@@ -1,40 +1,25 @@
-/* === ADAPTADOR A TU PALETA GLOBAL (solo cambia este bloque) === */
 :host {
-  /* Superficies y texto (blanco + verdes/amarillos) */
   --surface: var(--color-surface);
   --surface-muted: var(--color-surface-muted);
   --text-primary: var(--color-text);
   --text-secondary: var(--color-text);
   --text-muted: var(--color-text-muted);
-
-  /* Bordes y sombra */
   --border-color: var(--color-border);
   --border-light: var(--gray-100);
   --shadow: var(--shadow-1);
   --radius: 12px;
   --transition: .2s ease;
-
-  /* Marca y acentos (verde/amarillo) */
   --primary-color: var(--color-primary);
   --primary-light: var(--green-400);
-  /* usada en gradientes suaves */
   --primary-soft: var(--color-primary-soft);
-
-  /* Estados (éxito/advertencia) — sin rojos */
   --success-color: var(--state-success);
   --success-bg: var(--state-success-bg);
   --warning-color: var(--state-warning);
   --warning-bg: var(--state-warning-bg);
-
-  /* Danger se mapea a advertencia (amarillo) para evitar rojos/negros */
   --danger-color: var(--state-warning);
   --danger-bg: var(--state-warning-bg);
-
-  /* Muted */
   --muted-color: var(--color-text-muted);
   --muted-bg: var(--gray-50);
-
-  /* Gradientes y foco */
   --accent-gradient: var(--gradient-primary);
   --accent-gradient-hover: var(--gradient-primary-hover);
   --focus-ring-color: var(--focus-ring);
@@ -42,15 +27,12 @@
   --focus-ring-width: var(--focus-ring-width);
 }
 
-/* === A PARTIR DE AQUÍ, SOLO reuso tus reglas cambiando #fff y azules por tokens === */
-
 .dialog-container {
   max-height: 85vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
 .dialog-header {
   position: sticky;
   top: 0;
@@ -100,7 +82,6 @@
   background-color: var(--primary-soft);
 }
 
-/* Content */
 .dialog-content {
   display: flex;
   flex-direction: column;
@@ -145,7 +126,6 @@
   color: var(--text-secondary);
 }
 
-/* Info grid */
 .grid {
   display: grid;
   gap: .75rem 1.5rem;
@@ -177,7 +157,6 @@
   color: var(--text-primary);
 }
 
-/* Chips */
 .chip {
   display: inline-flex;
   align-items: center;
@@ -217,7 +196,6 @@
   color: var(--muted-color);
 }
 
-/* Timeline */
 .timeline {
   list-style: none;
   margin: 0;
@@ -280,7 +258,6 @@
   display: none;
 }
 
-/* Obligation card */
 .ob-card {
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -377,7 +354,6 @@
   font-weight: 700;
 }
 
-/* Estado vencido destacado */
 .timeline-item--overdue .ob-card {
   border-color: color-mix(in srgb, var(--warning-color) 35%, transparent);
 }
@@ -386,7 +362,6 @@
   background: color-mix(in srgb, var(--warning-bg) 90%, transparent);
 }
 
-/* Premises */
 .premises ul {
   margin: .5rem 0 0;
   padding-left: 1.25rem;
@@ -397,7 +372,6 @@
   color: var(--text-secondary);
 }
 
-/* No-data y estados */
 .muted {
   color: var(--text-muted);
 }
@@ -422,36 +396,191 @@
   color: var(--danger-color);
 }
 
-/* Actions */
 .dialog-actions {
   padding: 1rem 1.5rem;
   border-top: 1px solid var(--border-light);
   background: var(--surface);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .dialog-header {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .title {
+    font-size: 1.1rem;
   }
 
   .dialog-content {
-    padding: 1rem;
-    gap: 1rem;
+    padding: 0.75rem;
+    gap: 0.75rem;
   }
 
   .section.card {
-    padding: 1rem;
+    padding: 0.75rem;
+  }
+
+  .ob-header {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .ob-total {
+    text-align: left;
+  }
+
+  .ob-body {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 0.75rem;
+    padding: 0.6rem 0.75rem 0.75rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .dialog-container {
+    max-height: 90vh;
+  }
+
+  .dialog-header {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .dialog-content {
+    padding: 0.6rem;
+    gap: 0.6rem;
+  }
+
+  .section.card {
+    padding: 0.6rem;
   }
 
   .info-grid {
     grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .field {
+    padding: 0.3rem 0;
+  }
+
+  .label {
+    font-size: 0.75rem;
+  }
+
+  .value {
+    font-size: 0.85rem;
+  }
+
+  .timeline-item {
+    grid-template-columns: 16px 1fr;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .ob-card {
+    border-radius: 8px;
+  }
+
+  .ob-header {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .ob-title {
+    gap: 0.35rem;
+    font-size: 0.9rem;
+  }
+
+  .period .year,
+  .period .month {
+    font-size: 0.9rem;
+  }
+
+  .ob-total .label {
+    font-size: 0.7rem;
+  }
+
+  .ob-total .value {
+    font-size: 0.9rem;
+  }
+
+  .ob-body {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    padding: 0.5rem 0.6rem 0.6rem;
+  }
+
+  .kv .k {
+    font-size: 0.7rem;
+  }
+
+  .kv .v {
+    font-size: 0.85rem;
+  }
+
+  .chip {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .chip-icon {
+    font-size: 12px;
+    height: 12px;
+    width: 12px;
+  }
+
+  .dialog-actions {
+    padding: 0.75rem;
   }
 }
 
-/* Se elimina el mapeo a modo oscuro con grises/negros para mantener blanco/verde/amarillo */
+@media (max-width: 600px) {
+  .dialog-header {
+    padding: 0.5rem;
+  }
 
-/* Accesibilidad */
+  .title {
+    font-size: 0.95rem;
+  }
+
+  .accent {
+    width: 3px;
+    height: 22px;
+  }
+
+  .dialog-content {
+    padding: 0.5rem;
+  }
+
+  .section.card {
+    padding: 0.5rem;
+  }
+
+  .section h3 {
+    font-size: 0.95rem;
+  }
+
+  .ob-header {
+    padding: 0.4rem 0.5rem;
+  }
+
+  .ob-body {
+    padding: 0.4rem 0.5rem 0.5rem;
+  }
+
+  .dialog-actions {
+    padding: 0.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   .dialog-header button,
@@ -465,12 +594,9 @@ button:focus-visible {
   outline-offset: var(--focus-ring-offset);
 }
 
-
-/* Contenedor general de las acciones */
 .multa-actions {
   display: flex;
   justify-content: space-between;
-  /* separa los elementos */
   align-items: center;
   margin-top: 1rem;
   padding: 0.75rem 1rem;
@@ -480,7 +606,6 @@ button:focus-visible {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* Estilo para el texto de descarga */
 .click-hint {
   cursor: pointer;
   font-size: 0.95rem;
@@ -497,7 +622,6 @@ button:focus-visible {
   text-decoration: underline;
 }
 
-/* Si el botón de pago es un componente tipo p-button, puedes reforzar su estilo aquí */
 app-button-pay ::ng-deep button {
   background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;

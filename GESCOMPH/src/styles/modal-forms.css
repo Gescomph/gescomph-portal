@@ -169,7 +169,7 @@
 }
 
 /* ========== RESPONSIVE PARA MODALES ========== */
-@media (max-width: 600px) {
+@media (max-width: 575px) {
   .modal-form-actions {
     flex-direction: column;
     gap: 4px;
@@ -216,3 +216,8 @@
 .modal-mt-1 { margin-top: 4px; }
 .modal-mt-2 { margin-top: 8px; }
 .modal-mt-3 { margin-top: 12px; }
+
+
+
+
+

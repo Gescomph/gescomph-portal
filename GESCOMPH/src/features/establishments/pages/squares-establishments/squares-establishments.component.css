@@ -56,3 +56,55 @@
     color: #212529;
     font-weight: 600;
 }
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .tab-spacing {
+        padding-top: 20px;
+    }
+
+    .breadcrumb-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+        margin-bottom: 1rem;
+    }
+
+    .back-btn {
+        font-size: 0.85rem;
+    }
+
+    .breadcrumb-separator {
+        display: none;
+    }
+
+    .breadcrumb-nav {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .tab-spacing {
+        padding-top: 16px;
+    }
+
+    .breadcrumb-container {
+        padding: 0.5rem 0;
+        margin-bottom: 0.75rem;
+    }
+
+    .back-btn {
+        font-size: 0.8rem;
+        gap: 0.35rem;
+    }
+
+    .breadcrumb-nav {
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .breadcrumb-current {
+        font-size: 0.85rem;
+    }
+}
