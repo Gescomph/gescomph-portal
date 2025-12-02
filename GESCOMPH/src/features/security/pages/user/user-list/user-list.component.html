@@ -8,6 +8,7 @@
 <!-- Contenido -->
 <ng-template #content>
   <app-generic-table
+    id="security-users-table"
     [data]="users$ | async"
     [columns]="columns"
     titulo="Gestión de Usuario"

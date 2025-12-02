@@ -32,6 +32,8 @@ import { PageHeaderService } from '../../../../shared/services/page-header/page-
 import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-alert.service';
 import { ContractsRealtimeService } from '../../services/contract/contracts-realtime.service';
 import { ContractStore } from '../../store/contract.store';
+import { CONTRACTS_TOUR } from './contracts-tour';
+import { DriverJsService } from '../../../../shared/services/driver/driver-js.services';
 
 @Component({
   selector: 'app-contracts-list',
@@ -61,6 +63,7 @@ export class ContractsListComponent implements OnInit, OnDestroy {
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly pageHeader = inject(PageHeaderService);
   private readonly realtime = inject(ContractsRealtimeService);
+  private readonly driverJs = inject(DriverJsService);
 
   readonly rows = this.store.items;
   readonly loading = this.store.loading;
@@ -105,6 +108,7 @@ export class ContractsListComponent implements OnInit, OnDestroy {
     this.pageHeader.setPageHeader('Contratos', 'Gestión de Contratos');
     this.realtime.start();
     await this.store.loadAll({ force: true });
+    this.driverJs.registerSteps('/contracts', CONTRACTS_TOUR);
   }
 
   ngOnDestroy(): void {

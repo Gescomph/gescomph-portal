@@ -44,7 +44,7 @@
 <!-- Contenido principal -->
 <ng-template #contentTpl>
   <!-- Encabezado de página -->
-  <header class="page-header">
+  <header id="contracts-header" class="page-header">
     <div class="page-title">
       <h2>Gestión de Contratos</h2>
       <p class="muted">Contratos (según tu rol)</p>
@@ -52,6 +52,7 @@
 
     <div class="header-actions">
       <button
+        id="contracts-clauses-btn"
         *appHasRoleAndPermission="'Administrador'"
         mat-stroked-button
         color="primary"
@@ -61,7 +62,7 @@
         Cláusulas
       </button>
 
-      <mat-form-field appearance="outline" class="search-field">
+      <mat-form-field id="contracts-search" appearance="outline" class="search-field">
         <mat-label>Buscar</mat-label>
         <input
           matInput
@@ -72,6 +73,7 @@
 
       <ng-container *appHasRoleAndPermission="'Administrador'; perms: 'CREAR'">
         <app-standard-button
+          id="contracts-new-btn"
           text="Nuevo Contrato"
           variant="raised"
           color="primary"
@@ -84,7 +86,7 @@
   </header>
 
   <!-- Métricas rápidas -->
-  <section class="stats">
+  <section id="contracts-stats" class="stats">
     <div class="stat-card">
       <mat-icon aria-hidden="true">assignment</mat-icon>
       <div class="stat-text">
@@ -109,7 +111,7 @@
   </section>
 
   <!-- Grid de tarjetas -->
-  <section class="cards-grid" role="list" aria-label="Listado de contratos">
+  <section id="contracts-grid" class="cards-grid" role="list" aria-label="Listado de contratos">
     <article
       class="contract-card"
       *ngFor="let row of pagedFiltered(); trackBy: trackById"
@@ -130,6 +132,7 @@
 
         <div class="card-actions">
           <button
+            id="contract-download-{{row.id}}"
             mat-icon-button
             matTooltip="Descargar PDF"
             (click)="onDownload(row)"
@@ -139,6 +142,7 @@
           </button>
 
           <button
+            id="contract-view-{{row.id}}"
             mat-icon-button
             matTooltip="Ver detalle"
             (click)="onView(row)"
@@ -148,6 +152,7 @@
 
           <div *appHasRoleAndPermission="'Administrador'; perms: 'EDITAR'">
             <app-toggle-button-component
+              id="contract-toggle-{{row.id}}"
               [checked]="!!row?.active"
               [disabled]="loading()"
               (changed)="onToggleActive(row, $event)">
@@ -205,6 +210,7 @@
 
   <!-- 📄 Paginador -->
   <mat-paginator
+    id="contracts-paginator"
     [length]="totalCount()"
     [pageSize]="pageSize()"
     [pageIndex]="pageIndex()"
