@@ -2,13 +2,14 @@ import { Component, computed, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserStore } from '../../core/security/permission/user.store';
 import { PageHeaderService } from '../../shared/services/page-header/page-header.service';
 import { AuthService } from '../../core/security/auth/auth.service';
 
 @Component({
   selector: 'app-header',
-  imports: [MatIconModule, MatMenuModule, MatButtonModule],
+  imports: [MatIconModule, MatMenuModule, MatButtonModule, MatTooltipModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
