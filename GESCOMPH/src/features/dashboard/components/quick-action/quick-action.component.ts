@@ -11,9 +11,8 @@ import { RouterLink } from '@angular/router';
 export class QuickActionComponent {
   @Input() actions = [
     { label: 'Nuevo Contrato', style: 'btn-outline-success', RouterLink: '../contracts'},
-    { label: 'Nuevo Establecimiento', style: 'btn-outline-success', RouterLink: '../establishments/main'},
-    { label: 'Nueva Plaza', style: 'btn-outline-success', RouterLink: '../establishments/main'},
-    { label: 'Nuevo Usuario', style: 'btn-outline-success', RouterLink: '../tenants'},
+    { label: 'Gestión de Establecimientos', style: 'btn-outline-success', RouterLink: '../establishments/main'},
+    { label: 'Nuevo Usuario', style: 'btn-outline-success', RouterLink: '../security/users'},
     { label: 'Gestionar Citas', style: 'btn-outline-success', RouterLink: '../appointment'},
   ];
 }
