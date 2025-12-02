@@ -1,13 +1,30 @@
-<main class="landing container-fluid">
+<main class="landing">
   <app-banner></app-banner>
-  <app-history></app-history>
 
-  <section id="establishments" aria-labelledby="establishments-title">
-    <app-establishments
-      [establishments]="items()"
-      (view)="onView($event)"
-      (createAppointment)="onCreateAppointment($event)">
-    </app-establishments>
+  <section class="landing-section history-shell" aria-label="Territorio y contexto">
+    <app-history></app-history>
+  </section>
+
+  <section id="establishments" class="landing-section locales-shell" aria-labelledby="establishments-title">
+    <div class="container">
+      <div class="section-heading section-heading-inline">
+        <div>
+          <p class="eyebrow">Disponibilidad en Palermo</p>
+          <h2 id="establishments-title">Elige el espacio ideal y agenda en el momento</h2>
+          <p class="lead">
+            Explora los locales activos, revisa su estado y reserva una visita. La informacion de cada ubicacion se actualiza en tiempo real.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <app-establishments
+        [establishments]="items()"
+        (view)="onView($event)"
+        (createAppointment)="onCreateAppointment($event)">
+      </app-establishments>
+    </div>
   </section>
 </main>
 
