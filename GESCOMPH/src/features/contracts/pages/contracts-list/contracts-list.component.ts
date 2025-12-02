@@ -11,6 +11,7 @@ import {
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { finalize, switchMap, take, tap } from 'rxjs/operators';
+import { RouterModule } from '@angular/router';
 
 import { ContractSelectModel } from '../../models/contract.models';
 import { ContractService } from '../../services/contract/contract.service';
@@ -44,6 +45,7 @@ import { ContractStore } from '../../store/contract.store';
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
+    RouterModule,
     ToggleButtonComponent,
     HasRoleAndPermissionDirective,
     StandardButtonComponent,
