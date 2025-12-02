@@ -145,7 +145,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .locales__arrow {
     display: none !important;
   }
@@ -173,3 +173,8 @@
     flex: 0 0 240px;
   }
 }
+
+
+
+
+

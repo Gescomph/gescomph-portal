@@ -80,7 +80,7 @@
 }
 
 /* --- Responsive --- */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .action-btn {
     height: 40px;
   }
@@ -94,3 +94,8 @@
     padding: 0 10px;
   }
 }
+
+
+
+
+

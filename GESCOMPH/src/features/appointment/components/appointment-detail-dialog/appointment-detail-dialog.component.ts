@@ -7,11 +7,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { finalize, take } from 'rxjs/operators';
 
 import { StandardButtonComponent } from '../../../../shared/components/ui/standard-button/standard-button.component';
-import { AppointmentSelect } from '../../models/appointment.models';
+import { AppointmentSelect, AppointmentStatus } from '../../models/appointment.models';
 import { AppointmentService } from '../../services/appointment/appointment.service';
 import { AppointmentStore } from '../../store/appointment.store';
-
-type ComputedStatus = 'SCHEDULED' | 'OVERDUE' | 'CLOSED';
 
 @Component({
   selector: 'app-appointment-detail-dialog',
@@ -37,12 +35,7 @@ export class AppointmentDetailDialogComponent implements OnInit {
   loading = false;
   error: string | null = null;
 
-  // Etiquetas de estado (calculado en front)
-  private static readonly STATUS_LABEL = {
-    SCHEDULED: 'Programada',
-    OVERDUE: 'Vencida',
-    CLOSED: 'Cerrada',
-  } as const;
+  readonly AppointmentStatusEnum = AppointmentStatus;
 
   constructor(
     private readonly dialogRef: MatDialogRef<AppointmentDetailDialogComponent>,
@@ -86,22 +79,6 @@ export class AppointmentDetailDialogComponent implements OnInit {
           this.error = 'No se pudo cargar el detalle de la cita.';
         },
       });
-  }
-
-  // Estado calculado:
-  // - CLOSED: !active
-  // - OVERDUE: active && dateTimeAssigned en el pasado
-  // - SCHEDULED: active && dateTimeAssigned en el futuro/ahora
-  getComputedStatus(a: AppointmentSelect | null): ComputedStatus {
-    if (!a) return 'CLOSED';
-    if (!a.active) return 'CLOSED';
-    const now = new Date();
-    const assigned = new Date(a.dateTimeAssigned);
-    return assigned.getTime() < now.getTime() ? 'OVERDUE' : 'SCHEDULED';
-  }
-
-  getStatusText(status: ComputedStatus): string {
-    return AppointmentDetailDialogComponent.STATUS_LABEL[status];
   }
 
   close(): void {

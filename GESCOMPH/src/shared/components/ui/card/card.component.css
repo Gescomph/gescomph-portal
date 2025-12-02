@@ -1,7 +1,12 @@
 /* --- Tarjeta base --- */
+:host {
+  display: block;
+  height: 100%;
+}
+
 .local-card {
-  width: 280px;
-  max-height:350px ;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -177,16 +182,32 @@
   gap: 0.5rem;
   min-height: 40px;
 
-  margin-left: auto; /* <<--- FIX */
+  margin-left: auto;
+  /* <<--- FIX */
 }
 
 app-button {
   display: inline-flex;
 }
 
-@media (max-width: 768px) {
-  .local-card { width: 100%; }
-  .card-content { padding: 1rem; }
-  .local-name { font-size: 1rem; }
-  .card-price.bubble-style { font-size: 1rem; }
+@media (max-width: 767px) {
+  .local-card {
+    width: 100%;
+  }
+
+  .card-content {
+    padding: 1rem;
+  }
+
+  .local-name {
+    font-size: 1rem;
+  }
+
+  .card-price.bubble-style {
+    font-size: 1rem;
+  }
 }
+
+
+
+

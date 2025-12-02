@@ -5,68 +5,74 @@
     [columns]="columns"
     [titulo]="'Gestión de Citas'"
     [showActionsColumn]="false"
-    [subTitulo]="'Administra los citas del sistema'"
-    [showDetailButton]="false"
-    >
+    [subTitulo]="'Administra las citas del sistema'"
+    [showDetailButton]="false">
   </app-generic-table>
 
   <ng-template #userTemplate let-row>
-    <div>{{ row.personName }}</div>
-    <small>{{ row.email }}</small>
+    <div class="fw-semibold">{{ row.personName }}</div>
+    <small class="text-muted">Tel: {{ row.phone || 'N/D' }}</small>
   </ng-template>
 
-  <!-- Solo fecha -->
   <ng-template #onlyDateTpl let-row>
-    {{ row.requestDate | date:'yyyy-MM-dd' }}
+    {{ row.requestDate | date:'dd/MM/yyyy' }}
   </ng-template>
 
-  <!-- Fecha y hora -->
   <ng-template #dateTimeTpl let-row>
-    {{ row.dateTimeAssigned | date:'yyyy-MM-dd HH:mm' }}
+    {{ row.dateTimeAssigned | date:'dd/MM/yyyy HH:mm' }}
   </ng-template>
 
+  <ng-template #statusTemplate let-row>
+    <span
+      class="status-chip"
+      [ngClass]="{
+        'status-chip--pending': (row.status ?? AppointmentStatusEnum.Pendiente) === AppointmentStatusEnum.Pendiente,
+        'status-chip--approved': row.status === AppointmentStatusEnum.Aprobada,
+        'status-chip--rejected': row.status === AppointmentStatusEnum.Rechazada
+      }">
+      {{ row.statusName || 'Pendiente' }}
+    </span>
+  </ng-template>
 
+  <ng-template #actionsTemplate let-row>
+    <div class="d-inline-flex align-items-center gap-2">
+      <button
+        mat-icon-button
+        matTooltip="Ver detalle"
+        (click)="onView(row)"
+        aria-label="Ver detalle">
+        <mat-icon>visibility</mat-icon>
+      </button>
 
-  <ng-template #estadoTemplate let-row>
-    <div class="d-inline-flex align-items-center gap-3 flex-nowrap">
+      <button
+        mat-icon-button
+        matTooltip="Aprobar cita"
+        color="primary"
+        [disabled]="(row.status ?? AppointmentStatusEnum.Pendiente) !== AppointmentStatusEnum.Pendiente || isProcessing(row.id, 'accept')"
+        (click)="onAccept(row)"
+        aria-label="Aprobar cita">
+        <mat-icon *ngIf="!isProcessing(row.id, 'accept')">task_alt</mat-icon>
+        <mat-progress-spinner
+          *ngIf="isProcessing(row.id, 'accept')"
+          diameter="20"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </button>
 
-      <div class="d-inline-flex align-items-center gap-2">
-        <button
-          mat-icon-button
-          matTooltip="Ver detalle"
-          (click)="onView(row)"
-          aria-label="Ver detalle">
-          <mat-icon>visibility</mat-icon>
-        </button>
-        <!-- Activar -->
-        <button mat-icon-button matTooltip="Activar" aria-label="Activar" class="text-white"
-          class="badge-success-solid"
-          [disabled]="row.active || pendingId === row.id"
-          (click)="confirmState(row, true)">
-
-          <mat-icon *ngIf="!(pendingId === row.id && desiredState === true)">check</mat-icon>
-          <mat-progress-spinner
-            *ngIf="pendingId === row.id && desiredState === true" diameter="20"
-            mode="indeterminate">
-          </mat-progress-spinner>
-
-        </button>
-
-        <!-- Desactivar -->
-        <button mat-icon-button matTooltip="Desactivar" aria-label="Desactivar" class="text-white badge-warning"
-
-          [disabled]="!row.active || pendingId === row.id" (click)="confirmState(row, false)">
-
-          <mat-icon *ngIf="!(pendingId === row.id && desiredState === false)">close</mat-icon>
-
-          <mat-progress-spinner *ngIf="pendingId === row.id && desiredState === false"
-            diameter="20"
-            mode="indeterminate">
-          </mat-progress-spinner>
-        </button>
-      </div>
+      <button
+        mat-icon-button
+        matTooltip="Rechazar cita"
+        color="warn"
+        [disabled]="(row.status ?? AppointmentStatusEnum.Pendiente) !== AppointmentStatusEnum.Pendiente || isProcessing(row.id, 'reject')"
+        (click)="onReject(row)"
+        aria-label="Rechazar cita">
+        <mat-icon *ngIf="!isProcessing(row.id, 'reject')">block</mat-icon>
+        <mat-progress-spinner
+          *ngIf="isProcessing(row.id, 'reject')"
+          diameter="20"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </button>
     </div>
   </ng-template>
-
-
 </div>

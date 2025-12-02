@@ -31,7 +31,8 @@
   border-radius: 10px;
   box-shadow: var(--shadow-2);
   margin: 1rem;
-  border: 1.5px solid var(--green-200); /* Nuevo borde verde claro */
+  border: 1.5px solid var(--green-200);
+  /* Nuevo borde verde claro */
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -206,14 +207,93 @@ h3 {
   .dialog-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    margin: 1rem;
   }
 
   .carousel__image {
-    height: 220px;
+    height: 200px;
   }
 
   .dialog-actions {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .dialog-title {
+    font-size: 1.1rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .establishment-dialog {
+    margin: 0.25rem;
+  }
+
+  .dialog-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin: 0.5rem;
+  }
+
+  .dialog-left,
+  .dialog-right {
+    padding: 0.5rem;
+  }
+
+  .carousel__image {
+    height: 120px;
+  }
+
+  .carousel__arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .carousel__arrow--left {
+    left: 0.5rem;
+  }
+
+  .carousel__arrow--right {
+    right: 0.5rem;
+  }
+
+  .carousel__dots {
+    margin-top: 0.5rem;
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.3rem;
+  }
+
+  .info-list {
+    gap: 0.4rem;
+  }
+
+  .info-list li {
+    font-size: 0.85rem;
+  }
+
+  .info-list mat-icon {
+    font-size: 18px;
+  }
+
+  .description {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .dialog-actions {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .no-images {
+    padding: 1rem 0.5rem;
   }
 }

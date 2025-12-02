@@ -15,7 +15,7 @@ import { ContractSelectModel } from '../../../../contracts/models/contract.model
 import { ChartObligationsMonths } from '../../../../contracts/models/obligation-month.models';
 import { ContractService } from '../../../../contracts/services/contract/contract.service';
 import { DashboardService } from '../../../services/dashboard.service';
-import { AppointmentSelect } from '../../../../appointment/models/appointment.models';
+import { AppointmentSelect, AppointmentStatus } from '../../../../appointment/models/appointment.models';
 import { AppointmentService } from '../../../../appointment/services/appointment/appointment.service';
 import { DASHBOARD_TOUR } from './dashboard-tour';
 import { DriverJsService } from '../../../../../shared/services/driver/driver-js.services';
@@ -92,15 +92,23 @@ export class DashboardComponent implements OnInit {
   readonly upcomingAppointments = computed<DashboardAppointment[]>(() => {
     const now = Date.now();
     return this.appointments()
-      .filter((appointment) => appointment.active)
+      .filter((appointment) => appointment.active && this.isUpcomingStatus(appointment.status))
       .map((appointment) => {
-        const appointmentDate = new Date(appointment.dateTimeAssigned);
+        const appointmentDate = appointment.dateTimeAssigned ? new Date(appointment.dateTimeAssigned) : new Date(NaN);
         return { ...appointment, appointmentDate };
       })
       .filter((appointment) => !isNaN(appointment.appointmentDate.getTime()) && appointment.appointmentDate.getTime() >= now)
       .sort((a, b) => a.appointmentDate.getTime() - b.appointmentDate.getTime())
       .slice(0, 3);
   });
+
+  private isUpcomingStatus(status: AppointmentStatus): boolean {
+    return ![
+      AppointmentStatus.Rechazada,
+      AppointmentStatus.Finalizada,
+      AppointmentStatus.Vencida
+    ].includes(status);
+  }
 
   readonly expiringContracts = computed<ExpiringContract[]>(() => {
     const now = Date.now();

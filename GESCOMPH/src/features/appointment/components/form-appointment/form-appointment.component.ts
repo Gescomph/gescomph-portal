@@ -9,8 +9,6 @@ import {
 } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,8 +45,6 @@ import { SweetAlertService } from '../../../../shared/utils/notifications/sweet-
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     MatIconModule,
     MatStepperModule,
     MatProgressSpinnerModule,
@@ -86,9 +82,15 @@ export class FormAppointmentComponent implements OnInit, OnDestroy {
   loadingEstablishments = false;
   saving = false;
 
+  // Selección de horarios
+  timeSlots = [
+    '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+    '14:30', '15:00', '15:30', '16:00', '16:30'
+  ];
+  availableTimes: string[] = [];
+  selectedTime = '';
+
   today = new Date();
-  minEndDate = this.today;
-  startMinDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
 
   private lastQueriedDoc: string | null = null;
 
@@ -100,12 +102,18 @@ export class FormAppointmentComponent implements OnInit, OnDestroy {
     this.initForms();
     this.loadCiudades();
     this.setupReactivePersonLookup();
+    this.setupRequestDateChangeListener();
 
     if (this.data) {
       this.appointmentFormGroup.patchValue({
         establishmentId: this.data.id,
         establishmentName: this.data.name       // para mostrar en input
       });
+    }
+
+    const initialDate = this.appointmentFormGroup.get('requestDate')?.value;
+    if (initialDate) {
+      this.fetchAvailableTimes(initialDate);
     }
   }
 
@@ -127,9 +135,7 @@ export class FormAppointmentComponent implements OnInit, OnDestroy {
 
     this.appointmentFormGroup = this.fb.group({
       description: ['', Validators.required],
-      observation: [''],
       requestDate: [this.today, Validators.required],
-      dateTimeAssigned: [this.today, Validators.required],
       cityId: [null, Validators.required],
       establishmentId: [null, Validators.required],
       establishmentName: [null, Validators.required]
@@ -231,6 +237,82 @@ export class FormAppointmentComponent implements OnInit, OnDestroy {
     ['cityId'].forEach(k => this.appointmentFormGroup.get(k)?.enable({ emitEvent: false }));
   }
 
+  /* ===================== Horarios ===================== */
+  private setupRequestDateChangeListener(): void {
+    this.appointmentFormGroup.get('requestDate')!
+      .valueChanges.pipe(
+        takeUntil(this.destroy$),
+        distinctUntilChanged()
+      )
+      .subscribe(date => {
+        if (date) {
+          this.selectedTime = '';
+          this.fetchAvailableTimes(date);
+        } else {
+          this.availableTimes = [];
+          this.selectedTime = '';
+        }
+      });
+  }
+
+  private fetchAvailableTimes(selectedDate: Date): void {
+    const dateString = this.formatDate(selectedDate);
+    this.appointmentSvc.getByDate(dateString)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(err => {
+          console.error('Error al obtener citas:', err);
+          this.availableTimes = [...this.timeSlots];
+          return of([]);
+        })
+      )
+      .subscribe(appointments => {
+        if (!appointments || appointments.length === 0) {
+          this.availableTimes = [...this.timeSlots];
+          return;
+        }
+
+        const establishmentAppointments = appointments.filter(
+          app => app.establishmentId === this.data.id
+        );
+
+        const occupiedTimes = establishmentAppointments
+          .filter(app => !!app.dateTimeAssigned)
+          .map(app => {
+            const date = new Date(app.dateTimeAssigned!);
+            return this.formatTime(date);
+          });
+
+        this.availableTimes = this.timeSlots.filter(
+          slot => !occupiedTimes.includes(slot)
+        );
+      });
+  }
+
+  selectTime(time: string): void {
+    this.selectedTime = time;
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private formatDateForApi(date: Date): string {
+    return `${this.formatDate(date)}T00:00:00`;
+  }
+
+  private formatDateTimeForApi(date: Date, time: string): string {
+    return `${this.formatDate(date)}T${time}:00`;
+  }
+
+  private formatTime(date: Date): string {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
 
   /* ===================== Acciones ===================== */
   cancel(): void {
@@ -259,14 +341,13 @@ export class FormAppointmentComponent implements OnInit, OnDestroy {
       document: String(p.get('document')!.value).trim(),
       address: String(p.get('address')?.value ?? '').trim(),
       phone: String(p.get('phone')!.value).trim(),
-      email: String(p.get('email')!.value).trim(),           // 🔥 agregado
+      email: String(p.get('email')!.value).trim(),
       cityId: Number(a.get('cityId')!.value),
       establishmentId: Number(a.get('establishmentId')!.value),
       description: String(a.get('description')!.value).trim(),
-      observation: String(a.get('observation')!.value ?? '').trim(),
-      requestDate: a.get('requestDate')!.value,
-      dateTimeAssigned: a.get('dateTimeAssigned')!.value,
-      active: true                                          // 🔥 agregado
+      requestDate: this.formatDateForApi(a.get('requestDate')!.value),
+      dateTimeAssigned: this.buildDateTimeAssigned(),
+      active: true
     };
 
 
@@ -281,6 +362,13 @@ export class FormAppointmentComponent implements OnInit, OnDestroy {
 
   fixEmail(): void {
     this.utils.coerceEmailTld(this.personFormGroup.get('email'));
+  }
+
+  private buildDateTimeAssigned(): string | null {
+    const requestDate = this.appointmentFormGroup.get('requestDate')!.value as Date;
+    if (!requestDate || !this.selectedTime) return null;
+    // Enviamos hora local sin zona para que el backend no aplique corrimientos a UTC
+    return this.formatDateTimeForApi(requestDate, this.selectedTime);
   }
 
   /**

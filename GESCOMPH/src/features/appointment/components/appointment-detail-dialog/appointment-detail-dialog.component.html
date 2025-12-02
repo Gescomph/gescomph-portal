@@ -1,3 +1,4 @@
+
 <div class="dialog-container">
   <!-- Header -->
   <div class="dialog-header">
@@ -27,12 +28,12 @@
         <span
           class="chip"
           [ngClass]="{
-            'chip--success': getComputedStatus(a) === 'SCHEDULED',
-            'chip--danger':  getComputedStatus(a) === 'OVERDUE',
-            'chip--warning': getComputedStatus(a) === 'CLOSED'
+            'chip--success': a.status === AppointmentStatusEnum.Aprobada,
+            'chip--danger':  a.status === AppointmentStatusEnum.Rechazada,
+            'chip--warning': a.status === AppointmentStatusEnum.Pendiente || a.status === AppointmentStatusEnum.Asignada
           }"
           aria-live="polite">
-          {{ getStatusText(getComputedStatus(a)) }}
+          {{ a.statusName }}
         </span>
       </div>
 
@@ -72,7 +73,7 @@
 
       <div class="section">
         <h4>Descripción</h4>
-        <p class="muted" *ngIf="!a.description">—</p>
+        <p class="muted" *ngIf="!a.description">-</p>
         <p *ngIf="a.description">{{ a.description }}</p>
       </div>
 
@@ -88,7 +89,7 @@
   <ng-template #stateTpl>
     <div class="state" *ngIf="loading" aria-live="polite" aria-busy="true">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-      <div>Cargando detalle…</div>
+      <div>Cargando detalle.</div>
     </div>
 
     <div class="state error" *ngIf="!loading && error" aria-live="assertive">

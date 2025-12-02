@@ -1,0 +1,60 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon aria-hidden="true">{{ isReject ? 'block' : 'task_alt' }}</mat-icon>
+  {{ isReject ? 'Rechazar cita' : 'Aprobar cita' }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="dialog-text">
+    Se {{ isReject ? 'rechazará' : 'aprobará' }} la cita solicitada por
+    <strong>{{ appointment.personName }}</strong> para
+    <strong>{{ appointment.establishmentName }}</strong>.
+  </p>
+
+  <div class="info-grid">
+    <div class="field">
+      <span class="label">Estado actual</span>
+      <span class="value chip" [ngClass]="{ 'chip--warning': appointment.status === AppointmentStatus.Pendiente, 'chip--success': appointment.status === AppointmentStatus.Aprobada, 'chip--danger': appointment.status === AppointmentStatus.Rechazada }">
+        {{ appointment.statusName }}
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="label">Solicitada</span>
+      <span class="value">{{ appointment.requestDate | date:'dd/MM/yyyy' }}</span>
+    </div>
+
+    <div class="field">
+      <span class="label">Asignada</span>
+      <span class="value">{{ appointment.dateTimeAssigned | date:'dd/MM/yyyy HH:mm' }}</span>
+    </div>
+
+    <div class="field">
+      <span class="label">Teléfono</span>
+      <span class="value">{{ appointment.phone || '-' }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="isReject" class="form-block">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Motivo (opcional)</mat-label>
+      <textarea matInput rows="3" [formControl]="observationControl" placeholder="Ej. No hay disponibilidad en la fecha solicitada."></textarea>
+      <mat-hint align="end">{{ observationControl.value.length }} / 300</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="!canManage" class="warning">
+    Solo se pueden gestionar citas en estado Pendiente.
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" (click)="cancel()">Cancelar</button>
+  <button
+    mat-flat-button
+    [color]="isReject ? 'warn' : 'primary'"
+    type="button"
+    (click)="confirm()"
+    [disabled]="!canManage || observationControl.invalid">
+    {{ isReject ? 'Rechazar' : 'Aprobar' }}
+  </button>
+</mat-dialog-actions>

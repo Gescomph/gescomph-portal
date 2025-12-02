@@ -15,19 +15,12 @@
       <div class="row">
         <mat-form-field appearance="outline" class="field">
           <mat-label>Documento de Identidad</mat-label>
-          <input
-            matInput
-            appDocumentFormat
-            class="document-digit-input"
-            formControlName="document"
-            placeholder="1.234.567"
-            maxlength="14"
-            inputmode="numeric"
-            required
-            (keydown.enter)="personFormGroup.get('document')!.markAsTouched(); personFormGroup.get('document')!.updateValueAndValidity();"
-          />
+          <input matInput appDocumentFormat class="document-digit-input" formControlName="document"
+            placeholder="1.234.567" maxlength="14" inputmode="numeric" required
+            (keydown.enter)="personFormGroup.get('document')!.markAsTouched(); personFormGroup.get('document')!.updateValueAndValidity();" />
           <mat-spinner *ngIf="loadingPerson" matSuffix diameter="20"></mat-spinner>
-          <mat-error *ngIf="personFormGroup.get('document')?.hasError('required')">Por favor ingrese el número de documento de identidad</mat-error>
+          <mat-error *ngIf="personFormGroup.get('document')?.hasError('required')">Por favor ingrese el número de
+            documento de identidad</mat-error>
           <mat-error *ngIf="personFormGroup.get('document')?.hasError('required')">
             Por favor ingrese el número de documento de identidad
           </mat-error>
@@ -72,7 +65,8 @@
         <!-- Email -->
         <mat-form-field appearance="outline" class="field no-dim">
           <mat-label>Correo Electrónico</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="carlos.garcia@gmail.com" (blur)="fixEmail()" />
+          <input matInput type="email" formControlName="email" placeholder="carlos.garcia@gmail.com"
+            (blur)="fixEmail()" />
           <mat-hint>Se enviará el contrato a este correo</mat-hint>
           <mat-error *ngIf="personFormGroup.get('email')?.errors as errs">
             {{ getFirstError(personFormGroup.get('email')) }}
@@ -94,12 +88,7 @@
       <!-- Botones -->
       <div class="actions">
         <app-standard-button text="Cancelar" variant="stroked" (clicked)="cancel()"></app-standard-button>
-        <app-standard-button
-          text="Siguiente"
-          variant="raised"
-          color="primary"
-          icon="arrow_forward"
-          iconPosition="right"
+        <app-standard-button text="Siguiente" variant="raised" color="primary" icon="arrow_forward" iconPosition="right"
           (clicked)="stepper.next()">
         </app-standard-button>
       </div>
@@ -118,18 +107,13 @@
         <h3>Información de la Cita</h3>
       </div>
 
-      <div class="row two-cols">
+      <div class="row">
         <mat-form-field appearance="outline" class="field no-dim">
           <mat-label>Descripción</mat-label>
           <input matInput formControlName="description" />
           <mat-error *ngIf="appointmentFormGroup.get('description')?.hasError('required')">
             Por favor ingrese la descripción
           </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="field no-dim">
-          <mat-label>Observación</mat-label>
-          <input matInput formControlName="observation" />
         </mat-form-field>
       </div>
 
@@ -152,40 +136,28 @@
       <div class="section-header">
         <h3>Fechas de la Cita</h3>
       </div>
-
-      <div class="row two-cols">
-        <mat-form-field appearance="outline" class="field no-dim">
-          <mat-label>Fecha de Solicitud</mat-label>
-          <input matInput [matDatepicker]="pickerRequest" formControlName="requestDate" readonly />
-          <button mat-icon-button matSuffix type="button" (click)="pickerRequest.open()" aria-label="Abrir calendario">
-            <mat-icon>event</mat-icon>
-          </button>
-          <mat-datepicker #pickerRequest></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="field no-dim">
-          <mat-label>Fecha y Hora Asignada</mat-label>
-          <input matInput [matDatepicker]="pickerAssigned" formControlName="dateTimeAssigned" readonly />
-          <button mat-icon-button matSuffix type="button" (click)="pickerAssigned.open()" aria-label="Abrir calendario">
-            <mat-icon>event</mat-icon>
-          </button>
-          <mat-datepicker #pickerAssigned></mat-datepicker>
-        </mat-form-field>
+      <!-- Selección de Hora -->
+      <div class="row" *ngIf="appointmentFormGroup.get('requestDate')?.value">
+        <div class="time-selection">
+          <h4>Horarios Disponibles</h4>
+          <p class="hint" *ngIf="availableTimes.length === 0">No hay horarios disponibles para esta fecha</p>
+          <div class="time-slots">
+            <button *ngFor="let time of availableTimes" type="button" class="time-slot"
+              [class.selected]="selectedTime === time" (click)="selectTime(time)">
+              {{ time }}
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Botones -->
       <div class="actions">
         <app-standard-button text="Cancelar" variant="stroked" (clicked)="cancel()"></app-standard-button>
-        <app-standard-button text="Atrás" variant="flat" icon="arrow_back" (clicked)="stepper.previous()"></app-standard-button>
-        <app-standard-button
-          [text]="saving ? 'Creando…' : 'Crear Cita'"
-          variant="raised"
-          color="primary"
-          icon="save"
-          [disabled]="personFormGroup.invalid || appointmentFormGroup.invalid || saving"
-          [loading]="saving"
-          loadingText="Creando…"
-          (clicked)="submit()">
+        <app-standard-button text="Atrás" variant="flat" icon="arrow_back"
+          (clicked)="stepper.previous()"></app-standard-button>
+        <app-standard-button [text]="saving ? 'Creando…' : 'Crear Cita'" variant="raised" color="primary" icon="save"
+          [disabled]="personFormGroup.invalid || appointmentFormGroup.invalid || saving" [loading]="saving"
+          loadingText="Creando…" (clicked)="submit()">
         </app-standard-button>
       </div>
     </form>

@@ -105,9 +105,14 @@
 }
 
 /* Ajustes responsivos */
-@media (max-width: 600px) {
+@media (max-width: 575px) {
   .driverjs-popover {
     max-width: 95vw;
     font-size: 0.95em;
   }
 }
+
+
+
+
+

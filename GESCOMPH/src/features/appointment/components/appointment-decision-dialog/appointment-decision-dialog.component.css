@@ -1,0 +1,88 @@
+.dialog-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dialog-text {
+  margin: 0;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--gray-200, #e5e7eb);
+  border-radius: 8px;
+  background: var(--color-surface, #fff);
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-500, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.value {
+  font-size: 14px;
+  color: var(--color-text, #111827);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 12px;
+  background: var(--gray-100, #f3f4f6);
+  color: var(--gray-700, #374151);
+}
+
+.chip--warning {
+  background: var(--state-warning-bg, #fef9c3);
+  color: var(--state-warning, #d97706);
+}
+
+.chip--success {
+  background: var(--state-success-bg, #dcfce7);
+  color: var(--state-success, #16a34a);
+}
+
+.chip--danger {
+  background: var(--state-error-bg, #fee2e2);
+  color: var(--state-error, #b91c1c);
+}
+
+.form-block {
+  margin-top: 6px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.warning {
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: var(--state-warning-bg, #fef9c3);
+  color: var(--state-warning, #92400e);
+  font-size: 13px;
+}

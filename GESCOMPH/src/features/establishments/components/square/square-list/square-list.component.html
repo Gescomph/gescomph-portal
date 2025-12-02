@@ -1,27 +1,16 @@
 <div class="container mt-4">
 
   <!-- 🔍 BUSCADOR + BOTÓN NUEVO -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="controls-container">
     <mat-form-field id="squares-search" class="search-field" appearance="outline">
       <mat-icon matPrefix>search</mat-icon>
-      <input
-        matInput
-        placeholder="Buscar…"
-        [formControl]="filterControl"
-        type="text" />
+      <input matInput placeholder="Buscar…" [formControl]="filterControl" type="text" />
     </mat-form-field>
 
     <!-- 👤 Botón Nueva plaza (solo visible si el usuario tiene permiso CREAR) -->
     <ng-container *appHasRoleAndPermission="'Administrador'; perms: 'CREAR'">
-      <app-standard-button
-        id="squares-new-btn"
-        text="Nueva plaza"
-        variant="raised"
-        color="primary"
-        icon="add"
-        iconPosition="left"
-        (clicked)="onCreate()"
-        [disabled]="loading()">
+      <app-standard-button id="squares-new-btn" text="Nueva plaza" variant="raised" color="primary" icon="add"
+        iconPosition="left" (clicked)="onCreate()" [disabled]="loading()">
       </app-standard-button>
     </ng-container>
   </div>
@@ -36,35 +25,32 @@
   <!-- 📦 Contenido cuando NO está cargando -->
   <ng-template #content>
     <ng-container *ngIf="filteredSquares().length > 0; else noSquares">
-      <div id="squares-cards" class="d-flex flex-wrap gap-3 justify-content-center">
-        <app-card
-          *ngFor="let plaza of pagedSquares(); trackBy: trackById"
-          [resource]="plaza"
-          [showViewMore]="false"
-          [showViewButton]="false"
-          [showAvailableTag]="false"
-          [toggleConfig]="{
-            checked: plaza.active,
-            label: plaza.active ? 'Activo' : 'Inactivo',
-            disabled: isBusy(plaza.id)
-          }"
-          class="plaza-card"
-          (click)="onPlazaCardClick(plaza.id)"
-          (toggleChanged)="onToggleActive(plaza.id, $event)"
-          (delete)="onDelete(plaza)"
-          (edit)="onEdit(plaza)">
-        </app-card>
+      <div id="squares-cards">
+
+        <!-- VISTA ADMINISTRADOR: Con toggle de estado -->
+        <ng-container *appHasRoleAndPermission="'Administrador'">
+          <app-card *ngFor="let plaza of pagedSquares(); trackBy: trackById" [resource]="plaza" [showViewMore]="false"
+            [showViewButton]="false" [showAvailableTag]="false" [toggleConfig]="{
+              checked: plaza.active,
+              label: plaza.active ? 'Activo' : 'Inactivo',
+              disabled: isBusy(plaza.id)
+            }" class="plaza-card" (click)="onPlazaCardClick(plaza.id)"
+            (toggleChanged)="onToggleActive(plaza.id, $event)" (delete)="onDelete(plaza)" (edit)="onEdit(plaza)">
+          </app-card>
+        </ng-container>
+
+        <!-- VISTA ARRENDATARIO: Sin toggle, con botón de acción explícito -->
+        <ng-container *appHasRoleAndPermission="'Arrendador'">
+          <app-card *ngFor="let plaza of pagedSquares(); trackBy: trackById" [resource]="plaza" [showViewMore]="true"
+            [showViewButton]="true" [showAvailableTag]="false" [toggleConfig]="null" class="plaza-card"
+            (click)="onPlazaCardClick(plaza.id)" (view)="onPlazaCardClick(plaza.id)">
+          </app-card>
+        </ng-container>
       </div>
 
       <!-- 📄 Paginación -->
-      <mat-paginator
-        id="squares-paginator"
-        [length]="filteredSquares().length"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="[6, 12, 18]"
-        [pageIndex]="pageIndex"
-        showFirstLastButtons
-        (page)="onPage($event)">
+      <mat-paginator id="squares-paginator" [length]="filteredSquares().length" [pageSize]="pageSize"
+        [pageSizeOptions]="[6, 12, 18]" [pageIndex]="pageIndex" showFirstLastButtons (page)="onPage($event)">
       </mat-paginator>
     </ng-container>
   </ng-template>
@@ -84,15 +70,9 @@
       </span>
 
       <div *appHasRoleAndPermission="'Administrador'; perms: 'EDITAR'">
-        <app-toggle-button-component
-          class="align-middle"
-          [checked]="!!row?.active"
-          [disabled]="loading() || isBusy(row?.id)"
-          (changed)="onToggleActive(row?.id, $event)"
-          [size]="20"
-          [onColor]="'#388E3C'"
-          [offColor]="'#9CA3AF'"
-          [thumb]="'#ffffff'">
+        <app-toggle-button-component class="align-middle" [checked]="!!row?.active"
+          [disabled]="loading() || isBusy(row?.id)" (changed)="onToggleActive(row?.id, $event)" [size]="20"
+          [onColor]="'#388E3C'" [offColor]="'#9CA3AF'" [thumb]="'#ffffff'">
         </app-toggle-button-component>
       </div>
     </div>

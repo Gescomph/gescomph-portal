@@ -1,214 +1,582 @@
 /* =========================
-   Variables (ya deben estar en tu :root)
+   Variables Base
 ========================= */
-/* Ya están definidos los colores verde y amarillo personalizados. */
+:root {
+  --transition: all 0.3s ease;
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
 
 /* =========================
-   Fondo moderno con curva
+   Estructura Base
 ========================= */
-
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, var(--green-100) 0%, var(--green-100) 50%, var(--green-700) 50%, var(--green-700) 100%);
+  overflow-x: hidden;
 }
 
+body {
+  background-color: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =========================
+   Fondo Formal con División de Color
+========================= */
+.container-fluid {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(to right, 
+    #ffffff 0%, 
+    #ffffff 50%, 
+    #15803d 50%, 
+    #15803d 100%
+  );
+}
+
+/* Línea divisoria vertical */
 .container-fluid::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
-  right: 0;
-  width: 60%;
+  left: 50%;
+  width: 1px;
   height: 100%;
-  background: linear-gradient(135deg, var(--green-600), var(--green-700));
-  /* background-color: var(--green-700); */
-  clip-path: ellipse(90% 100% at 100% 50%);
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    rgba(0, 0, 0, 0.1) 50%, 
+    transparent 100%
+  );
   z-index: 0;
 }
 
-.container-fluid {
+/* =========================
+   Layout Principal
+========================= */
+.container-xl {
+  max-width: 1200px;
   position: relative;
   z-index: 1;
-  min-height: 100vh;
-  background-color: transparent;
+}
+
+.row.justify-content-center {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
 }
 
 /* =========================
-   Logo e Identidad
+   Sección del Logo - Formal
 ========================= */
-
-.imagen-logo {
-  max-width: 200px;
-  height: auto;
-}
-
 .text-center {
   position: relative;
-  z-index: 2;
-  color: #14532d; /* verde fuerte para texto sobre fondo claro */
+  padding: 2rem;
+}
+
+.text-center .mb-3 {
+  margin-bottom: 1.5rem;
+}
+
+.imagen-logo {
+  max-width: 180px;
+  height: auto;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+  transition: var(--transition);
+}
+
+.imagen-logo:hover {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* Títulos formales */
+.text-green {
+  color: #15803d;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.text-marmol {
+  color: #4b5563;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.text-marmol.fs-5 {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.text-marmol.fs-6 {
+  color: #6b7280;
 }
 
 /* =========================
-   Formulario
+   Formulario Formal
 ========================= */
-
 .form {
   position: relative;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-  max-width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-card);
+  border: 1px solid #e5e7eb;
+  transition: var(--transition);
 }
 
-/* Inputs */
+.form:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* Encabezado del formulario */
+.form .text-start h4 {
+  color: #15803d;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form .text-start p {
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* =========================
+   Labels Formales
+========================= */
+.form-label {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* =========================
+   Inputs Formales
+========================= */
 .form-control {
-  border-radius: 10px;
   border: 1px solid #d1d5db;
-  padding: .7rem .9rem;
-  transition: border-color .2s ease, box-shadow .2s ease;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #ffffff;
+  transition: var(--transition);
+  font-weight: 400;
+}
+
+.form-control:hover {
+  border-color: #9ca3af;
 }
 
 .form-control:focus {
-  border-color: rgb(134 239 172);
-  box-shadow: 0 0 0 3px rgba(20, 101, 48, .15);
+  border-color: #15803d;
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.1);
   outline: none;
+  background-color: #ffffff;
+}
+
+.form-control::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
 }
 
 .form-control.is-invalid {
   border-color: #dc2626;
-  animation: field-pop .12s ease-out;
+  background-color: #fef2f2;
 }
 
-/* Animación de error */
-@keyframes field-pop {
-  from {
-    transform: scale(1.005);
-  }
-
-  to {
-    transform: scale(1);
-  }
+.form-control.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
-/* Mensajes de error */
+/* =========================
+   Input Group
+========================= */
+.input-group {
+  position: relative;
+}
+
+.input-group .form-control {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group .btn-outline-secondary {
+  border: 1px solid #d1d5db;
+  border-left: none;
+  background-color: #f9fafb;
+  color: #6b7280;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  padding: 0.75rem 1rem;
+  transition: var(--transition);
+}
+
+.input-group .btn-outline-secondary:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.input-group .form-control:hover + .btn-outline-secondary {
+  border-color: #9ca3af;
+}
+
+.input-group .form-control:focus + .btn-outline-secondary {
+  border-color: #15803d;
+}
+
+.input-group .form-control.is-invalid ~ .btn-outline-secondary {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+}
+
+/* =========================
+   Mensajes de Error
+========================= */
 .invalid-feedback {
-  margin-top: .35rem;
+  display: block;
   color: #dc2626;
-  font-size: .875rem;
-  line-height: 1.2rem;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+  font-weight: 500;
+  padding-left: 0.25rem;
 }
 
-/* Botón personalizado */
+/* =========================
+   Botón Formal
+========================= */
 .btn-green {
-  background-color: var(--green-800);
-  color: #fff;
-  border-radius: 10px;
-  padding: .8rem 1rem;
-  font-weight: 600;
-  transition: transform .06s ease, background-color .2s ease, box-shadow .2s ease;
-  box-shadow: 0 6px 14px rgba(20, 101, 48, .18);
+  background-color: #15803d;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.875rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: var(--transition);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .btn-green:hover {
-  background-color: var(--green-700);
+  background-color: #166534;
+  box-shadow: 0 2px 8px rgba(21, 128, 61, 0.3);
+  transform: translateY(-1px);
 }
 
 .btn-green:active {
-  transform: translateY(1px);
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .btn-green:disabled {
-  background-color: var(--gray-300) !important;
-  color: var(--gray-600) !important;
-  border-color: var(--gray-300) !important;
-  opacity: 1;
+  background-color: #d1d5db;
+  color: #9ca3af;
   cursor: not-allowed;
   box-shadow: none;
+  transform: none;
 }
 
-@media (max-width: 575.98px) {
-  /* Ocultar la curva para móviles */
-  .container-fluid::before {
-    display: none;
-  }
+.btn-green:disabled:hover {
+  background-color: #d1d5db;
+  transform: none;
+}
 
-  /* Centrar todo en columna */
-  .row.justify-content-center {
-    flex-direction: column;
-    align-items: center;
-    min-height: auto;
-  }
+/* =========================
+   Link de Recuperación
+========================= */
+.link-secondary {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
 
-  /* Logo más grande y con más margen */
-  .text-center {
-    margin-bottom: 1.5rem;
-  }
+.link-secondary:hover {
+  color: #15803d;
+  text-decoration: underline;
+}
 
-  .imagen-logo {
-    max-width: 130px !important;
-    height: auto;
-  }
+/* =========================
+   RESPONSIVE FORMAL
+========================= */
 
-  /* Formulario con margen para que no quede pegado a los bordes */
-  .form {
-    margin: 0 15px;
-    padding: 20px !important;
+/* Desktop Grande (1400px+) */
+@media (min-width: 1400px) {
+  .container-fluid {
+    padding: 3rem;
   }
   
-  /* Ajustar textos para que se vean bien y no tan pequeños */
-  h2 {
-    font-size: 1.8rem !important;
-  }
-
-  .fs-5 {
-    font-size: 1.1rem !important;
-  }
-}
-
-
-@media (min-width: 576px) and (max-width: 767.98px) {
   .form {
-    margin: 0 20px;
+    padding: 3rem;
   }
-
+  
   .imagen-logo {
-    max-width: 90px;
+    max-width: 200px;
   }
 }
 
-@media (min-width: 768px) and (max-width: 991.98px) {
+/* Desktop (992px - 1399px) */
+@media (min-width: 992px) and (max-width: 1399px) {
+  .row.justify-content-center {
+    gap: 3rem;
+  }
+}
+
+/* Tablets (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .container-fluid {
+    background: linear-gradient(to bottom, 
+      #ffffff 0%, 
+      #ffffff 50%, 
+      #15803d 50%, 
+      #15803d 100%
+    );
+    padding: 2rem 1.5rem;
+  }
+  
+  .container-fluid::before {
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+  }
+  
+  .row.justify-content-center {
+    flex-direction: column;
+    gap: 3rem;
+  }
+  
   .form {
-    margin: 0 30px;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .imagen-logo {
+    max-width: 160px;
   }
 }
 
-@media (min-width: 992px) {
-  .row {
-    min-height: 80vh;
+/* Tablets Pequeñas (576px - 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .container-fluid {
+    background: #f5f5f5;
+    padding: 2rem 1rem;
   }
-}
-
-@media (max-width: 991.98px) {
-  .mb-4.mb-lg-0 {
-    margin-bottom: 2rem !important;
-  }
-  /* Ocultar la curva para móviles */
+  
   .container-fluid::before {
     display: none;
   }
-
-  /* Centrar todo en columna */
+  
   .row.justify-content-center {
     flex-direction: column;
-    align-items: center;
-    min-height: auto;
+    gap: 2.5rem;
+  }
+  
+  .form {
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 2rem;
+  }
+  
+  .imagen-logo {
+    max-width: 150px;
   }
 }
 
-.container-xl {
-  max-width: 1200px;
+/* Móviles (menos de 576px) */
+@media (max-width: 575px) {
+  .container-fluid {
+    background: #f5f5f5;
+    padding: 1.5rem 1rem;
+  }
+  
+  .container-fluid::before {
+    display: none;
+  }
+  
+  .row.justify-content-center {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  /* Logo */
+  .text-center {
+    padding: 1rem;
+  }
+  
+  .text-center .mb-3 {
+    margin-bottom: 1.25rem;
+  }
+  
+  .imagen-logo {
+    max-width: 140px !important;
+  }
+  
+  .text-green {
+    font-size: 1.75rem !important;
+  }
+  
+  .text-center .fs-5 {
+    font-size: 1rem !important;
+  }
+  
+  .text-center .fs-6 {
+    font-size: 0.9rem !important;
+  }
+  
+  /* Formulario */
+  .form {
+    padding: 2rem !important;
+    border-radius: 6px;
+    width: 100%;
+  }
+  
+  .form .text-start h4 {
+    font-size: 1.35rem;
+  }
+  
+  .form .text-start p {
+    font-size: 0.875rem;
+  }
+  
+  /* Inputs */
+  .form-control {
+    padding: 0.875rem 1rem;
+    font-size: 16px; /* Evita zoom en iOS */
+  }
+  
+  .form-label {
+    font-size: 0.8rem;
+  }
+  
+  .input-group .btn-outline-secondary {
+    padding: 0.875rem 1rem;
+  }
+  
+  /* Botón */
+  .btn-green {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Espaciado */
+  .mb-3 {
+    margin-bottom: 1rem !important;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+/* Móviles Pequeños (menos de 360px) */
+@media (max-width: 360px) {
+  .container-fluid {
+    padding: 1rem 0.75rem;
+  }
+  
+  .form {
+    padding: 1.5rem !important;
+  }
+  
+  .imagen-logo {
+    max-width: 120px !important;
+  }
+  
+  .text-green {
+    font-size: 1.5rem !important;
+  }
+  
+  .form .text-start h4 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Landscape Móvil */
+@media (max-height: 600px) and (orientation: landscape) {
+  .container-fluid {
+    padding: 1rem;
+  }
+  
+  .row.justify-content-center {
+    gap: 1.5rem;
+  }
+  
+  .text-center {
+    padding: 0.5rem;
+  }
+  
+  .text-center .mb-3 {
+    margin-bottom: 1rem;
+  }
+  
+  .imagen-logo {
+    max-width: 110px !important;
+  }
+  
+  .text-green {
+    font-size: 1.4rem !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  .text-center .fs-5,
+  .text-center .fs-6 {
+    font-size: 0.8rem !important;
+  }
+  
+  .form {
+    padding: 1.5rem !important;
+  }
+  
+  .form .text-start h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .form .text-start p {
+    font-size: 0.8rem;
+    margin-bottom: 1rem !important;
+  }
+  
+  .mb-3 {
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem !important;
+  }
+  
+  .form-control,
+  .input-group .btn-outline-secondary {
+    padding: 0.65rem 0.875rem;
+  }
+  
+  .btn-green {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.85rem;
+  }
 }

@@ -146,7 +146,7 @@ app-quick-action {
 /* ============================
    RESPONSIVE DE SUMMARY
 ============================ */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .summary-stats {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -198,3 +198,8 @@ app-quick-action {
   justify-content: center;
   align-items: center;
 }
+
+
+
+
+

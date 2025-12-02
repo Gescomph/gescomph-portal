@@ -1,9 +1,8 @@
 // angular 17+
 import { inject, Injectable, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { AppointmentService } from '../services/appointment/appointment.service';
-import { AppointmentSelect, AppointmentCreateModel, AppointmentUpdateModel } from '../models/appointment.models';
-import { tap } from 'rxjs';
+import { AppointmentSelect, AppointmentCreateModel, AppointmentUpdateModel, AppointmentStatus } from '../models/appointment.models';
+import { map, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AppointmentStore {
@@ -15,9 +14,7 @@ export class AppointmentStore {
 
   // ACTIONS
   loadAll() {
-    return this.service.getAll().pipe(
-      tap(data => this.appointments.set(data))
-    );
+    return this.service.getAll().pipe(tap(data => this.appointments.set(data.map(this.ensureStatus))));
   }
 
   loadById(id: number) {
@@ -53,4 +50,45 @@ export class AppointmentStore {
       tap(() => this.loadAll().subscribe())
     );
   }
+
+  accept(id: number) {
+    return this.service.accept(id).pipe(
+      map(a => this.applyStatus(a, AppointmentStatus.Aprobada, 'Aprobada')),
+      tap((updated) => this.replaceOne(updated))
+    );
+  }
+
+  reject(id: number, observation?: string | null) {
+    return this.service.reject(id, observation).pipe(
+      map(a => this.applyStatus(a, AppointmentStatus.Rechazada, 'Rechazada')),
+      tap((updated) => this.replaceOne(updated))
+    );
+  }
+
+  private replaceOne(appointment: AppointmentSelect) {
+    this.appointments.update(list => {
+      const idx = list.findIndex(a => a.id === appointment.id);
+      if (idx === -1) return [...list, appointment];
+      const clone = [...list];
+      clone[idx] = appointment;
+      return clone;
+    });
+  }
+
+  private ensureStatus = (a: AppointmentSelect): AppointmentSelect => {
+    if (typeof a.status === 'number' && a.statusName) return a;
+    const status = a.status ?? AppointmentStatus.Pendiente;
+    const statusName = a.statusName ?? 'Pendiente';
+    return { ...a, status, statusName };
+  };
+
+  private applyStatus = (
+    a: AppointmentSelect,
+    status: AppointmentStatus,
+    statusName: string
+  ): AppointmentSelect => {
+    // Si el backend no devuelve estado, forzamos el que corresponde a la acción
+    const normalized = this.ensureStatus(a);
+    return { ...normalized, status, statusName };
+  };
 }
