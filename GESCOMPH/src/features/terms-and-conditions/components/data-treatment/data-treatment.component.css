@@ -1,0 +1,34 @@
+.data-treatment-card {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.data-treatment-content h2 {
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.data-treatment-content h3 {
+  color: #1976d2;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+}
+
+.data-treatment-content p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  text-align: justify;
+}
+
+.data-treatment-content ul {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.data-treatment-content li {
+  line-height: 1.6;
+  margin-bottom: 5px;
+}

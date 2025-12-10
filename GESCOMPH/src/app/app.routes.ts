@@ -18,8 +18,6 @@ export const routes: Routes = [
     title: 'Pago Exitoso'
   },
 
-
-
   {
     path: 'auth',
     canActivate: [publicGuard],
