@@ -1,0 +1,33 @@
+<div class="dialog-container">
+  <!-- Header -->
+  <div class="dialog-header">
+    <div class="title-wrap">
+      <div class="accent"></div>
+      <h2 class="title" id="dialog-title">
+        <mat-icon class="mr-1" aria-hidden="true">description</mat-icon>
+        Términos y Condiciones
+      </h2>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <mat-dialog-content class="dialog-content">
+    <mat-tab-group id="terms-modal-tabs" (selectedIndexChange)="onTabChange($event)">
+      <mat-tab *ngFor="let tab of visibleTabs" [label]="tab.label">
+        <div class="tab-spacing">
+          <ng-container *ngComponentOutlet="tab.component"></ng-container>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-dialog-content>
+
+  <!-- Actions -->
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button color="primary" (click)="close()">
+      Cancelar
+    </button>
+    <button mat-raised-button color="primary" (click)="acceptTerms()">
+      Aceptar Términos y Condiciones, Autorizar Tratamiento de Datos
+    </button>
+  </mat-dialog-actions>
+</div>

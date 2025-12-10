@@ -1,0 +1,24 @@
+.terms-card {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.terms-content h2 {
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.terms-content h3 {
+  color: #1976d2;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+}
+
+.terms-content p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  text-align: justify;
+}

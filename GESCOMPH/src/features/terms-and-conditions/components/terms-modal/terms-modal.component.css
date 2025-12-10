@@ -1,0 +1,113 @@
+:host {
+  --surface: var(--color-surface);
+  --surface-muted: var(--color-surface-muted);
+  --text-primary: var(--color-text);
+  --text-secondary: var(--color-text);
+  --text-muted: var(--color-text-muted);
+  --border-color: var(--color-border);
+  --border-light: var(--gray-100);
+  --shadow: var(--shadow-1);
+  --radius: 12px;
+  --transition: .2s ease;
+  --primary-color: var(--color-primary);
+  --primary-light: var(--green-400);
+  --primary-soft: var(--color-primary-soft);
+  --accent-gradient: var(--gradient-primary);
+}
+
+.dialog-container {
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: var(--shadow-1);
+}
+
+.title-wrap {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.accent {
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+  background: var(--accent-gradient);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.dialog-header .title mat-icon {
+  color: var(--primary-color);
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.tab-spacing {
+  padding: 1rem 0;
+}
+
+.dialog-actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-light);
+  background: var(--surface);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  .dialog-container {
+    max-height: 90vh;
+  }
+
+  .dialog-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .dialog-content {
+    padding: 0.75rem;
+    max-height: 70vh;
+  }
+
+  .dialog-actions {
+    padding: 0.75rem;
+    flex-direction: column;
+  }
+
+  .dialog-actions button {
+    width: 100%;
+  }
+}
